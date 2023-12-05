@@ -535,11 +535,19 @@ function adaptivequiz_extend_settings_navigation(settings_navigation $settingsna
         return;
     }
 
+	$node = navigation_node::create(get_string('testSettings', 'adaptivequiz'),
+        new moodle_url('/mod/adaptivequiz/testsettings.php', ['cmid' => $PAGE->cm->id]),
+        navigation_node::TYPE_SETTING, null, 'Test Settings',
+        new pix_icon('i/report', ''));
+    $adaptivequiznode->add_node($node);
+
     $node = navigation_node::create(get_string('questionanalysisbtn', 'adaptivequiz'),
         new moodle_url('/mod/adaptivequiz/questionanalysis/overview.php', ['cmid' => $PAGE->cm->id]),
         navigation_node::TYPE_SETTING, null, 'mod_adaptivequiz_question_analysis',
         new pix_icon('i/report', ''));
     $adaptivequiznode->add_node($node);
+
+	
 }
 
 /**

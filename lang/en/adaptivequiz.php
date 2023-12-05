@@ -238,3 +238,8 @@ $string['midlevelusers'] = 'Users near the question-level';
 $string['lowlevelusers'] = 'Users below the question-level';
 $string['user'] = 'User';
 $string['result'] = 'Result';
+
+$string['testSettings'] = 'Test Settings';
+
+// CS 91interactive
+$string['testlength'] = 'Test length';
