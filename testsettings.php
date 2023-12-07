@@ -26,21 +26,41 @@
 require_once(dirname(__FILE__).'/../../config.php');
 require_once(dirname(__FILE__). '/classes/form/testsettingsform.php');
 
-$id = required_param('cmid', PARAM_INT);
+$id = optional_param('cmid', 0, PARAM_INT);
+$downloadusersattempts = optional_param('download', '', PARAM_ALPHA);
+$n  = optional_param('n', 0, PARAM_INT);
+$resetfilter = optional_param('resetfilter', 0, PARAM_INT);
 
-if (!$cm = get_coursemodule_from_id('adaptivequiz', $id)) {
-    throw new moodle_exception('invalidcoursemodule');
+if ($id) {
+    $cm         = get_coursemodule_from_id('adaptivequiz', $id, 0, false, MUST_EXIST);
+    $course     = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $adaptivequiz  = $DB->get_record('adaptivequiz', ['id' => $cm->instance], '*', MUST_EXIST);
+} else if ($n) {
+    $adaptivequiz  = $DB->get_record('adaptivequiz', ['id' => $n], '*', MUST_EXIST);
+    $course     = $DB->get_record('course', ['id' => $adaptivequiz->course], '*', MUST_EXIST);
+    $cm         = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id, $course->id, false, MUST_EXIST);
+} else {
+    throw new moodle_exception('invalidarguments');
 }
+
+$context = context_module::instance($cm->id);
+$PAGE->set_context($context);
+$PAGE->add_body_class('limitedwidth');
 
 $PAGE->set_url(new moodle_url('/mod/adaptivequiz/testsettings.php', array('cmid' => $cm->id)));
 $PAGE->set_title(get_string('testSettings', 'adaptivequiz'));
+$PAGE->set_cm($cm);
+/** @var mod_adaptivequiz_renderer $renderer */
+$renderer = $PAGE->get_renderer('mod_adaptivequiz');
 
 $templatecontext = (object)[
 
 	'message' => 'Hello Test Settings'
 ];
+echo $OUTPUT->header();
 
-$mform = new mod_testsettingsform_mod_form('testsettingform',$cm->section,$cm,$cm->course);
+// $mform = new mod_testsettingsform_mod_form('testsettingform',$cm->section,$cm,$cm->course);
+$mform = new mod_testsettingsform_mod_form($PAGE->url->out());
 if ($mform->is_cancelled()) {
     // If there is a cancel element on the form, and it was pressed,
     // then the `is_cancelled()` function will return true.
@@ -60,7 +80,13 @@ if ($mform->is_cancelled()) {
 
 }
 
-echo $OUTPUT->header();
+// if ($canviewattemptsreport && $activityisnotavailablenotification) {
+//     echo $OUTPUT->notification($activityisnotavailablenotification, notification::NOTIFY_WARNING, false);
+// }
+
+// if ($adaptivequiz->intro) { // Conditions to show the intro can change to look for own settings or whatever.
+//     echo $OUTPUT->box(format_module_intro('adaptivequiz', $adaptivequiz, $cm->id), 'generalbox mod_introbox', 'newmoduleintro');
+// }
 
 echo $OUTPUT->render_from_template('adaptivequiz/testsettings',$templatecontext);
 

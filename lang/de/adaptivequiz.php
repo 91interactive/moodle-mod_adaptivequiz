@@ -30,4 +30,11 @@ $string['modulenameplural'] = 'Adaptive Quizs';
 $string['pluginadministration'] = 'Adaptive Quiz administration';
 $string['pluginname'] = 'Adaptive Quiz';
 
-$string['testlength'] = 'Testlänge';
+$string['testlength'] = 'Anzahl an vorzugebenden Aufgaben';
+$string['testduration'] = 'Maximale Testzeit';
+$string['testsettingsheader'] = 'Test Einstellungen';
+$string['selectTaskTypes'] = 'Aufgabentype wählen';
+$string['notadaptivepartheader'] = 'Nicht adavptiver Teil';
+$string['adaptiveSettingsDescription'] = 'Hier wird spezifiziert, wie die Aufgabenauswahl für nicht adaptive Tests bzw.
+nicht adaptive Teile des Gesamttests erfolgt';
+$string['numbercalibrationclusters'] = "Anzahl Kalibrierungscluster";

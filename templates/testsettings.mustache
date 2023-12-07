@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template mod_adaptivequiz/test_settings
+    @template mod_adaptivequiz/testsettings
 
     Template purpose and description.
 
@@ -32,4 +32,10 @@
     {
     }
 }}
-<div></div>
+<div>
+	 {{#secondarymoremenu}}
+                <div class="secondary-navigation">
+                    {{> core/moremenu}}
+                </div>
+            {{/secondarymoremenu}}
+</div>

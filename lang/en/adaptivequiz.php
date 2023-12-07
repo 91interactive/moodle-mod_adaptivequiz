@@ -242,4 +242,14 @@ $string['result'] = 'Result';
 $string['testSettings'] = 'Test Settings';
 
 // CS 91interactive
-$string['testlength'] = 'Test length';
+$string['testlength'] = 'Number of tasks to be specified';
+$string['testduration'] = 'Max test time';
+$string['testsettingsheader'] = 'Test Settings';
+$string['selectTaskTypes'] = 'Select task type';
+$string['notadaptivepartheader'] = 'None adaptive part';
+$string['adaptiveSettingsDescription'] = 'This section specifies how the item selection for non-adaptive tests or non-adaptive parts of the overall test';
+$string['numbercalibrationclusters'] = "Number of calibration clusters";
+
+
+
+
