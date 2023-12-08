@@ -71,7 +71,7 @@
         <INDEX NAME="instance_userid_idx" UNIQUE="false" FIELDS="instance, userid" COMMENT="Instance and user id index"/>
       </INDEXES>
     </TABLE>
-	<TABLE>
+	<TABLE NAME="adaptivequiz_testsettings" COMMENT="Test settings">
 		<FIELDS>
 			<FIELD NAME="id" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
 			<FIELD NAME="userid" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
@@ -82,7 +82,7 @@
 			<FIELD NAME="numbercalibrationclusters" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
 			<FIELD NAME="numberlinkingclusters" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
 			<FIELD NAME="numberadaptivclusters" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="personalparameterestimation" TYPE="var" LENGTH="255" NOTNULL="true"></FIELD>
+			<FIELD NAME="personalparameterestimation" TYPE="char" LENGTH="255" NOTNULL="true"></FIELD>
 			<FIELD NAME="adaptivepart" TYPE="var" LENGTH="255" NOTNULL="true"></FIELD>
 			<FIELD NAME="randomesque_exposure_control" TYPE="tinyint" LENGTH="255" NOTNULL="true"></FIELD>
 			<FIELD NAME="suitableTasks" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
