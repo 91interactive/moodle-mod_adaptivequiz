@@ -73,19 +73,19 @@
     </TABLE>
 	<TABLE NAME="adaptivequiz_testsettings" COMMENT="Test settings">
 		<FIELDS>
-			<FIELD NAME="id" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="userid" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="courseid" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="testlength" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="testduration" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="selectTaskTypes" TYPE="char" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="numbercalibrationclusters" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="numberlinkingclusters" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="numberadaptivclusters" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="personalparameterestimation" TYPE="char" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="adaptivepart" TYPE="var" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="randomesque_exposure_control" TYPE="tinyint" LENGTH="255" NOTNULL="true"></FIELD>
-			<FIELD NAME="suitableTasks" TYPE="int" LENGTH="255" NOTNULL="true"></FIELD>
+			<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"></FIELD>
+			<FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true"></FIELD>
+			<FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true"></FIELD>
+			<FIELD NAME="testlength" TYPE="int" LENGTH="10" NOTNULL="true"></FIELD>
+			<FIELD NAME="testduration" TYPE="int" LENGTH="10" NOTNULL="true"></FIELD>
+			<FIELD NAME="selecttasktypes" TYPE="char" LENGTH="10" NOTNULL="true"></FIELD>
+			<FIELD NAME="numbercalibrationclusters" TYPE="int" LENGTH="10" NOTNULL="true"></FIELD>
+			<FIELD NAME="numberlinkingclusters" TYPE="int" LENGTH="10" NOTNULL="true"></FIELD>
+			<FIELD NAME="numberadaptivclusters" TYPE="int" LENGTH="10" NOTNULL="true"></FIELD>
+			<FIELD NAME="personalparameterestimation" TYPE="char" LENGTH="10" NOTNULL="true"></FIELD>
+			<FIELD NAME="adaptivepart" TYPE="char" LENGTH="10" NOTNULL="true"></FIELD>
+			<FIELD NAME="randomesque_exposure_control" TYPE="int" LENGTH="2" NOTNULL="true"></FIELD>
+			<FIELD NAME="suitabletasks" TYPE="int" LENGTH="10" NOTNULL="true"></FIELD>
 		</FIELDS>
 		<KEYS>
         	<KEY NAME="primary" TYPE="primary" FIELDS="id"/>

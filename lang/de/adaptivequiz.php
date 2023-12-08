@@ -33,7 +33,7 @@ $string['pluginname'] = 'Adaptive Quiz';
 $string['testlength'] = 'Anzahl an vorzugebenden Aufgaben';
 $string['testduration'] = 'Maximale Testzeit';
 $string['testsettingsheader'] = 'Test Einstellungen';
-$string['selectTaskTypes'] = 'Aufgabentype wählen';
+$string['selecttasktypes'] = 'Aufgabentype wählen';
 $string['notadaptivepartheader'] = 'Nicht adavptiver Teil';
 $string['adaptiveSettingsDescription'] = 'Hier wird spezifiziert, wie die Aufgabenauswahl für nicht adaptive Tests bzw.
 nicht adaptive Teile des Gesamttests erfolgt';
@@ -44,4 +44,4 @@ $string['personalparameterestimation'] = "Personenparameterschätzung";
 $string['personalparameterestimationDescription'] = "Spezifiziert den Schätzer, der genutzt wird, um die vorläufige Personenfähigkeit während des Tests nach Beantwortung jeder einzelnen Aufgabe zu schätzen.";
 $string['adaptivepart'] = "Aufgabenauswahl adaptiver Teil";
 $string['adaptivepartheaderDescription'] = "Spezifiziert Kriterium nach dem Aufgaben während des adaptiven Tests ausgewählt werden.";
-$string['suitableTasks'] = "Anzahl der am besten passenden Aufgaben, aus denen zufällig gewählt werden soll";
+$string['suitabletasks'] = "Anzahl der am besten passenden Aufgaben, aus denen zufällig gewählt werden soll";

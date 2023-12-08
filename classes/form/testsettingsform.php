@@ -46,7 +46,7 @@ class mod_testsettingsform_mod_form  extends moodleform {
 
 		$mform->addElement('header', 'notadaptivepartheader', get_string('notadaptivepartheader', 'adaptivequiz'));
 		$mform->addElement('static', 'adaptiveSettingsDescription',get_string('description'),get_string('adaptiveSettingsDescription', 'adaptivequiz'));
-		$mform->addElement('select', 'selectTaskTypes', get_string('selectTaskTypes', 'adaptivequiz'),  ["Sequentiell","Zufällig"],["sequentiell","zufällig"]);
+		$mform->addElement('select', 'selecttasktypes', get_string('selecttasktypes', 'adaptivequiz'),  ["Sequentiell","Zufällig"],["sequentiell","zufällig"]);
 
 
 		// $mform->addElement('header', 'numbercalibrationclusters', get_string('numbercalibrationclusters', 'adaptivequiz'));
@@ -73,14 +73,14 @@ class mod_testsettingsform_mod_form  extends moodleform {
 
 		$mform->addElement('advcheckbox', 'randomesque_exposure_control', '', 'Randomesque Exposure Control', array('group' => 1), array(0, 1));
 		
-		$mform->addElement('text','suitableTasks',get_string('suitableTasks','adaptivequiz')); // should be only intergers
-		$mform->setType('suitableTasks', PARAM_INT);
-		$mform->disabledIf('suitableTasks', 'advcheckbox', 'unchecked');
+		$mform->addElement('text','suitabletasks',get_string('suitabletasks','adaptivequiz')); // should be only intergers
+		$mform->setType('suitabletasks', PARAM_INT);
+		$mform->disabledIf('suitabletasks', 'advcheckbox', 'unchecked');
 	
 		$PAGE->requires->js_init_code("
-		document.getElementById('id_suitableTasks').disabled = true;
+		document.getElementById('id_suitabletasks').disabled = true;
 			document.getElementById('id_randomesque_exposure_control').addEventListener('change', function() {
-				document.getElementById('id_suitableTasks').disabled = !this.checked;
+				document.getElementById('id_suitabletasks').disabled = !this.checked;
 			});"
 		);
 

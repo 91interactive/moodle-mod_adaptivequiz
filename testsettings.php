@@ -73,17 +73,17 @@ if ($mform->is_cancelled()) {
 	$recordtoinsert = new stdClass();
 		
 	$recordtoinsert->userid = $USER->id;
-	$recordtoinsert->courseId = $course->id;
+	$recordtoinsert->courseid = $course->id;
 	$recordtoinsert->testlength = $fromform->testlength;
 	$recordtoinsert->testduration = $fromform->testduration;
-	$recordtoinsert->selectTaskTypes = $fromform->selectTaskTypes;
+	$recordtoinsert->selecttasktypes = $fromform->selecttasktypes;
 	$recordtoinsert->numbercalibrationclusters = $fromform->numbercalibrationclusters;
 	$recordtoinsert->numberlinkingclusters = $fromform->numberlinkingclusters;
 	$recordtoinsert->numberadaptivclusters = $fromform->numberadaptivclusters;
 	$recordtoinsert->personalparameterestimation = $fromform->personalparameterestimation;
 	$recordtoinsert->adaptivepart = $fromform->adaptivepart;
 	$recordtoinsert->randomesque_exposure_control = $fromform->randomesque_exposure_control;
-	$recordtoinsert->suitableTasks = $fromform->suitableTasks;
+	$recordtoinsert->suitabletasks = $fromform->suitabletasks;
 
 	$DB->insert_record('adaptivequiz_testsettings', $recordtoinsert);
 	// go back to manage page
