@@ -249,7 +249,11 @@ $string['selectTaskTypes'] = 'Select task type';
 $string['notadaptivepartheader'] = 'None adaptive part';
 $string['adaptiveSettingsDescription'] = 'This section specifies how the item selection for non-adaptive tests or non-adaptive parts of the overall test';
 $string['numbercalibrationclusters'] = "Number of calibration clusters";
-
-
-
-
+$string['numberlinkingclusters'] = "Number of linking clusters";
+$string['numberadaptivclusters'] = "Number of adaptive cluster";
+$string['personalparameterestimation'] = "Personal parameter estimation";
+$string['personalparameterestimationDescription'] = "Specifies the estimator that is used to estimate the preliminary person's ability during the test after answering each individual task.";
+$string['adaptivepart'] = "Task selection adaptive part";
+$string['adaptivepartheaderDescription'] = "Specifies criterion according to which tasks are selected during the adaptive test.";
+$string['REC'] = "Randomesque Exposure Control";
+$string['suitableTasks'] = "Number of best matching tasks from which to choose at random";

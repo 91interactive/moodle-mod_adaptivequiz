@@ -25,6 +25,8 @@
 
 require_once(dirname(__FILE__).'/../../config.php');
 require_once(dirname(__FILE__). '/classes/form/testsettingsform.php');
+global $DB;
+global $USER;
 
 $id = optional_param('cmid', 0, PARAM_INT);
 $downloadusersattempts = optional_param('download', '', PARAM_ALPHA);
@@ -68,6 +70,26 @@ if ($mform->is_cancelled()) {
 } else if ($fromform = $mform->get_data()) {
     // When the form is submitted, and the data is successfully validated,
     // the `get_data()` function will return the data posted in the form.
+	$recordtoinsert = new stdClass();
+		
+	$recordtoinsert->userid = $USER->id;
+	$recordtoinsert->courseId = $course->id;
+	$recordtoinsert->testlength = $fromform->testlength;
+	$recordtoinsert->testduration = $fromform->testduration;
+	$recordtoinsert->selectTaskTypes = $fromform->selectTaskTypes;
+	$recordtoinsert->numbercalibrationclusters = $fromform->numbercalibrationclusters;
+	$recordtoinsert->numberlinkingclusters = $fromform->numberlinkingclusters;
+	$recordtoinsert->numberadaptivclusters = $fromform->numberadaptivclusters;
+	$recordtoinsert->personalparameterestimation = $fromform->personalparameterestimation;
+	$recordtoinsert->adaptivepart = $fromform->adaptivepart;
+	$recordtoinsert->randomesque_exposure_control = $fromform->randomesque_exposure_control;
+	$recordtoinsert->suitableTasks = $fromform->suitableTasks;
+
+	$DB->insert_record('adaptivequiz_testsettings', $recordtoinsert);
+	// go back to manage page
+	redirect($CFG->wwwroot . '/mod/adaptivequiz/testsettings.php?cmid=' .$cm->id,'Testsettings saved on DB');
+
+
 } else {
     // This branch is executed if the form is submitted but the data doesn't
     // validate and the form should be redisplayed or on the first display of the form.
@@ -79,14 +101,6 @@ if ($mform->is_cancelled()) {
     $mform->display();
 
 }
-
-// if ($canviewattemptsreport && $activityisnotavailablenotification) {
-//     echo $OUTPUT->notification($activityisnotavailablenotification, notification::NOTIFY_WARNING, false);
-// }
-
-// if ($adaptivequiz->intro) { // Conditions to show the intro can change to look for own settings or whatever.
-//     echo $OUTPUT->box(format_module_intro('adaptivequiz', $adaptivequiz, $cm->id), 'generalbox mod_introbox', 'newmoduleintro');
-// }
 
 echo $OUTPUT->render_from_template('adaptivequiz/testsettings',$templatecontext);
 

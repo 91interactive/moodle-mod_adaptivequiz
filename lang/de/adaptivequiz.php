@@ -38,3 +38,10 @@ $string['notadaptivepartheader'] = 'Nicht adavptiver Teil';
 $string['adaptiveSettingsDescription'] = 'Hier wird spezifiziert, wie die Aufgabenauswahl für nicht adaptive Tests bzw.
 nicht adaptive Teile des Gesamttests erfolgt';
 $string['numbercalibrationclusters'] = "Anzahl Kalibrierungscluster";
+$string['numberlinkingclusters'] = "Anzahl Linkingcluster";
+$string['numberadaptivclusters'] = "Anzahl adaptiver Cluster";
+$string['personalparameterestimation'] = "Personenparameterschätzung";
+$string['personalparameterestimationDescription'] = "Spezifiziert den Schätzer, der genutzt wird, um die vorläufige Personenfähigkeit während des Tests nach Beantwortung jeder einzelnen Aufgabe zu schätzen.";
+$string['adaptivepart'] = "Aufgabenauswahl adaptiver Teil";
+$string['adaptivepartheaderDescription'] = "Spezifiziert Kriterium nach dem Aufgaben während des adaptiven Tests ausgewählt werden.";
+$string['suitableTasks'] = "Anzahl der am besten passenden Aufgaben, aus denen zufällig gewählt werden soll";
