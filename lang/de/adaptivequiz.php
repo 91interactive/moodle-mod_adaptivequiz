@@ -83,3 +83,6 @@ $string['messageatlastpageDescription']="Nachricht auf der letzten Seite des Tes
 $string['messageatlastpageDescription_help']="Könnte für das individuelle Feedback genutzt werden. Heißt, entweder steht für alle das gleiche da, oder, wenn wir  individuelles Feedback erlauben, steht das dann jeweils auf der letzten Seite.";
 
 $string['contentAreas'] = "Benutzerdefinierte Angabe von Anteilen einzelner Inhaltsbereicheam Gesamttest?";
+
+$string['formtextareaempty'] = 'Textarea darf nicht leer sein';
+

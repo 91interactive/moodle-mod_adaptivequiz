@@ -123,6 +123,7 @@ $string['highestlevel_help'] = 'The highest or most difficult level the assessme
 $string['questionpool'] = 'Question pool';
 $string['questionpool_help'] = 'Select the question category(ies) where the activity will pull questions from during an attempt.';
 $string['formelementempty'] = 'Input a positive integer from 1 to 999';
+$string['formtextareaempty'] = 'Textarea can not be empty';
 $string['formelementnumeric'] = 'Input a numeric value from 1 to 999';
 $string['formelementnegative'] = 'Input a positive number from 1 to 999';
 $string['formminquestgreaterthan'] = 'Minimum number of questions must be less than maximum number of questions';
@@ -253,7 +254,6 @@ $string['selecttasktypes'] = 'Select task type';
 $string['selecttasktypesDescription'] = 'Select task type';
 $string['selecttasktypesDescription_help'] = 'This section specifies how the item selection for non-adaptive tests or non-adaptive parts of the overall test';
 $string['notadaptivepartheader'] = 'None adaptive part';
-// $string['adaptiveSettingsDescription'] = 'This section specifies how the item selection for non-adaptive tests or non-adaptive parts of the overall test';
 $string['numbercalibrationclusters'] = "Number of calibration clusters";
 $string['numbercalibrationclustersDescription'] = "Number of calibration clusters";
 $string['numbercalibrationclustersDescription_help'] = "Number of task clusters (cluster = group of tasks) that contain tasks that do not yet have a parameter estimate and therefore need to be need to be calibrated. If the test consists only of new (uncalibrated) items, the test only contains calibration clusters. Calibration clusters are given to each respondent";
@@ -265,7 +265,6 @@ $string['numberlinkingclustersDescription_help'] = "Number of task clusters that
 $string['numberadaptivclusters'] = "Number of adaptive clusters";
 $string['numberadaptivclustersDescription'] = "Number of adaptive clusters";
 $string['numberadaptivclustersDescription_help'] = "Number of task clusters in which tasks are selected adaptively. Tasks here already have parameter estimation.";
-
 
 $string['personalparameterestimation'] = "Personal parameter estimation";
 $string['personalparameterestimationDescription'] = "Personal parameter estimation";

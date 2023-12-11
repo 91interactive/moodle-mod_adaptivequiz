@@ -231,11 +231,13 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
 		// adding standard "message before test" field 
 		$mform->addElement('textarea','messagebeforetest',get_string('messagebeforetest','adaptivequiz'));
 		$mform->setType('messagebeforetest', PARAM_NOTAGS);
+        $mform->addRule('messagebeforetest', get_string('formtextareaempty', 'adaptivequiz'), 'required', null, 'client');
         $mform->addHelpButton('messagebeforetest', 'messagebeforetestDescription', 'adaptivequiz');
 
 		// adding standard "message on last page of the test" field 
 		$mform->addElement('textarea','messageatlastpage',get_string('messageatlastpage','adaptivequiz'));
 		$mform->setType('messageatlastpage', PARAM_NOTAGS);
+        $mform->addRule('messageatlastpage', get_string('formtextareaempty', 'adaptivequiz'), 'required', null, 'client');
         $mform->addHelpButton('messageatlastpage', 'messageatlastpageDescription', 'adaptivequiz');
 
 		// adding checkbox for "User-defined specification of proportions of individual content areas in the overall test?"
