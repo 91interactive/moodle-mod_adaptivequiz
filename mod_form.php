@@ -223,6 +223,7 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
 		// Adding the standard "Number of best matching tasks from which to choose at random" field
 		$mform->addElement('text','suitabletasks',get_string('suitabletasks','adaptivequiz')); // should be only intergers
 		$mform->setType('suitabletasks', PARAM_INT);
+		$mform->setDefault('suitabletasks', 0);
 		$mform->disabledIf('suitabletasks', 'advcheckbox', 'unchecked');
 		
 		// disable input field "suitable tasks" on init / add eventlistener to control disable state by checkbox "Randomesque Exposure Control"
