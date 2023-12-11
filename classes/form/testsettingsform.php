@@ -33,56 +33,54 @@ class mod_testsettingsform_mod_form  extends moodleform {
 		global $PAGE;
 		$mform = $this->_form;
 		// 
-		$mform->addElement('header', 'testsettingsheader', get_string('testsettingsheader', 'adaptivequiz'));
+		// $mform->addElement('header', 'testsettingsheader', get_string('testsettingsheader', 'adaptivequiz'));
 
-		$mform->addElement('text','testlength',get_string('testlength','adaptivequiz')); // should be only intergers
-		$mform->setType('testlength', PARAM_INT);
-		$mform->setDefault('testlength',0); // TODO Default value from DB?
+		// $mform->addElement('text','testlength',get_string('testlength','adaptivequiz')); // should be only intergers
+		// $mform->setType('testlength', PARAM_INT);
+		// $mform->setDefault('testlength',0); // TODO Default value from DB?
 		
-		$mform->addElement('text','testduration',get_string('testduration','adaptivequiz'),'min'); // should be only intergers
-		$mform->setType('testduration', PARAM_INT);
-		$mform->setDefault("testduration",0); // TODO Default value from DB?
+		// $mform->addElement('text','testduration',get_string('testduration','adaptivequiz'),'min'); // should be only intergers
+		// $mform->setType('testduration', PARAM_INT);
+		// $mform->setDefault("testduration",0); // TODO Default value from DB?
 
 
-		$mform->addElement('header', 'notadaptivepartheader', get_string('notadaptivepartheader', 'adaptivequiz'));
-		$mform->addElement('static', 'adaptiveSettingsDescription',get_string('description'),get_string('adaptiveSettingsDescription', 'adaptivequiz'));
-		$mform->addElement('select', 'selecttasktypes', get_string('selecttasktypes', 'adaptivequiz'),  ["Sequentiell","Zufällig"],["sequentiell","zufällig"]);
+		// $mform->addElement('header', 'notadaptivepartheader', get_string('notadaptivepartheader', 'adaptivequiz'));
+		// $mform->addElement('static', 'adaptiveSettingsDescription',get_string('description'),get_string('adaptiveSettingsDescription', 'adaptivequiz'));
+		// $mform->addElement('select', 'selecttasktypes', get_string('selecttasktypes', 'adaptivequiz'),  ["Sequentiell","Zufällig"],["sequentiell","zufällig"]);
 
 
-		// $mform->addElement('header', 'numbercalibrationclusters', get_string('numbercalibrationclusters', 'adaptivequiz'));
+		// $mform->addElement('text','numbercalibrationclusters',get_string('numbercalibrationclusters','adaptivequiz')); // should be only intergers
+		// $mform->setType('numbercalibrationclusters', PARAM_INT);
+		// $mform->setDefault("numbercalibrationclusters",0); // TODO Default value from DB?
 
-		$mform->addElement('text','numbercalibrationclusters',get_string('numbercalibrationclusters','adaptivequiz')); // should be only intergers
-		$mform->setType('numbercalibrationclusters', PARAM_INT);
-		$mform->setDefault("numbercalibrationclusters",0); // TODO Default value from DB?
+		// $mform->addElement('text','numberlinkingclusters',get_string('numberlinkingclusters','adaptivequiz')); // should be only intergers
+		// $mform->setType('numberlinkingclusters', PARAM_INT);
+		// $mform->setDefault("numberlinkingclusters",0);
 
-		$mform->addElement('text','numberlinkingclusters',get_string('numberlinkingclusters','adaptivequiz')); // should be only intergers
-		$mform->setType('numberlinkingclusters', PARAM_INT);
-		$mform->setDefault("numberlinkingclusters",0);
-
-		$mform->addElement('text','numberadaptivclusters',get_string('numberadaptivclusters','adaptivequiz')); // should be only intergers
-		$mform->setType('numberadaptivclusters', PARAM_INT);
-		$mform->setDefault("numberadaptivclusters",0);
+		// $mform->addElement('text','numberadaptivclusters',get_string('numberadaptivclusters','adaptivequiz')); // should be only intergers
+		// $mform->setType('numberadaptivclusters', PARAM_INT);
+		// $mform->setDefault("numberadaptivclusters",0);
 
 
-		$mform->addElement('static', 'personalparameterestimationDescription',get_string('description'),get_string('personalparameterestimationDescription', 'adaptivequiz'));
-		$mform->addElement('select', 'personalparameterestimation', get_string('personalparameterestimation', 'adaptivequiz'),  ["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"],["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"]);
+		// $mform->addElement('static', 'personalparameterestimationDescription',get_string('description'),get_string('personalparameterestimationDescription', 'adaptivequiz'));
+		// $mform->addElement('select', 'personalparameterestimation', get_string('personalparameterestimation', 'adaptivequiz'),  ["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"],["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"]);
 
-		$mform->addElement('static', 'adaptivepartheaderDescription',get_string('description'),get_string('adaptivepartheaderDescription', 'adaptivequiz'));
-		$mform->addElement('select', 'adaptivepart', get_string('adaptivepart', 'adaptivequiz'),  ["Maximum Information","Minimum Expected Posterior Variance","Maximum Expected Information","Integration-based Kullback-Leibler"],["Maximum Information","Minimum Expected Posterior Variance","Maximum Expected Information","Integration-based Kullback-Leibler"]);
+		// $mform->addElement('static', 'adaptivepartheaderDescription',get_string('description'),get_string('adaptivepartheaderDescription', 'adaptivequiz'));
+		// $mform->addElement('select', 'adaptivepart', get_string('adaptivepart', 'adaptivequiz'),  ["Maximum Information","Minimum Expected Posterior Variance","Maximum Expected Information","Integration-based Kullback-Leibler"],["Maximum Information","Minimum Expected Posterior Variance","Maximum Expected Information","Integration-based Kullback-Leibler"]);
 
 
-		$mform->addElement('advcheckbox', 'randomesque_exposure_control', '', 'Randomesque Exposure Control', array('group' => 1), array(0, 1));
+		// $mform->addElement('advcheckbox', 'randomesque_exposure_control', '', 'Randomesque Exposure Control', array('group' => 1), array(0, 1));
 		
-		$mform->addElement('text','suitabletasks',get_string('suitabletasks','adaptivequiz')); // should be only intergers
-		$mform->setType('suitabletasks', PARAM_INT);
-		$mform->disabledIf('suitabletasks', 'advcheckbox', 'unchecked');
+		// $mform->addElement('text','suitabletasks',get_string('suitabletasks','adaptivequiz')); // should be only intergers
+		// $mform->setType('suitabletasks', PARAM_INT);
+		// $mform->disabledIf('suitabletasks', 'advcheckbox', 'unchecked');
 	
-		$PAGE->requires->js_init_code("
-		document.getElementById('id_suitabletasks').disabled = true;
-			document.getElementById('id_randomesque_exposure_control').addEventListener('change', function() {
-				document.getElementById('id_suitabletasks').disabled = !this.checked;
-			});"
-		);
+		// $PAGE->requires->js_init_code("
+		// document.getElementById('id_suitabletasks').disabled = true;
+		// 	document.getElementById('id_randomesque_exposure_control').addEventListener('change', function() {
+		// 		document.getElementById('id_suitabletasks').disabled = !this.checked;
+		// 	});"
+		// );
 
 		$this->add_action_buttons(true, get_string('save'));
 

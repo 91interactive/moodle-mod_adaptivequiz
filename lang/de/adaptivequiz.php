@@ -45,3 +45,5 @@ $string['personalparameterestimationDescription'] = "Spezifiziert den Schätzer,
 $string['adaptivepart'] = "Aufgabenauswahl adaptiver Teil";
 $string['adaptivepartheaderDescription'] = "Spezifiziert Kriterium nach dem Aufgaben während des adaptiven Tests ausgewählt werden.";
 $string['suitabletasks'] = "Anzahl der am besten passenden Aufgaben, aus denen zufällig gewählt werden soll";
+$string['sequential'] = "Sequentiell";
+$string['random'] = "Zufällig";

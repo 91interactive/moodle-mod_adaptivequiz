@@ -55,10 +55,7 @@ $PAGE->set_cm($cm);
 /** @var mod_adaptivequiz_renderer $renderer */
 $renderer = $PAGE->get_renderer('mod_adaptivequiz');
 
-$templatecontext = (object)[
 
-	'message' => 'Hello Test Settings'
-];
 echo $OUTPUT->header();
 
 // $mform = new mod_testsettingsform_mod_form('testsettingform',$cm->section,$cm,$cm->course);
