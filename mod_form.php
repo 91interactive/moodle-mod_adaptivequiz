@@ -180,42 +180,58 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
 		// Adding the standard "test length" field.
 		$mform->addElement('text','testlength',get_string('testlength','adaptivequiz')); // should be only intergers
 		$mform->setType('testlength', PARAM_INT);
-		$mform->setDefault('testlength',0); // TODO Default value from DB?
+        $mform->addRule('testlength', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('testlength', 'testlengthDescription', 'adaptivequiz');
+		// $mform->setDefault('testlength',0); // TODO Default value from DB?
 		
 		// Adding the standard "test duration in minutes" field.
 		$mform->addElement('text','testduration',get_string('testduration','adaptivequiz'),'min'); // should be only intergers
 		$mform->setType('testduration', PARAM_INT);
-		$mform->setDefault("testduration",0); // TODO Default value from DB?
+        $mform->addRule('testduration', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('testduration', 'testdurationDescription', 'adaptivequiz');
+
+		// $mform->setDefault("testduration",0); // TODO Default value from DB?
 
 		// Adding description for "select task type"
-		$mform->addElement('static', 'adaptiveSettingsDescription',get_string('description'),get_string('adaptiveSettingsDescription', 'adaptivequiz'));
+		// $mform->addElement('static', 'adaptiveSettingsDescription',get_string('description'),get_string('adaptiveSettingsDescription', 'adaptivequiz'));
 		// Adding the standard "select task type" field.
 		$mform->addElement('select', 'selecttasktypes', get_string('selecttasktypes', 'adaptivequiz'),  [get_string('sequential','adaptivequiz'),get_string('random','adaptivequiz')],[get_string('sequential','adaptivequiz'),get_string('random','adaptivequiz')]);
+        $mform->addHelpButton('selecttasktypes', 'selecttasktypesDescription', 'adaptivequiz');
 
 		// Adding the standard "Number of calibration clusters" field.
 		$mform->addElement('text','numbercalibrationclusters',get_string('numbercalibrationclusters','adaptivequiz')); // should be only intergers
 		$mform->setType('numbercalibrationclusters', PARAM_INT);
-		$mform->setDefault("numbercalibrationclusters",0); // TODO Default value from DB?
+        $mform->addRule('numbercalibrationclusters', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('numbercalibrationclusters', 'numbercalibrationclustersDescription', 'adaptivequiz');
+		// $mform->setDefault("numbercalibrationclusters",0); // TODO Default value from DB?
 
 		// Adding the standard "Number of linking clusters" field.
 		$mform->addElement('text','numberlinkingclusters',get_string('numberlinkingclusters','adaptivequiz')); // should be only intergers
 		$mform->setType('numberlinkingclusters', PARAM_INT);
-		$mform->setDefault("numberlinkingclusters",0);
+        $mform->addRule('numberlinkingclusters', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('numberlinkingclusters', 'numberlinkingclustersDescription', 'adaptivequiz');
+
+		// $mform->setDefault("numberlinkingclusters",0);
 
 		// Adding the standard "Number of adaptive clusters" field.
 		$mform->addElement('text','numberadaptivclusters',get_string('numberadaptivclusters','adaptivequiz')); // should be only intergers
 		$mform->setType('numberadaptivclusters', PARAM_INT);
-		$mform->setDefault("numberadaptivclusters",0);
+        $mform->addRule('numberadaptivclusters', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('numberadaptivclusters', 'numberadaptivclustersDescription', 'adaptivequiz');
+		// $mform->setDefault("numberadaptivclusters",0);
 
 		// Adding description for "personal parameter estimation"
-		$mform->addElement('static', 'personalparameterestimationDescription',get_string('description'),get_string('personalparameterestimationDescription', 'adaptivequiz'));
+		// $mform->addElement('static', 'personalparameterestimationDescription',get_string('description'),get_string('personalparameterestimationDescription', 'adaptivequiz'));
 		// Adding the standard "Personal parameter estimation" field.
 		$mform->addElement('select', 'personalparameterestimation', get_string('personalparameterestimation', 'adaptivequiz'),  ["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"],["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"]);
+        $mform->addHelpButton('personalparameterestimation', 'personalparameterestimationDescription', 'adaptivequiz');
 
 		// adding description for "task selection adaptive part"
-		$mform->addElement('static', 'adaptivepartheaderDescription',get_string('description'),get_string('adaptivepartheaderDescription', 'adaptivequiz'));
+		// $mform->addElement('static', 'adaptivepartheaderDescription',get_string('description'),get_string('adaptivepartheaderDescription', 'adaptivequiz'));
 		// Adding the standard "Task selection adaptive part" field
 		$mform->addElement('select', 'adaptivepart', get_string('adaptivepart', 'adaptivequiz'),  ["Maximum Information","Minimum Expected Posterior Variance","Maximum Expected Information","Integration-based Kullback-Leibler"],["Maximum Information","Minimum Expected Posterior Variance","Maximum Expected Information","Integration-based Kullback-Leibler"]);
+        $mform->addHelpButton('adaptivepart', 'adaptivepartDescription', 'adaptivequiz');
+
 
 		// Adding the standard "Randomesque Exposure Control" checkbox
 		$mform->addElement('advcheckbox', 'randomesque_exposure_control', '', 'Randomesque Exposure Control', array('group' => 1), array(0, 1));
@@ -224,15 +240,47 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
 		$mform->addElement('text','suitabletasks',get_string('suitabletasks','adaptivequiz')); // should be only intergers
 		$mform->setType('suitabletasks', PARAM_INT);
 		$mform->setDefault('suitabletasks', 0);
-		$mform->disabledIf('suitabletasks', 'advcheckbox', 'unchecked');
+
+		$mform->hideIf('suitabletasks', 'randomesque_exposure_control', 'notchecked');
+        $mform->addHelpButton('suitabletasks', 'suitabletasksdescription', 'adaptivequiz');
 		
 		// disable input field "suitable tasks" on init / add eventlistener to control disable state by checkbox "Randomesque Exposure Control"
-		$PAGE->requires->js_init_code("
-		document.getElementById('id_suitabletasks').disabled = true;
-			document.getElementById('id_randomesque_exposure_control').addEventListener('change', function() {
-				document.getElementById('id_suitabletasks').disabled = !this.checked;
-			});"
-		);
+		// $PAGE->requires->js_init_code("
+		// document.getElementById('id_suitabletasks').disabled = true;
+		// 	document.getElementById('id_randomesque_exposure_control').addEventListener('change', function() {
+		// 		document.getElementById('id_suitabletasks').disabled = !this.checked;
+		// 	});"
+		// );
+		
+		// adding standard "message before test" field 
+		$mform->addElement('textarea','messagebeforetest',get_string('messagebeforetest','adaptivequiz'));
+		$mform->setType('messagebeforetest', PARAM_NOTAGS);
+        $mform->addHelpButton('messagebeforetest', 'messagebeforetestDescription', 'adaptivequiz');
+
+		// adding standard "message on last page of the test" field 
+		$mform->addElement('textarea','messageatlastpage',get_string('messageatlastpage','adaptivequiz'));
+		$mform->setType('messageatlastpage', PARAM_NOTAGS);
+        $mform->addHelpButton('messageatlastpage', 'messageatlastpageDescription', 'adaptivequiz');
+
+		// adding checkbox for "User-defined specification of proportions of individual content areas in the overall test?"
+		$mform->addElement('advcheckbox', 'contentAreas', '', get_string('contentAreas','adaptivequiz'), array('group' => 1), array(0, 1));
+		
+		
+		$mform->addElement('text','contentarea1','Inhaltsbereich1'); // TODO Dynamic naming from an excel table
+		$mform->setType('contentarea1',PARAM_NOTAGS);
+		$mform->addElement('text','contentarea2','Inhaltsbereich2'); // TODO Dynamic naming from an excel table
+		$mform->setType('contentarea2',PARAM_NOTAGS);
+		$mform->addElement('text','contentarea3','Inhaltsbereich3'); // TODO Dynamic naming from an excel table
+		$mform->setType('contentarea3',PARAM_NOTAGS);
+		$mform->addElement('text','contentarea4','Inhaltsbereich4'); // TODO Dynamic naming from an excel table
+		$mform->setType('contentarea4',PARAM_NOTAGS);
+
+		
+		$mform->hideIf('contentarea1','contentAreas','notchecked');
+		$mform->hideIf('contentarea2','contentAreas','notchecked');
+		$mform->hideIf('contentarea3','contentAreas','notchecked');
+		$mform->hideIf('contentarea4','contentAreas','notchecked');
+
 
         // Grade settings.
         $this->standard_grading_coursemodule_elements();

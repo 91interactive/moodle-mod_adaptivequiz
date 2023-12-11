@@ -38,6 +38,14 @@
 		<FIELD NAME="adaptivepart" TYPE="char" LENGTH="10" NOTNULL="true" COMMENT="Tasks Adaptive part"></FIELD>
 		<FIELD NAME="randomesque_exposure_control" TYPE="int" LENGTH="2" NOTNULL="true" COMMENT="Randomesque Exposure Control"></FIELD>
 		<FIELD NAME="suitabletasks" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Number of suitable tasks"></FIELD>
+		<FIELD NAME="messagebeforetest" TYPE="text" NOTNULL="false" COMMENT="Message before Test"></FIELD>
+		<FIELD NAME="messageatlastpage" TYPE="text" NOTNULL="false" COMMENT="Number of suitable tasks"></FIELD>
+		
+		<FIELD NAME="contentarea1" TYPE="text" NOTNULL="false" COMMENT="Number of suitable tasks"></FIELD>
+		<FIELD NAME="contentarea2" TYPE="text" NOTNULL="false" COMMENT="Number of suitable tasks"></FIELD>
+		<FIELD NAME="contentarea3" TYPE="text" NOTNULL="false" COMMENT="Number of suitable tasks"></FIELD>
+		<FIELD NAME="contentarea4" TYPE="text" NOTNULL="false" COMMENT="Number of suitable tasks"></FIELD>
+
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

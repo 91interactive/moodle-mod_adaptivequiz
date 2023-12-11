@@ -242,20 +242,53 @@ $string['result'] = 'Result';
 $string['testSettings'] = 'Test Settings';
 
 // CS 91interactive
-$string['testlength'] = 'Number of tasks to be specified';
-$string['testduration'] = 'Max test time';
+$string['testlength'] = 'Test length';
+$string['testlengthDescription'] = 'Number of tasks to be presented';
+$string['testlengthDescription_help'] = 'Number of tasks to be presented';
+$string['testduration'] = 'Test time in minutes';
+$string['testdurationDescription'] = 'Max test time';
+$string['testdurationDescription_help'] = 'Max test time';
 $string['testsettingsheader'] = 'Test Settings';
 $string['selecttasktypes'] = 'Select task type';
+$string['selecttasktypesDescription'] = 'Select task type';
+$string['selecttasktypesDescription_help'] = 'This section specifies how the item selection for non-adaptive tests or non-adaptive parts of the overall test';
 $string['notadaptivepartheader'] = 'None adaptive part';
-$string['adaptiveSettingsDescription'] = 'This section specifies how the item selection for non-adaptive tests or non-adaptive parts of the overall test';
+// $string['adaptiveSettingsDescription'] = 'This section specifies how the item selection for non-adaptive tests or non-adaptive parts of the overall test';
 $string['numbercalibrationclusters'] = "Number of calibration clusters";
+$string['numbercalibrationclustersDescription'] = "Number of calibration clusters";
+$string['numbercalibrationclustersDescription_help'] = "Number of task clusters (cluster = group of tasks) that contain tasks that do not yet have a parameter estimate and therefore need to be need to be calibrated. If the test consists only of new (uncalibrated) items, the test only contains calibration clusters. Calibration clusters are given to each respondent";
+
 $string['numberlinkingclusters'] = "Number of linking clusters";
+$string['numberlinkingclustersDescription'] = "Number of linking clusters";
+$string['numberlinkingclustersDescription_help'] = "Number of task clusters that contain link tasks (items for linking the report metric over time). Linking tasks already have a parameter estimate. Linking clusters are given to each respondent.";
+
 $string['numberadaptivclusters'] = "Number of adaptive clusters";
+$string['numberadaptivclustersDescription'] = "Number of adaptive clusters";
+$string['numberadaptivclustersDescription_help'] = "Number of task clusters in which tasks are selected adaptively. Tasks here already have parameter estimation.";
+
+
 $string['personalparameterestimation'] = "Personal parameter estimation";
-$string['personalparameterestimationDescription'] = "Specifies the estimator that is used to estimate the preliminary person's ability during the test after answering each individual task.";
+$string['personalparameterestimationDescription'] = "Personal parameter estimation";
+$string['personalparameterestimationDescription_help'] = "Specifies the estimator that is used to estimate the preliminary person's ability during the test after answering each individual task.";
+
 $string['adaptivepart'] = "Task selection adaptive part";
-$string['adaptivepartheaderDescription'] = "Specifies criterion according to which tasks are selected during the adaptive test.";
+$string['adaptivepartDescription'] = "Task selection adaptive part";
+$string['adaptivepartDescription_help'] = "Specifies criterion according to which tasks are selected during the adaptive test.";
+
 $string['REC'] = "Randomesque Exposure Control";
-$string['suitabletasks'] = "Number of best matching tasks from which to choose at random";
+$string['suitabletasks'] = "best matching tasks";
+$string['suitabletasksdescription'] = "best matching tasks";
+$string['suitabletasksdescription_help'] = "Number of best matching tasks from which to choose at random";
+
 $string['sequential'] = "sequential";
 $string['random'] = "random";
+
+$string['messagebeforetest']="Message before test";
+$string['messagebeforetestDescription']="Message before test";
+$string['messagebeforetestDescription_help']="Page after the test/exam  instructions; mainly used to mainly to ensure that everyone starts working on an exam at the same time. If you leave the field empty, the corresponding page will not appear in the test. Can also be also be omitted";
+
+$string['messageatlastpage']="Message on the last page of the test";
+$string['messageatlastpageDescription']="Message on the last page of the test";
+$string['messageatlastpageDescription_help']="Could be used for individual feedback could be used for individual feedback. In other words, either the same thing is there for everyone, or, if we allow individual feedback is then written on the last page.";
+
+$string['contentAreas'] = "User-defined specification of proportions of individual content areas in the overall test?";
