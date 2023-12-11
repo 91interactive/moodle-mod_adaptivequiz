@@ -374,6 +374,24 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
             $errors['questionpool'] = $questionspoolerrormsg;
         }
 
+		if (0 >= $data['testlength']) {
+            $errors['testlength'] = get_string('formelementnegative', 'adaptivequiz');
+        }
+		if (0 >= $data['testduration']) {
+            $errors['testduration'] = get_string('formelementnegative', 'adaptivequiz');
+        }
+		if (0 >= $data['numbercalibrationclusters']) {
+            $errors['numbercalibrationclusters'] = get_string('formelementnegative', 'adaptivequiz');
+        }
+		if (0 >= $data['numberlinkingclusters']) {
+            $errors['numberlinkingclusters'] = get_string('formelementnegative', 'adaptivequiz');
+        }
+		if (0 >= $data['numberadaptivclusters']) {
+            $errors['numberadaptivclusters'] = get_string('formelementnegative', 'adaptivequiz');
+        }
+		if (0 >= $data['suitabletasks']) {
+            $errors['suitabletasks'] = get_string('formelementnegative', 'adaptivequiz');
+        }
         return $errors;
     }
 
