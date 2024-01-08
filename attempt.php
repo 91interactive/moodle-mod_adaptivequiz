@@ -180,12 +180,50 @@ if (!empty($uniqueid) && confirm_sesskey()) {
             $standarderror = $algo->get_standarderror();
 
             try {
+				
+				// CS: adding list with object of questionId as key and raw and rated answer as value
+				$objList = null;
+				foreach ($quba->get_attempt_iterator() as $qa) {
+				
+					// check if question is answered (graded)
+					if ($qa->get_state()->is_graded()) {
+
+						// get question id 
+						$quID = $qa->get_question_id();
+						
+						$qu = new stdClass();
+						// $qu->id = $quID;
+						// get question text
+						$qu->question = $qa->get_question()->questiontext;
+						// get given answer
+						$qu->givenAnswer = $qa->get_response_summary();
+						$compareWith = $qu->givenAnswer;
+						$answers = $qa->get_question()->answers;
+						// filter answer object according to given answer to get the fraction later
+						$fractionArray = array_filter($answers, function($answer) use ($compareWith){
+							if($answer->answer == $compareWith){
+								return $answer;
+							}
+						});
+						// get fraction of given answer
+						if(!empty($fractionArray)){	
+							$keys = array_keys($fractionArray);
+							$qu->fractionAnswer = $fractionArray[$keys[0]]->fraction;
+						}
+						
+						$objList[$quID] = $qu;
+					}
+			
+				} 
                 $catcalculationresult = cat_calculation_steps_result::from_floats($difflogit, $standarderror, $algo->get_measure());
-                $adaptiveattempt->update_after_question_answered($catcalculationresult, time());
+                $adaptiveattempt->update_after_question_answered($catcalculationresult, time(), json_encode($objList));
             } catch (Exception $exception) {
                 throw new moodle_exception('unableupdatediffsum', 'adaptivequiz',
                     new moodle_url('/mod/adaptivequiz/attempt.php', ['cmid' => $id]));
             }
+
+			
+
         }
     } catch (question_out_of_sequence_exception $e) {
         $url = new moodle_url('/mod/adaptivequiz/attempt.php', array('cmid' => $id));
@@ -248,6 +286,9 @@ $slot = $itemadministrationevaluation->next_item()->slot();
 
 $level = $itemadministrationevaluation->next_item()->difficulty_level();
 
+
+			
+
 $headtags = $output->init_metadata($quba, $slot);
 $PAGE->requires->js_init_call('M.mod_adaptivequiz.init_attempt_form', array($viewurl->out(), $adaptivequiz->browsersecurity),
     false, $output->adaptivequiz_get_js_module());
@@ -261,7 +302,6 @@ if (!empty($adaptivequiz->browsersecurity)) {
 }
 
 echo $output->header();
-
 // Check if the user entered a password.
 $condition = adaptivequiz_user_entered_password($adaptivequiz->id);
 

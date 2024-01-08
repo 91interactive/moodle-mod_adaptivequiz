@@ -118,7 +118,7 @@ class attempt {
      * @param int $time Current timestamp.
      * @throws coding_exception
      */
-    public function update_after_question_answered(cat_calculation_steps_result $calcstepsresult, int $time): void {
+    public function update_after_question_answered(cat_calculation_steps_result $calcstepsresult, int $time, string $detaildtestresults): void {
         if ($this->adpqattempt === null) {
             throw new coding_exception('attempt record must be set already when updating an attempt with any data');
         }
@@ -129,6 +129,7 @@ class attempt {
         $record->questionsattempted = (int) $record->questionsattempted + 1;
         $record->standarderror = $calcstepsresult->standard_error();
         $record->measure = $calcstepsresult->measure();
+		$record->detaildtestresults = $detaildtestresults;
 
         $this->adpqattempt = $record;
 

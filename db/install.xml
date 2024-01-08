@@ -71,6 +71,7 @@
         <FIELD NAME="attemptstate" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" COMMENT="The state of the attempt"/>
         <FIELD NAME="attemptstopcriteria" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The reason why the attempt was stopped"/>
         <FIELD NAME="questionsattempted" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The number of question attempted"/>
+		<FIELD NAME="detaildtestresults" TYPE="text" LENGTH="255" NOTNULL="false" DEFAULT="null" SEQUENCE="false" COMMENT="List of questionId, raw answers and rated answers"/>
         <FIELD NAME="difficultysum" TYPE="number" LENGTH="10" NOTNULL="true" DEFAULT="0.0" SEQUENCE="false" DECIMALS="7" COMMENT="The sum of difficulty levels attempted measured in logits"/>
         <FIELD NAME="standarderror" TYPE="number" LENGTH="10" NOTNULL="true" DEFAULT="0.0" SEQUENCE="false" DECIMALS="5" COMMENT="The standard error that was achieved during the attempt"/>
         <FIELD NAME="measure" TYPE="number" LENGTH="10" NOTNULL="true" DEFAULT="0.0" SEQUENCE="false" DECIMALS="5" COMMENT="The attempt ability measure in logits"/>

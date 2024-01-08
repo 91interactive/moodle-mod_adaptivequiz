@@ -82,5 +82,16 @@ function xmldb_adaptivequiz_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2022110200, 'adaptivequiz');
     }
 
+	if ($oldversion < 2023021500) {
+        $table = new xmldb_table('adaptivequiz_attempt');
+        $field = new xmldb_field('detaildtestresults', XMLDB_TYPE_TEXT, '255', null, null, null, null,
+            'questionsattempted');
+
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_mod_savepoint(true, 2023021500, 'adaptivequiz ');
+    }
     return true;
 }

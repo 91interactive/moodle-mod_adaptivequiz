@@ -365,9 +365,11 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
 		if (0 >= $data['numberadaptivclusters']) {
             $errors['numberadaptivclusters'] = get_string('formelementnegative', 'adaptivequiz');
         }
-		if (0 >= $data['suitabletasks']) {
-            $errors['suitabletasks'] = get_string('formelementnegative', 'adaptivequiz');
-        }
+		if($data['randomesque_exposure_control']){
+			if (0 >= $data['suitabletasks']) {
+				$errors['suitabletasks'] = get_string('formelementnegative', 'adaptivequiz');
+			}
+		}
         return $errors;
     }
 
