@@ -85,4 +85,5 @@ $string['messageatlastpageDescription_help']="Könnte für das individuelle Feed
 $string['contentAreas'] = "Benutzerdefinierte Angabe von Anteilen einzelner Inhaltsbereicheam Gesamttest?";
 
 $string['formtextareaempty'] = 'Textarea darf nicht leer sein';
+$string['detaildtestresults'] = 'Detailierte Test Ergebnisse';
 

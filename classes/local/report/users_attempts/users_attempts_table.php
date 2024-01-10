@@ -187,6 +187,16 @@ final class users_attempts_table extends table_sql {
             ? userdate($row->attempttimefinished)
             : get_string('na', 'adaptivequiz');
     }
+	
+	/**
+     * @throws coding_exception
+     */
+    protected function col_detaildtestresults(stdClass $row): string {
+		return $row->detaildtestresults != null 
+			? $row->detaildtestresults 
+			: get_string('na', 'adaptivequiz');
+      
+    }
 
     /**
      * A convenience method to call a bunch of init methods.
@@ -196,7 +206,7 @@ final class users_attempts_table extends table_sql {
      */
     private function init(moodle_url $baseurl, context $context, filter $filter): void {
         $this->define_columns([
-            'fullname', 'email', 'attemptsnum', 'measure', 'stderror', 'attempttimefinished',
+            'fullname', 'email', 'attemptsnum', 'measure', 'stderror', 'attempttimefinished','detaildtestresults'
         ]);
         $this->define_headers([
             get_string('fullname'),
@@ -205,6 +215,7 @@ final class users_attempts_table extends table_sql {
             get_string('bestscore', 'adaptivequiz'),
             get_string('bestscorestderror', 'adaptivequiz'),
             get_string('attemptfinishedtimestamp', 'adaptivequiz'),
+            get_string('detaildtestresults','adaptivequiz')
         ]);
         $this->define_baseurl($baseurl);
         $this->set_attribute('class', $this->attributes['class'] . ' usersattemptstable');

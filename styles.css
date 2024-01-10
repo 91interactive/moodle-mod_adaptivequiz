@@ -50,6 +50,17 @@ table.adpq_answers_table thead:first-child th.section {
     margin-bottom: 0.75rem !important;
 }
 
+.usersattemptstable tbody tr td.cell:last-of-type {
+    
+	background: red;
+	display:none;
+}
+.usersattemptstable thead tr th.header:last-of-type{
+	background: green;
+	display:none;
+
+}
+
 .attempt-controls-or-notification-container {
     padding-top: 10px;
 }

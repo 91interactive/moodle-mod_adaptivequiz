@@ -223,7 +223,11 @@ final class sql_and_params {
                 AND iaa.standarderror > 0.0
                 ORDER BY measure DESC
                 LIMIT 1
-            ) AS attemptid'
+            ) AS attemptid,
+			(
+				SELECT GROUP_CONCAT(detaildtestresults SEPARATOR ", ") as detaildtestresults from mdl_adaptivequiz_attempt paa
+				WHERE  paa.instance = aa.instance AND paa.userid = u.id AND detaildtestresults IS NOT NULL
+			) AS detaildtestresults'
             ,
             [
                 'attemptstate1' => attempt_state::COMPLETED,
