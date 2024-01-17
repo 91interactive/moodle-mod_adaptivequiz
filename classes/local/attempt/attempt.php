@@ -66,6 +66,9 @@ class attempt {
      */
     private $adaptivequiz;
 
+	// public static $start_time;
+	// public static $end_time;
+
     /**
      * The constructor.
      *
@@ -258,6 +261,52 @@ class attempt {
 
         return $attempt;
     }
+
+	public function call_r_server($data){
+		// API-Endpoint
+		$url = 'https://jsonplaceholder.typicode.com/posts';
+		// $url = 'https://mocki.io/v1/ce5d01d9-e37b-4b00-ab32-3af9ab0fc456';
+		$decoded_response = NULL;
+		// Daten, die du senden möchtest (als assoziatives Array)
+
+		$data = array(
+
+			'user_id' => $data->user_id,
+			'attempt_id' => $data->attempt_id,
+			'slots' => $data->slots,
+			'measure' => $data->measure,
+			'standarderror'=> $data->standarderror,
+			'logit' => $data->logit,
+			'questionstest' => $data->questionstest,
+			'testsettings' => $data->testsettings,
+		);
+
+		$options = array(
+			'http' => array(
+				'header' => "Content-type: application/x-www-form-urlencoded",
+				'method' => 'POST',
+				'content' => http_build_query($data),
+			),
+		);
+
+		$context = stream_context_create($options);
+
+		// Führe den HTTP-Request aus
+		$response = file_get_contents($url, false, $context);
+
+		// Überprüfe auf Fehler
+		if ($response === FALSE) {
+			echo 'Fehler beim Senden des POST-Requests.';
+		} else {
+			
+			// $decoded_response = json_decode($response);
+			// $decoded_response =json_decode("{'id' : 3,'slot': 3}");
+			$decoded_response =json_decode('{"errormessage":null, "nextdifficultylevel":3}');
+
+		}
+		return $decoded_response;
+	}
+
 
     /**
      * This function adds a message to the debugging array

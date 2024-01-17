@@ -36,6 +36,7 @@ use mod_adaptivequiz\local\itemadministration\item_administration;
 use mod_adaptivequiz\local\question\question_answer_evaluation;
 use mod_adaptivequiz\local\question\questions_answered_summary_provider;
 use mod_adaptivequiz\local\report\questions_difficulty_range;
+use mod_adaptivequiz\local\catalgorithm\determine_next_difficulty_result;
 
 $id = required_param('cmid', PARAM_INT); // Course module id.
 $uniqueid  = optional_param('uniqueid', 0, PARAM_INT);  // Unique id of the attempt.
@@ -161,16 +162,48 @@ if (!empty($uniqueid) && confirm_sesskey()) {
             $questionanswerevaluationresult = $questionanswerevaluation->perform();
 
             // Determine the next difficulty level or whether there is an error.
-            $determinenextdifficultylevelresult = $algo->determine_next_difficulty_level(
-                (float) $adaptiveattempt->read_attempt_data()->difficultysum,
-                (int) $adaptiveattempt->read_attempt_data()->questionsattempted,
-                questions_difficulty_range::from_activity_instance($adaptivequiz),
-                (float) $adaptivequiz->standarderror,
-                $questionanswerevaluationresult,
-                (new questions_answered_summary_provider($quba))->collect_summary()
-            );
+			// CS determinenextdifficultylevelresult enthählt nextdifficultiylevel welches das aktuelle Level angibt und
+			// ob eine errormessage vorhanden ist
+
+			$diffSum = (float) $adaptiveattempt->read_attempt_data()->difficultysum;
+			$quAttempted = (int) $adaptiveattempt->read_attempt_data()->questionsattempted;
+			$quRange = questions_difficulty_range::from_activity_instance($adaptivequiz);
+			$quStdError = (float) $adaptivequiz->standarderror;
+			$quAnwserEvaluResult = $questionanswerevaluationresult;
+			$quSummary = (new questions_answered_summary_provider($quba))->collect_summary();
+
+			//CS original algorythmus
+			// falls der R-Server die gleichen Werte zurück gibt, kann das hier wieder mit entsprechnder Response einkommentiert werden
+			
+            // $determinenextdifficultylevelresult = $algo->determine_next_difficulty_level(
+            //     (float) $adaptiveattempt->read_attempt_data()->difficultysum,
+            //     (int) $adaptiveattempt->read_attempt_data()->questionsattempted,
+            //     questions_difficulty_range::from_activity_instance($adaptivequiz),
+            //     (float) $adaptivequiz->standarderror,
+            //     $questionanswerevaluationresult,
+            //     (new questions_answered_summary_provider($quba))->collect_summary()
+            // );   
+			// CS: calling R-Server for next question
+
+			$data_for_r_server = new stdClass;
+				
+			$data_for_r_server->user_id = $USER->id;
+			$data_for_r_server->attempt_id = $uniqueid;
+			$data_for_r_server->slots = $quba->get_slots();
+			$data_for_r_server->measure = $algo->get_measure();
+			$data_for_r_server->standarderror = $algo->get_standarderror();
+			$data_for_r_server->logit = $algo->get_levellogit();
+			$data_for_r_server->questionstest = $objList;
+			$data_for_r_server->testsettings = $adaptivequiz;
+			
+
+			$r_server_response = $adaptiveattempt->call_r_server($data_for_r_server);
+
+
+			$determinenextdifficultylevelresult = new determine_next_difficulty_result($r_server_response->errormessage, $r_server_response->nextdifficultylevel);
 
             // Increment difficulty level for attempt.
+			// CS im folgenden wird der Schwierigkeitsgrad erhöht und eine Frage aus dessen Pool wird ausgefwählt und dargestellt
             $difflogit = $algo->get_levellogit();
             if (is_infinite($difflogit)) {
                 throw new moodle_exception('unableupdatediffsum', 'adaptivequiz',
