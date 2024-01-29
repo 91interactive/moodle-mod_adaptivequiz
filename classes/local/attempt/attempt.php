@@ -265,7 +265,6 @@ class attempt {
 	public function call_r_server($data){
 		// API-Endpoint
 		$url = 'https://jsonplaceholder.typicode.com/posts';
-		// $url = 'https://mocki.io/v1/ce5d01d9-e37b-4b00-ab32-3af9ab0fc456';
 		$decoded_response = NULL;
 		// Daten, die du senden möchtest (als assoziatives Array)
 
@@ -277,7 +276,7 @@ class attempt {
 			'measure' => $data->measure,
 			'standarderror'=> $data->standarderror,
 			'logit' => $data->logit,
-			'questionstest' => $data->questionstest,
+			'answeredquestions' => $data->answeredquestions,
 			'testsettings' => $data->testsettings,
 		);
 
@@ -299,9 +298,9 @@ class attempt {
 			echo 'Fehler beim Senden des POST-Requests.';
 		} else {
 			
-			// $decoded_response = json_decode($response);
-			// $decoded_response =json_decode("{'id' : 3,'slot': 3}");
-			$decoded_response =json_decode('{"errormessage":null, "nextdifficultylevel":3}');
+			// richtig falsch fragen ab 247 - 266
+			$decoded_response =json_decode('{"errormessage":null, "nextdifficultylevel":3, "standarderror": '. rand(1,5) .',"measure" : -5.65286, "id_next_question": '. rand(45,246) .', "difficultysum" : 5.2417470, "questionsattempted" : 0 ,"score": 3.4}');
+
 
 		}
 		return $decoded_response;

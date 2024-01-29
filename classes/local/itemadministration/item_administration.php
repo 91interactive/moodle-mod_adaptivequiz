@@ -78,6 +78,8 @@ final class item_administration {
         stdClass $adaptivequiz,
         int $questionsattempted,
         int $lastdifficultylevel,
+		// CS question id to display
+		?int $question_id,
         ?determine_next_difficulty_result $determinenextdifficultyresult
     ): item_administration_evaluation {
         if (!is_null($determinenextdifficultyresult)) {
@@ -167,11 +169,15 @@ final class item_administration {
         // If the slot property is set, then we have a question that is ready to be attempted.  No more process is required.
         if (!empty($slot)) {
 
+			if($question_id != null){
+				return $this->get_question_ready($attempt, $nextdifficultylevel, $question_id);
+			}
+
             return item_administration_evaluation::with_next_item(new next_item($nextdifficultylevel, $slot));
         }
 
         // If we are here, then the slot property was unset and a new question needs to prepared for display.
-        $status = $this->get_question_ready($attempt, $nextdifficultylevel);
+        $status = $this->get_question_ready($attempt, $nextdifficultylevel, $question_id);
 
         if (empty($status)) {
 
@@ -225,14 +231,21 @@ final class item_administration {
      * @param int $nextdifficultylevel
      * @return item_administration_evaluation
      */
-    private function get_question_ready(attempt $attempt, int $nextdifficultylevel): item_administration_evaluation {
+    private function get_question_ready(attempt $attempt, int $nextdifficultylevel, ?int $question_id): item_administration_evaluation {
         global $DB;
 
         // Fetch questions already attempted.
         $exclude = $DB->get_records_menu('question_attempts', ['questionusageid' => $attempt->read_attempt_data()->uniqueid],
             'id ASC', 'id,questionid');
         // Fetch questions for display.
-        $questionids = $this->fetchquestion->fetch_questions($exclude);
+
+		// CS commented out
+        if($question_id == null){
+			$questionids = $this->fetchquestion->fetch_questions($exclude);
+		}
+		else{
+			$questionids = $question_id;
+		}
 
         if (empty($questionids)) {
 
@@ -242,7 +255,14 @@ final class item_administration {
         }
 
         // Select one random question.
-        $questiontodisplay = array_rand($questionids);
+		// CS commented out
+		if($question_id == null){
+			$questiontodisplay = array_rand($questionids);
+		}
+		else{
+
+			$questiontodisplay = $questionids;
+		}
 
         // Load basic question data.
         $questionobj = question_preload_questions(array($questiontodisplay));
