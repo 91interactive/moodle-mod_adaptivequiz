@@ -138,6 +138,31 @@ class attempt {
 
         $this->save($time);
     }
+	/**
+     * Sets the appropriate state with the data of the R-Server for the attempt when a question has been answered.
+     *
+     * @param cat_calculation_steps_result $calcstepsresult
+     * @param int $time Current timestamp.
+     * @throws coding_exception
+     */
+	public function update_after_question_answered_with_r_response(float $difficultysum,int $standarderror,int $measure, int $time, string $detaildtestresults): void {
+        if ($this->adpqattempt === null) {
+            throw new coding_exception('attempt record must be set already when updating an attempt with any data');
+        }
+
+        $record = $this->adpqattempt;
+
+        $record->difficultysum = (float) $record->difficultysum + $difficultysum;
+        $record->questionsattempted = (int) $record->questionsattempted + 1;
+        $record->standarderror = $standarderror;
+        $record->measure = $measure;
+		$record->detaildtestresults = $detaildtestresults;
+
+        $this->adpqattempt = $record;
+
+        $this->save($time);
+    }
+
 
     /**
      * Sets the attempt as complete.
@@ -299,7 +324,7 @@ class attempt {
 		} else {
 			
 			// richtig falsch fragen ab 247 - 266
-			$decoded_response =json_decode('{"errormessage":null, "nextdifficultylevel":3, "standarderror": '. rand(1,5) .',"measure" : -5.65286, "id_next_question": '. rand(45,246) .', "difficultysum" : 5.2417470, "questionsattempted" : 0 ,"score": 3.4}');
+			$decoded_response =json_decode('{"errormessage":null, "nextdifficultylevel":3, "standarderror": '. rand(1,5) .',"measure" : -5.65286, "id_next_question": '. rand(267,286) .', "difficultysum" : 5.2417470, "questionsattempted" : 0 ,"score": 3.4}');
 
 
 		}

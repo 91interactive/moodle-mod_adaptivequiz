@@ -260,7 +260,8 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 				
 
                 $catcalculationresult = cat_calculation_steps_result::from_floats($difflogit, $standarderror, $algo->get_measure());
-				$adaptiveattempt->update_after_question_answered($catcalculationresult, time(), json_encode($mergedObj));
+				// $adaptiveattempt->update_after_question_answered($catcalculationresult, time(), json_encode($mergedObj));
+				$adaptiveattempt->update_after_question_answered_with_r_response($r_server_response->difficultsum ?? 0.0, $r_server_response->standarderror ?? $standarderror,$r_server_response->measure ?? 0, time(), json_encode($mergedObj));
 
 			
             } catch (Exception $exception) {
