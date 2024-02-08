@@ -176,7 +176,11 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			$data_for_r_server->answeredquestions = $adaptiveattempt->read_attempt_data()->detaildtestresults;
 			$data_for_r_server->testsettings = $adaptivequiz;
 			
-			
+			// get all enemy and category tags from the database
+			$allEnemyTags = $DB->get_records_sql("SELECT DISTINCT name FROM mdl_tag WHERE name LIKE 'enemy_id_%' AND name NOT LIKE 'adpq_%'");
+			$allCategoryTags = $DB->get_records_sql("SELECT DISTINCT name FROM mdl_tag WHERE name LIKE 'cat_%' AND name NOT LIKE 'adpq_%'");
+			$data_for_r_server->enemyTags = $allEnemyTags;
+			$data_for_r_server->categoryTags = $allCategoryTags;
 			// CS in der Serverresponse ist die ID der nächsten Frage hinterlegt, welche aus der QuestionDB gezogen wird.
 			$r_server_response = $adaptiveattempt->call_r_server($data_for_r_server);
 			
@@ -259,7 +263,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 					
 				
 
-                $catcalculationresult = cat_calculation_steps_result::from_floats($difflogit, $standarderror, $algo->get_measure());
+                // $catcalculationresult = cat_calculation_steps_result::from_floats($difflogit, $standarderror, $algo->get_measure());
 				// $adaptiveattempt->update_after_question_answered($catcalculationresult, time(), json_encode($mergedObj));
 				$adaptiveattempt->update_after_question_answered_with_r_response($r_server_response->difficultsum ?? 0.0, $r_server_response->standarderror ?? $standarderror,$r_server_response->measure ?? 0, time(), json_encode($mergedObj));
 

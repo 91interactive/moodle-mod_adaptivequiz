@@ -239,7 +239,7 @@ final class item_administration {
             'id ASC', 'id,questionid');
         // Fetch questions for display.
 
-		// CS commented out
+		// CS if first question ?
         if($question_id == null){
 			$questionids = $this->fetchquestion->fetch_questions($exclude);
 		}
@@ -255,7 +255,7 @@ final class item_administration {
         }
 
         // Select one random question.
-		// CS commented out
+		// CS if first question ?
 		if($question_id == null){
 			$questiontodisplay = array_rand($questionids);
 		}

@@ -152,7 +152,7 @@ class attempt {
 
         $record = $this->adpqattempt;
 
-        $record->difficultysum = (float) $record->difficultysum + $difficultysum;
+        $record->difficultysum = (float) $record->difficultysum + (float) $difficultysum;
         $record->questionsattempted = (int) $record->questionsattempted + 1;
         $record->standarderror = $standarderror;
         $record->measure = $measure;
@@ -303,6 +303,8 @@ class attempt {
 			'logit' => $data->logit,
 			'answeredquestions' => $data->answeredquestions,
 			'testsettings' => $data->testsettings,
+			'enemyTags' => $data->allEnemyTags,
+			'categoryTags' => $data->allCategoryTags
 		);
 
 		$options = array(
@@ -324,7 +326,7 @@ class attempt {
 		} else {
 			
 			// richtig falsch fragen ab 247 - 266
-			$decoded_response =json_decode('{"errormessage":null, "nextdifficultylevel":3, "standarderror": '. rand(1,5) .',"measure" : -5.65286, "id_next_question": '. rand(267,286) .', "difficultysum" : 5.2417470, "questionsattempted" : 0 ,"score": 3.4}');
+			$decoded_response = json_decode('{"errormessage":null, "nextdifficultylevel":3, "standarderror": '. rand(1,5) .',"measure" : -5.65286, "id_next_question": '. rand(267,286) .',"score": 3.4}');
 
 
 		}
