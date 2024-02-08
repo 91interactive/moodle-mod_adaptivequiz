@@ -1,6 +1,6 @@
 Following JSON should be the response of the R-Server. 
 Values are examples to get the code working
-
+--------------------------------------------------------------------
 {
 	"errormessage":null,  								// if an error occurs
 	"nextdifficultylevel":3,							// next difficultyLevel

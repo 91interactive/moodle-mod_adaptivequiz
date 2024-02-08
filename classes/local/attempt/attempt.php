@@ -297,14 +297,10 @@ class attempt {
 
 			'user_id' => $data->user_id,
 			'attempt_id' => $data->attempt_id,
-			'slots' => $data->slots,
-			'measure' => $data->measure,
-			'standarderror'=> $data->standarderror,
-			'logit' => $data->logit,
 			'answeredquestions' => $data->answeredquestions,
 			'testsettings' => $data->testsettings,
-			'enemyTags' => $data->allEnemyTags,
-			'categoryTags' => $data->allCategoryTags
+			'enemyTags' => $data->enemyTags,
+			'categoryTags' => $data->categoryTags
 		);
 
 		$options = array(

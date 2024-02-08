@@ -162,17 +162,11 @@ if (!empty($uniqueid) && confirm_sesskey()) {
             $questionanswerevaluation = new question_answer_evaluation($quba);
             $questionanswerevaluationresult = $questionanswerevaluation->perform();
 
-			
 			// CS: calling R-Server for next question
-			
 			$data_for_r_server = new stdClass;
 			
 			$data_for_r_server->user_id = $USER->id;
 			$data_for_r_server->attempt_id = $uniqueid;
-			$data_for_r_server->slots = $quba->get_slots();
-			$data_for_r_server->measure = $algo->get_measure();
-			$data_for_r_server->standarderror = $algo->get_standarderror();
-			$data_for_r_server->logit = $algo->get_levellogit();
 			$data_for_r_server->answeredquestions = $adaptiveattempt->read_attempt_data()->detaildtestresults;
 			$data_for_r_server->testsettings = $adaptivequiz;
 			
@@ -197,7 +191,6 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 				// );   
 				
 			// Determine the next difficulty level or whether there is an error.
-			// desweiteren benötigt man vom R-Server folgende Werte für $catcalculationresult = cat_calculation_steps_result::from_floats($difflogit, $standarderror, $algo->get_measure()); in aktuell Zeile 284
 			$determinenextdifficultylevelresult = new determine_next_difficulty_result($r_server_response->errormessage, $r_server_response->nextdifficultylevel);
 
 
@@ -253,8 +246,9 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 						$qu->standarderror = $r_server_response->standarderror;
 						$qu->measure = $r_server_response->measure;
 						$qu->score = $r_server_response->score;
-
-
+						$qu->tags = core_tag_tag::get_item_tags_array('core_question', 'question', $quID);
+						
+						
 						$objList[$quID] = $qu;
 						$array1 = (array) $objList;
 						$array2 = (array) $currentDBdetaildtestresults;
