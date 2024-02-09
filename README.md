@@ -191,3 +191,18 @@ question 5 and below correctly and every question 6 and up wrong, the test-taker
 ability measure would fall close to 5.5.
 
 Remember that the ability measure does have error associated with it. Be sure to take the standard error ammount into account when acting on the score.
+
+
+91interactive hints
+===================
+Following JSON should be the response of the R-Server. 
+Values are examples to get the code working
+--------------------------------------------------------------------
+{
+	"errormessage":null,  								// if an error occurs
+	"nextdifficultylevel":3,							// next difficultyLevel
+	"standarderror": '. rand(1,5) .',					// standard error
+	"measure" : -5.65286,								// measure
+	"id_next_question": '. rand(267,286) .',			// id of the next question
+	"score": 3.4										// current calculated score (normally calculated at the end of the test)
+}
