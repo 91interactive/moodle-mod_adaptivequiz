@@ -1,0 +1,215 @@
+// question: 0  name: Switch category to $course$/top/Default for CustomQuestions
+$CATEGORY: $course$/top/Default for CustomQuestions
+
+
+// question: 1  name: Question1
+// [tag:adpq_1] [tag:enemy_id_194] [tag:cat_rivers] [tag:discrimination_[4\]] [tag:diff_cat_[1.2\]]
+::Question1::[html]<p>Question1 Text?</p>{
+	~%50%<p>richtig</p>
+	~%50%<p>richtig </p>
+	~%-50%<p>falsch</p>
+	~%-50%<p>falsch</p>
+}
+
+
+// question: 2  name: Question10 Lvl2
+// [tag:cat_rivers] [tag:adpq_2] [tag:enemy_id_14] [tag:discrimination_[2\]] [tag:diff_cat_[3.4\]]
+::Question10 Lvl2::[html]<p>Question10 Lvl2 Text?</p>{
+	~%100%<p>richtig</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+}
+
+
+// question: 3  name: Question11 Lvl3
+// [tag:adpq_3] [tag:enemy_id_19] [tag:cat_buildings] [tag:discrimination_[1\]] [tag:diff_cat_[5.2\]]
+::Question11 Lvl3::[html]<p>Question11 Lvl3 Text?</p>{
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 4  name: Question12 Lvl3
+// [tag:cat_rivers] [tag:adpq_3] [tag:enemy_id_120] [tag:discrimination_[5\]] [tag:diff_cat_[2.5\]]
+::Question12 Lvl3::[html]<p>Question12 Lvl3 Text?</p>{
+	~%40%<p>richtig</p>
+	~%-40%<p>falsch</p>
+	~%20%<p>richtig</p>
+	~%40%<p>richtig</p>
+	~%-20%<p>falsch</p>
+}
+
+
+// question: 5  name: Question13 Lvl3
+// [tag:enemy_id_194] [tag:adpq_3] [tag:cat_buildings] [tag:enemy_id_120] [tag:discrimination_[3\]] [tag:diff_cat_[3.1\]]
+::Question13 Lvl3::[html]<p>Question13 Lvl3 Text?</p>{
+	~%100%<p>richtig</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+}
+
+
+// question: 6  name: Question14 Lvl3
+// [tag:discrimination_[2\]] [tag:adpq_3] [tag:cat_buildings] [tag:enemy_id_133] [tag:diff_cat_[1.7\]]
+::Question14 Lvl3::[html]<p>Question14 lvl3 Text?</p>{
+	~%-50%<p>falsch</p>
+	~%-50%<p>falsch</p>
+	~%100%<p>richtig</p>
+}
+
+
+// question: 7  name: Question15 Lvl3
+// [tag:discrimination_[4\]] [tag:adpq_3] [tag:enemy_id_155] [tag:cat_testquestion] [tag:diff_cat_[2.2\]]
+::Question15 Lvl3::[html]<p>Question15 Lvl3 Text?</p>{
+	~%-33.33333%<p>falsch</p>
+	~%33.33333%<p>richtig</p>
+	~%-33.33333%<p>falsch</p>
+	~%33.33333%<p>richtig</p>
+	~%-33.33333%<p>falsch</p>
+	~%33.33333%<p>richtig</p>
+}
+
+
+// question: 8  name: Question16 Lvl4
+// [tag:discrimination_[1\]] [tag:cat_testquestion] [tag:adpq_4] [tag:enemy_id_154] [tag:diff_cat_[1.2;2.3;4.4\]]
+::Question16 Lvl4::[html]<p>Question16 Lvl4 text?</p>{
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+}
+
+
+// question: 9  name: Question17 Lvl4
+// [tag:cat_testquestion] [tag:adpq_4] [tag:enemy_id_114] [tag:discrimination_[6\]] [tag:diff_cat_[1.3;3.4\]]
+::Question17 Lvl4::[html]<p>Question17 Lvl4 Text?</p>{
+	~%-50%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+	~%-50%<p>falsch</p>
+}
+
+
+// question: 10  name: Question18 Lvl4
+// [tag:discrimination_[4\]] [tag:cat_testquestion] [tag:adpq_4] [tag:enemy_id_124] [tag:diff_cat_[1.7;2.6;4.2\]]
+::Question18 Lvl4::[html]<p>Question18 Lvl4 Text?</p>{
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%-100%<p>falsch</p>
+}
+
+
+// question: 11  name: Question19 Lvl4
+// [tag:cat_testquestion] [tag:adpq_4] [tag:discrimination_[6\]] [tag:enemy_id_111] [tag:diff_cat_[1.0;2.1;3.4\]]
+::Question19 Lvl4::[html]<p>Question19 Lvl4</p>{
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+	~%-50%<p>falsch</p>
+	~%-50%<p>falsch</p>
+}
+
+
+// question: 12  name: Question2
+// [tag:adpq_1] [tag:discrimination_[2\]] [tag:cat_testquestion] [tag:enemy_id_134] [tag:diff_cat_[1.9\]]
+::Question2::[html]<p>Question 2 Text?</p>{
+	~%-50%<p>falsch</p>
+	~%33.33333%<p>richtig</p>
+	~%33.33333%<p>richtig</p>
+	~%-50%<p>falsch</p>
+	~%33.33333%<p>richtig</p>
+}
+
+
+// question: 13  name: Question20 Lvl4
+// [tag:discrimination_[4\]] [tag:enemy_id_155] [tag:cat_testquestion] [tag:adpq_4] [tag:diff_cat_[3.2\]]
+::Question20 Lvl4::[html]<p>Question20 Lvl4</p>{
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 14  name: Question3
+// [tag:adpq_1] [tag:discrimination_[2\]] [tag:cat_testquestion] [tag:enemy_id_144] [tag:diff_cat_[5.2\]]
+::Question3::[html]<p>Question 3 Text?</p>{
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 15  name: Question4
+// [tag:adpq_1] [tag:cat_rivers] [tag:discrimination_[1\]] [tag:enemy_id_124] [tag:diff_cat_[3.2\]]
+::Question4::[html]<p>Question 4 Text?</p>{
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%100%<p>richtig</p>
+}
+
+
+// question: 16  name: Question5
+// [tag:adpq_1] [tag:cat_rivers] [tag:discrimination_[2\]] [tag:enemy_id_94] [tag:diff_cat_[2.5\]]
+::Question5::[html]<p>Question 5 Text?</p>{
+	~%-50%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%-50%<p>falsch</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 17  name: Question6 Lvl2
+// [tag:adpq_2] [tag:enemy_id_58] [tag:cat_rivers] [tag:cat_diff_[5.2\]] [tag:discrimination_[1\]]
+::Question6 Lvl2::[html]<p>Question6 Lvl2 Text?</p>{
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%-100%<p>falsch</p>
+}
+
+
+// question: 18  name: Question7 Lvl2
+// [tag:cat_rivers] [tag:adpq_2] [tag:discrimination_[1\]] [tag:enemy_id_64] [tag:diff_cat_[4.2\]]
+::Question7 Lvl2::[html]<p>Question7 Lvl2 Text</p>{
+	~%-100%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 19  name: Question8 Lvl2
+// [tag:discrimination_[4\]] [tag:adpq_2] [tag:cat_buildings] [tag:enemy_id_54] [tag:diff_cat_[3.2\]]
+::Question8 Lvl2::[html]<p>Question8 Lvl2 Text?</p>{
+	~%50%<p>richtig</p>
+	~%-100%<p>falsch</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 20  name: Question9 Lvl2
+// [tag:adpq_2] [tag:discrimination_[2\]] [tag:cat_buildings] [tag:enemy_id_64] [tag:diff_cat_[3.2\]]
+::Question9 Lvl2::[html]<p>Question9 Lvl2 Text?</p>{
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+}
+
+
