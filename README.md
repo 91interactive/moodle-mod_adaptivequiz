@@ -199,31 +199,33 @@ Remember that the ability measure does have error associated with it. Be sure to
 ## Tag Definitions adding to questions
 
 --------------------------------------------------------------------
-
-adqp_ + number 					// Diffultylevel questions for Adaptive Quiz  
-enemey_id_ + number 			// Enemy question Id  
-cat_ + string					// Categoryname  
-diff_cat_ + Array				// Category difficulties. Can have multiple float values.   
-								// One value on dichotomies questions or multiple values possible on polytomes values separated with ;   
-								// Examples:  
-								// 		cat_diff_[1.2] for dichotomies questions  
-								// 		cat_diff_[1.2;2.34;5.54]  
-discrimination_ + number		// Discrimination parameter  
+| Tag      | Description | 
+| ------------- |:-------------:|
+| adqp_ + number |  Diffultylevel questions for Adaptive Quiz |
+| enemey_id_ + number | Enemy question Id |
+| cat_ + string | Categoryname |
+| diff_cat_ + Array | Category difficulties. Can have multiple float values.   
+					  One value on dichotomies questions or multiple values possible on polytomes values separated with ;   
+					  Examples:  
+					  		cat_diff_[1.2] for dichotomies questions  
+					  		cat_diff_[1.2;2.34;5.54]  |
+| discrimination_ + number | Discrimination parameter |					
+				
 
 example of questionData structure
 ```PHP
 {
-	id:"8"						// question id 
-	name:"Question16 Lvl4"		// question name
-	enemyIds: array(1)			// array with all enemy question id's
+	id:"8"    // question id 
+	name:"Question16 Lvl4"     // question name
+	enemyIds: array(1)     // array with all enemy question id's
 		0 : '145'
-	category: "testquestion"	// category
-	diff_cat: array(3)			// array with all category difficulties
+	category: "testquestion"     // category
+	diff_cat: array(3)     // array with all category difficulties
 		0 : "1.2"
 		1 : "2.3"
 		2 :	"4.4"
-	adpq : "4"					// adpq tag from adaptiv quiz == difficulty
-	discrimination: "3"			// discimination parameter
+	adpq : "4"     // adpq tag from adaptiv quiz == difficulty
+	discrimination: "3"    // discimination parameter
 }
 ```
 
@@ -233,11 +235,11 @@ Values are examples to get the code working
 --------------------------------------------------------------------
 ```PHP
 {
-	"errormessage":null,  								// if an error occurs
-	"nextdifficultylevel":3,							// next difficultyLevel
-	"standarderror": '. rand(1,5) .',					// standard error
-	"measure" : -5.65286,								// measure
-	"id_next_question": '. rand(267,286) .',			// id of the next question
-	"score": 3.4										// current calculated score (normally calculated at the end of the test)
+	"errormessage":null,      // if an error occurs
+	"nextdifficultylevel":3,    // next difficultyLevel
+	"standarderror": '. rand(1,5) .',    // standard error
+	"measure" : -5.65286,    // measure
+	"id_next_question": '. rand(267,286) .',    // id of the next question
+	"score": 3.4    // current calculated score (normally calculated at the end of the test)
 }
 ```
