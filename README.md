@@ -225,10 +225,10 @@ Remember that the ability measure does have error associated with it. Be sure to
 }
 ```
 
+
 Following JSON should be the response of the R-Server. 
 Values are examples to get the code working
 
---------------------------------------------------------------------
 ```PHP
 {
 	"errormessage":null,      // if an error occurs
