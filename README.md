@@ -196,7 +196,7 @@ Remember that the ability measure does have error associated with it. Be sure to
 # 91interactive extensions
 ===================
 
-## Tag Definitions adding to questions
+### Tag Definitions adding to questions
 
 --------------------------------------------------------------------
 | Tag      | Description | 
@@ -208,7 +208,7 @@ Remember that the ability measure does have error associated with it. Be sure to
 | discrimination_ + number | Discrimination parameter |					
 				
 
-example of questionData structure
+### Example of questionData structure
 ```PHP
 {
 	id:"8"    // question id 
