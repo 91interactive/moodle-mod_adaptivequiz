@@ -180,17 +180,43 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 				$question->category = "";
 				$question->diff_cat = [];
 				$question->adpq = "";
-				$question->discrimination = "";
+				$question->discrimination = [];
 				
 				foreach ($tags as $tag => $value) {
 					if(str_starts_with($value,"adpq_") ){
 						$question->adpq = str_replace('adpq_', '', $value);							
 					}
 					if(str_starts_with($value,"discrimination_") ){
-						$question->discrimination = str_replace('discrimination_', '', $value);							
+						if (strpos($value, ';') !== false) {
+							
+							$temp = str_replace('discrimination_[', '', $value);
+							$temp = str_replace(']', '', $temp);
+							$numbers = explode(';', $temp);
+							foreach ($numbers as $number) {
+								array_push($question->discrimination, $number);
+							}
+						}
+						else{
+							preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
+							$number = $matches[1];
+							array_push($question->discrimination, $number);
+						}							
 					}
 					if(str_starts_with($value,"enemy_id_") ){
-						array_push($question->enemyIds, str_replace('enemy_id_', '', $value));							
+						if (strpos($value, ';') !== false) {
+							
+							$temp = str_replace('enemy_id_[', '', $value);
+							$temp = str_replace(']', '', $temp);
+							$numbers = explode(';', $temp);
+							foreach ($numbers as $number) {
+								array_push($question->enemyIds, $number);
+							}
+						}
+						else{
+							preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
+							$number = $matches[1];
+							array_push($question->enemyIds, $number);
+						}	
 					}
 					if(str_starts_with($value,"cat_") ){
 						$question->category= str_replace('cat_', '', $value);							

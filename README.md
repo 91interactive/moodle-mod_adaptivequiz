@@ -202,10 +202,10 @@ Remember that the ability measure does have error associated with it. Be sure to
 | Tag      | Description | 
 | ------------- |:-------------:|
 | adpq_ + number |  Diffultylevel questions for Adaptive Quiz |
-| enemey_id_ + number | Enemy question Id |
+| enemey_id_ + Array | Enemy question Ids |
 | cat_ + string | Categoryname |
 | diff_cat_ + Array | Category difficulties. Can have multiple float values. <br/>One value on dichotomies questions or multiple values possible on polytomes values separated with ;<br/>Examples:  <br/>cat_diff_[1.2] for dichotomies questions<br/>cat_diff_[1.2;2.34;5.54]  |
-| discrimination_ + number | Discrimination parameter |					
+| discrimination_ + Array | Discrimination parameter |					
 				
 
 ### Example of questionData structure
@@ -215,13 +215,17 @@ Remember that the ability measure does have error associated with it. Be sure to
 	name:"Question16 Lvl4"     // question name
 	enemyIds: array(1)     // array with all enemy question id's
 		0 : '145'
+		1 : '22'
 	category: "testquestion"     // category
 	diff_cat: array(3)     // array with all category difficulties
 		0 : "1.2"
 		1 : "2.3"
 		2 :	"4.4"
 	adpq : "4"     // adpq tag from adaptiv quiz == difficulty
-	discrimination: "3"    // discimination parameter
+	discrimination: array(3)   // discimination parameters
+		0 : "1.2"
+		1 : "2.3"
+		2 :	"4.4"
 }
 ```
 
