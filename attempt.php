@@ -37,6 +37,7 @@ use mod_adaptivequiz\local\question\question_answer_evaluation;
 use mod_adaptivequiz\local\question\questions_answered_summary_provider;
 use mod_adaptivequiz\local\report\questions_difficulty_range;
 use mod_adaptivequiz\local\catalgorithm\determine_next_difficulty_result;
+use mod_adaptivequiz\local\repository\questions_repository;
 
 $id = required_param('cmid', PARAM_INT); // Course module id.
 $uniqueid  = optional_param('uniqueid', 0, PARAM_INT);  // Unique id of the attempt.
@@ -156,48 +157,82 @@ if (!empty($uniqueid) && confirm_sesskey()) {
             // Check if the minimum number of attempts have been reached.
             $minattemptreached = adaptivequiz_min_attempts_reached($uniqueid, $cm->instance, $USER->id);
 
-            // Create an instance of the CAT algo class.
-            $algo = new catalgo($minattemptreached, (int) $attempteddifficultylevel);
-
             $questionanswerevaluation = new question_answer_evaluation($quba);
             $questionanswerevaluationresult = $questionanswerevaluation->perform();
+			
+			
+			// prepare question data for R-Server 
+			$category = $DB->get_record('adaptivequiz_question', ['instance' => $adaptivequiz->id]);
+			$quategoryId = $category->questioncategory;
+			
+			$tagIDList = $DB->get_records_sql("SELECT DISTINCT id, name FROM mdl_tag");
 
+			$filteredTagIds = array_map(function($tag) {
+				return $tag->id;
+			}, $tagIDList);
+			
+			$questions = questions_repository::find_questions_with_tags($filteredTagIds, [$quategoryId],[]);
+			foreach ($questions as $question) {
+				
+				$tags =  core_tag_tag::get_item_tags_array('core_question', 'question', $question->id);
+
+				$question->enemyIds = [];
+				$question->category = "";
+				$question->diff_cat = [];
+				$question->adpq = "";
+				$question->discrimination = "";
+				
+				foreach ($tags as $tag => $value) {
+					if(str_starts_with($value,"adpq_") ){
+						$question->adpq = str_replace('adpq_', '', $value);							
+					}
+					if(str_starts_with($value,"discrimination_") ){
+						$question->discrimination = str_replace('discrimination_', '', $value);							
+					}
+					if(str_starts_with($value,"enemy_id_") ){
+						array_push($question->enemyIds, str_replace('enemy_id_', '', $value));							
+					}
+					if(str_starts_with($value,"cat_") ){
+						$question->category= str_replace('cat_', '', $value);							
+					}
+					if(str_starts_with($value,"diff_cat_") ){
+						if (strpos($value, ';') !== false) {
+							
+							$temp = str_replace('diff_cat_[', '', $value);
+							$temp = str_replace(']', '', $temp);
+							$numbers = explode(';', $temp);
+							foreach ($numbers as $number) {
+								array_push($question->diff_cat, $number);
+							}
+						}
+						else{
+							preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
+							$number = $matches[1];
+							array_push($question->diff_cat, $number);
+						}		
+					}
+				}
+			}
 			// CS: calling R-Server for next question
 			$data_for_r_server = new stdClass;
-			
+					
 			$data_for_r_server->user_id = $USER->id;
 			$data_for_r_server->attempt_id = $uniqueid;
 			$data_for_r_server->answeredquestions = $adaptiveattempt->read_attempt_data()->detaildtestresults;
 			$data_for_r_server->testsettings = $adaptivequiz;
-			
-			// get all enemy and category tags from the database
-			$allEnemyTags = $DB->get_records_sql("SELECT DISTINCT name FROM mdl_tag WHERE name LIKE 'enemy_id_%' AND name NOT LIKE 'adpq_%'");
-			$allCategoryTags = $DB->get_records_sql("SELECT DISTINCT name FROM mdl_tag WHERE name LIKE 'cat_%' AND name NOT LIKE 'adpq_%'");
-			$data_for_r_server->enemyTags = $allEnemyTags;
-			$data_for_r_server->categoryTags = $allCategoryTags;
-			// CS in der Serverresponse ist die ID der nächsten Frage hinterlegt, welche aus der QuestionDB gezogen wird.
+			$data_for_r_server->questionsDatas = $questions;			
+
+			// CS in response we get the next question and the next difficulty level
 			$r_server_response = $adaptiveattempt->call_r_server($data_for_r_server);
-			
-			
-			//CS
-			// falls der R-Server die gleichen Werte zurück gibt, kann das hier wieder mit entsprechnder Response einkommentiert werden
-            // $determinenextdifficultylevelresult = $algo->determine_next_difficulty_level(
-				//     (float) $adaptiveattempt->read_attempt_data()->difficultysum,
-				//     (int) $adaptiveattempt->read_attempt_data()->questionsattempted,
-				//     questions_difficulty_range::from_activity_instance($adaptivequiz),
-				//     (float) $adaptivequiz->standarderror,
-				//     $questionanswerevaluationresult,
-				//     (new questions_answered_summary_provider($quba))->collect_summary()
-				// );   
-				
+	
 			// Determine the next difficulty level or whether there is an error.
 			$determinenextdifficultylevelresult = new determine_next_difficulty_result($r_server_response->errormessage, $r_server_response->nextdifficultylevel);
 
 
-
             // Increment difficulty level for attempt.
-			// CS im folgenden wird der Schwierigkeitsgrad erhöht und eine Frage aus dessen Pool wird ausgefwählt und dargestellt
-            $difflogit = $algo->get_levellogit();
+			
+            // $difflogit = $algo->get_levellogit();
+            $difflogit = $r_server_response->nextdifficultylevel ?? 1;
             if (is_infinite($difflogit)) {
                 throw new moodle_exception('unableupdatediffsum', 'adaptivequiz',
                     new moodle_url('/mod/adaptivequiz/attempt.php', ['cmid' => $id]));
@@ -308,9 +343,9 @@ $itemadministrationevaluation = $itemadministration->evaluate_ability_to_adminis
 if ($itemadministrationevaluation->item_administration_is_to_stop()) {
     // Set the attempt to complete, update the standard error and attempt message, then redirect the user to the attempt-finished
     // page.
-    if ($algo instanceof catalgo) {
-        $standarderror = $algo->get_standarderror();
-    }
+    // if ($algo instanceof catalgo) {
+    //     $standarderror = $algo->get_standarderror();
+    // }
 
     $noquestionsfetchedforattempt = $uniqueid == 0;
     if ($noquestionsfetchedforattempt) {
@@ -320,7 +355,7 @@ if ($itemadministrationevaluation->item_administration_is_to_stop()) {
             (new moodle_url('/mod/adaptivequiz/view.php', ['id' => $cm->id]))->out());
     }
 
-    $adaptiveattempt->complete($context, $standarderror, $itemadministrationevaluation->stoppage_reason(), time());
+    $adaptiveattempt->complete($context, $r_server_response->standarderror, $itemadministrationevaluation->stoppage_reason(), time());
 
     redirect(new moodle_url('/mod/adaptivequiz/attemptfinished.php',
         ['cmid' => $cm->id, 'id' => $cm->instance, 'uattid' => $uniqueid]));

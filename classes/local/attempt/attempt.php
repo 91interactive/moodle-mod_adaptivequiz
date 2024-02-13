@@ -299,8 +299,7 @@ class attempt {
 			'attempt_id' => $data->attempt_id,
 			'answeredquestions' => $data->answeredquestions,
 			'testsettings' => $data->testsettings,
-			'enemyTags' => $data->enemyTags,
-			'categoryTags' => $data->categoryTags
+			'questionsDatas' => $data->questionsDatas,
 		);
 
 		$options = array(
@@ -321,8 +320,9 @@ class attempt {
 			echo 'Fehler beim Senden des POST-Requests.';
 		} else {
 			
-			// richtig falsch fragen ab 247 - 266
-			$decoded_response = json_decode('{"errormessage":null, "nextdifficultylevel":3, "standarderror": '. rand(1,5) .',"measure" : -5.65286, "id_next_question": '. rand(267,286) .',"score": 3.4}');
+			//CS richtig falsch fragen ab 1 - 20
+			// TODO - Hier muss die Antwort des R-Servers verarbeitet werden
+			$decoded_response = json_decode('{"errormessage":null, "nextdifficultylevel":3, "standarderror": '. rand(1,5) .',"measure" : -5.65286, "id_next_question": '. rand(1,20) .',"score": 3.4}');
 
 
 		}
