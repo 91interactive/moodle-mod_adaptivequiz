@@ -201,7 +201,7 @@ Remember that the ability measure does have error associated with it. Be sure to
 --------------------------------------------------------------------
 | Tag      | Description | 
 | ------------- |:-------------:|
-| adqp_ + number |  Diffultylevel questions for Adaptive Quiz |
+| adpq_ + number |  Diffultylevel questions for Adaptive Quiz |
 | enemey_id_ + number | Enemy question Id |
 | cat_ + string | Categoryname |
 | diff_cat_ + Array | Category difficulties. Can have multiple float values. <br/>One value on dichotomies questions or multiple values possible on polytomes values separated with ;<br/>Examples:  <br/>cat_diff_[1.2] for dichotomies questions<br/>cat_diff_[1.2;2.34;5.54]  |
