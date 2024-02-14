@@ -278,6 +278,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 				$currentDBentry = $DB->get_record('adaptivequiz_attempt',array('uniqueid'=>$uniqueid), '*', MUST_EXIST);
 				
 				$currentDBdetaildtestresults = json_decode($currentDBentry->detaildtestresults) ?? '';
+				
 					// check if question is answered (graded)
 					if ($qa->get_state()->is_graded() && $currentDBdetaildtestresults != "null") {
 
@@ -285,7 +286,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 						$quID = $qa->get_question_id();
 						
 						$qu = new stdClass();
-				
+						$qu->questionId = $quID;
 						// get question text
 						$qu->question = $qa->get_question()->questiontext;
 						
@@ -309,11 +310,24 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 						$qu->score = $r_server_response->score;
 						$qu->tags = core_tag_tag::get_item_tags_array('core_question', 'question', $quID);
 						
+						// question history in single attempt
+						if($currentDBdetaildtestresults != null && $currentDBdetaildtestresults != "" && $currentDBdetaildtestresults != "null"){
+							$tmpArray = [];
+							if(gettype($currentDBdetaildtestresults->$uniqueid) == "object"){
+								$tmpArray = [$currentDBdetaildtestresults->$uniqueid,$qu];
+							}
+							else{
+								foreach($currentDBdetaildtestresults->$uniqueid as $key => $value){
+									array_push($tmpArray,$value);
+								}
+								array_push($tmpArray,$qu);
+							}
+								$mergedObj[$uniqueid] = $tmpArray;
+						}
+						else{
+							$mergedObj[$uniqueid] = $qu;
+						}
 						
-						$objList[$quID] = $qu;
-						$array1 = (array) $objList;
-						$array2 = (array) $currentDBdetaildtestresults;
-						$mergedObj = $array1 + $array2; 
 					}
 					
 				
