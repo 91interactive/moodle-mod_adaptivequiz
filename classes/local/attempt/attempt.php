@@ -300,6 +300,14 @@ class attempt {
 			'answeredquestions' => $data->answeredquestions,
 			'testsettings' => $data->testsettings,
 			'questionsDatas' => $data->questionsDatas,
+
+			//CS TODO new structure
+			'courseID' => $data->courseID,
+			'testID' => $data->testID,
+			'itempool' => $data->itempool,
+			'settings' => $data->settings,
+			'person' => $data->person,
+			'test' => $data->test,
 		);
 
 		$options = array(
@@ -353,4 +361,77 @@ class attempt {
 
         $DB->update_record(self::TABLE, $this->adpqattempt);
     }
+
+	/**
+	 * distrubutes the tags already used in that attempt
+	 *
+	 * @return stdClass {@see self::$adpqattempt}.
+	 */
+	public static function distribute_used_tags($tags,$itemsArray){
+		
+		foreach ($tags as $tag => $value){
+			
+			if(str_starts_with($value,"diff_")){
+				$temp1 = str_replace('diff_[', '', $value);
+				$temp = str_replace(']', '', $temp1);
+				if (strpos($temp, ';') !== false) {
+				
+					$numbers = explode(';', $temp);
+					foreach ($numbers as $number) {
+						array_push($itemsArray->diff, $number);
+					}
+				}
+				else{
+					// preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
+					// $number = $matches[1];
+					$number = $temp;
+					array_push($itemsArray->diff, $number);
+				}
+			}
+
+			if(str_starts_with($value,"ca_")){
+				$temp1 = str_replace('ca_[', '', $value);
+				$temp = str_replace(']', '', $temp1);
+				$categories = explode(';', $temp);
+				foreach ($categories as $cat) {
+					array_push($itemsArray->content_area, $cat);
+				}
+			}
+			if(str_starts_with($value,"enemy_") ){
+				$temp1 = str_replace('enemy_[', '', $value);
+				$temp = str_replace(']', '', $temp1);
+				if (strpos($temp, ';') !== false) {
+					
+					$numbers = explode(';', $temp);
+					foreach ($numbers as $number) {
+						array_push($itemsArray->enemys, $number);
+					}
+				}
+				else{
+					// preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
+					// $number = $matches[1];
+					$number = $temp;
+					array_push($itemsArray->enemys, $number);
+				}	
+			}
+			if(str_starts_with($value,"disc_") ){
+				$temp1 = str_replace('disc_[', '', $value);
+				$temp = str_replace(']', '', $temp1);
+				if (strpos($temp, ';') !== false) {
+					
+					$numbers = explode(';', $temp);
+					foreach ($numbers as $number) {
+						array_push($itemsArray->disc, $number);
+					}
+				}
+				else{
+					// preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
+					// $number = $matches[1];
+					$number = $temp;
+					array_push($itemsArray->disc, $number);
+				}							
+			}
+		}
+		return $itemsArray;
+	}
 }

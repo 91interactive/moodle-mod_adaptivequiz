@@ -26,6 +26,7 @@
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/mod/adaptivequiz/locallib.php');
 require_once($CFG->dirroot . '/tag/lib.php');
+require_once($CFG->libdir . '/questionlib.php');
 
 use mod_adaptivequiz\local\adaptive_quiz_requires;
 use mod_adaptivequiz\local\attempt\attempt;
@@ -162,92 +163,85 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			
 			
 			// prepare question data for R-Server 
-			$category = $DB->get_record('adaptivequiz_question', ['instance' => $adaptivequiz->id]);
-			$quategoryId = $category->questioncategory;
 			
-			$tagIDList = $DB->get_records_sql("SELECT DISTINCT id, name FROM mdl_tag");
-
-			$filteredTagIds = array_map(function($tag) {
-				return $tag->id;
-			}, $tagIDList);
 			
-			$questions = questions_repository::find_questions_with_tags($filteredTagIds, [$quategoryId],[]);
-			foreach ($questions as $question) {
-				
-				$tags =  core_tag_tag::get_item_tags_array('core_question', 'question', $question->id);
-
-				$question->enemyIds = [];
-				$question->category = "";
-				$question->diff_cat = [];
-				$question->adpq = "";
-				$question->discrimination = [];
-				
-				foreach ($tags as $tag => $value) {
-					if(str_starts_with($value,"adpq_") ){
-						$question->adpq = str_replace('adpq_', '', $value);							
-					}
-					if(str_starts_with($value,"discrimination_") ){
-						if (strpos($value, ';') !== false) {
-							
-							$temp = str_replace('discrimination_[', '', $value);
-							$temp = str_replace(']', '', $temp);
-							$numbers = explode(';', $temp);
-							foreach ($numbers as $number) {
-								array_push($question->discrimination, $number);
-							}
-						}
-						else{
-							preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
-							$number = $matches[1];
-							array_push($question->discrimination, $number);
-						}							
-					}
-					if(str_starts_with($value,"enemy_id_") ){
-						if (strpos($value, ';') !== false) {
-							
-							$temp = str_replace('enemy_id_[', '', $value);
-							$temp = str_replace(']', '', $temp);
-							$numbers = explode(';', $temp);
-							foreach ($numbers as $number) {
-								array_push($question->enemyIds, $number);
-							}
-						}
-						else{
-							preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
-							$number = $matches[1];
-							array_push($question->enemyIds, $number);
-						}	
-					}
-					if(str_starts_with($value,"cat_") ){
-						$question->category= str_replace('cat_', '', $value);							
-					}
-					if(str_starts_with($value,"diff_cat_") ){
-						if (strpos($value, ';') !== false) {
-							
-							$temp = str_replace('diff_cat_[', '', $value);
-							$temp = str_replace(']', '', $temp);
-							$numbers = explode(';', $temp);
-							foreach ($numbers as $number) {
-								array_push($question->diff_cat, $number);
-							}
-						}
-						else{
-							preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
-							$number = $matches[1];
-							array_push($question->diff_cat, $number);
-						}		
-					}
-				}
-			}
 			// CS: calling R-Server for next question
 			$data_for_r_server = new stdClass;
-					
-			$data_for_r_server->user_id = $USER->id;
-			$data_for_r_server->attempt_id = $uniqueid;
+			
+			
+			$data_for_r_server = new stdClass;
+			$data_for_r_server->courseID = $course->id;
+			$data_for_r_server->testID =  $adaptivequiz->id;
+
+			$data_for_r_server->itempool = new stdClass;
+			$data_for_r_server->itempool->items = [];
+
+			
+			
+			$category = $DB->get_record('adaptivequiz_question', ['instance' => $adaptivequiz->id]);
+			$quategoryId = $category->questioncategory;
+			$qf = new question_finder();
+			$questionIdsFromCategories = $qf->get_questions_from_categories([$quategoryId],null);
+			$questionBankWithIdNumber = question_load_questions($questionIdsFromCategories,'qbe.idnumber');
+
+			
+			foreach ($questionBankWithIdNumber as $question) {
+				$itemsArray = new stdClass;
+				$itemsArray->diff = [];
+				$itemsArray->content_area = [];
+				$itemsArray->disc = [];
+				$itemsArray->enemys = [];
+				$itemsArray->ID = null;
+				// idnumber 
+				$itemsArray->ID = $question->idnumber;
+
+				//get tags for each question
+				$tags =  core_tag_tag::get_item_tags_array('core_question', 'question', $question->id);
+				$itemsArray = attempt::distribute_used_tags($tags, $itemsArray);
+
+				// push itemsArray to itempool items
+				array_push($data_for_r_server->itempool->items,$itemsArray);
+				
+			}
+
+			// CS: prepare settings for R-Server
+			$data_for_r_server->settings = new stdClass;
+			// Settings $adaptivequiz
+			$data_for_r_server->settings->maxItems = $adaptivequiz->testlength; // max questions
+			$data_for_r_server->settings->criteria_not_adaptive = $adaptivequiz->selecttasktypes == 0 ? 'random':'sequential';
+			$data_for_r_server->settings->ncl_calib =$adaptivequiz->numbercalibrationclusters;
+			$data_for_r_server->settings->ncl_link = $adaptivequiz->numberlinkingclusters;
+			$data_for_r_server->settings->ncl_adaptive = $adaptivequiz->numberadaptiveclusters;
+			$data_for_r_server->settings->pers_est = $adaptivequiz->personalparameterestimation;
+			$data_for_r_server->settings->criteria_adaptive = $adaptivequiz->adaptivepart;
+			$data_for_r_server->settings->exposure = $adaptive->randomesque_exposure_control;
+			$data_for_r_server->settings->nitems_exposure =$adaptivequiz->suitabletasks;
+
+			$data_for_r_server->person = new stdClass;
+			$data_for_r_server->person->personID = $USER->id;
+
+			// CS: prepare test data for R-Server			
+			$data_for_r_server->test = new stdClass;
+			
+			// $data_for_r_server->test->item = $questionIDs; // sammlung der question ids  // wird vorerst weggelassen
+
+			$quSlots = $quba->get_slots();
+			$data_for_r_server->test->itemID = [];	// $data_for_r_server->test->itemID = array("ID1", "ID8", "ID24");
+			foreach ($quSlots as $slot) {
+				$questionBySlot = $quba->get_question($slot);
+				$idnumber = $quba->get_question($slot)->idnumber;
+								
+				array_push($data_for_r_server->test->itemID, $idnumber);
+			}
+			$data_for_r_server->test->scoredResponse = array(1, 0, 1);
+			$data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33);
+			$data_for_r_server->test->timeout = false;
+			
+			// CS: TODO test if deprecated ?
 			$data_for_r_server->answeredquestions = $adaptiveattempt->read_attempt_data()->detaildtestresults;
 			$data_for_r_server->testsettings = $adaptivequiz;
 			$data_for_r_server->questionsDatas = $questions;			
-
+			
 			// CS in response we get the next question and the next difficulty level
 			$r_server_response = $adaptiveattempt->call_r_server($data_for_r_server);
 	
