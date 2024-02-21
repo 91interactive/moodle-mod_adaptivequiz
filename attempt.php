@@ -181,6 +181,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			$category = $DB->get_record('adaptivequiz_question', ['instance' => $adaptivequiz->id]);
 			$quategoryId = $category->questioncategory;
 			$qf = new question_finder();
+			// create question bank via quategoryId
 			$questionIdsFromCategories = $qf->get_questions_from_categories([$quategoryId],null);
 			$questionBankWithIdNumber = question_load_questions($questionIdsFromCategories,'qbe.idnumber');
 
@@ -222,16 +223,15 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 
 			// CS: prepare test data for R-Server			
 			$data_for_r_server->test = new stdClass;
+			$data_for_r_server->test->itemID = [];
+			$data_for_r_server->test->item = [];	// $data_for_r_server->test->itemID = array("ID1", "ID8", "ID24");
 			
-			// $data_for_r_server->test->item = $questionIDs; // sammlung der question ids  // wird vorerst weggelassen
-
 			$quSlots = $quba->get_slots();
-			$data_for_r_server->test->itemID = [];	// $data_for_r_server->test->itemID = array("ID1", "ID8", "ID24");
 			foreach ($quSlots as $slot) {
 				$questionBySlot = $quba->get_question($slot);
-				$idnumber = $quba->get_question($slot)->idnumber;
-								
-				array_push($data_for_r_server->test->itemID, $idnumber);
+												
+				array_push($data_for_r_server->test->itemID, $questionBySlot->idnumber);
+				array_push($data_for_r_server->test->item, $questionBySlot->id);
 			}
 			$data_for_r_server->test->scoredResponse = array(1, 0, 1);
 			$data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33);
