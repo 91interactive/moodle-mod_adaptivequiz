@@ -288,20 +288,12 @@ class attempt {
     }
 
 	public function call_r_server($data){
-		// API-Endpoint
+		// TODO - Need to call R-Server here
 		$url = 'https://jsonplaceholder.typicode.com/posts';
 		$decoded_response = NULL;
-		// Daten, die du senden möchtest (als assoziatives Array)
+		
 
 		$data = array(
-
-			'user_id' => $data->user_id,
-			'attempt_id' => $data->attempt_id,
-			'answeredquestions' => $data->answeredquestions,
-			'testsettings' => $data->testsettings,
-			'questionsDatas' => $data->questionsDatas,
-
-			//CS TODO new structure
 			'courseID' => $data->courseID,
 			'testID' => $data->testID,
 			'itempool' => $data->itempool,
@@ -330,7 +322,12 @@ class attempt {
 			
 			//CS richtig falsch fragen ab 1 - 20
 			// TODO - Hier muss die Antwort des R-Servers verarbeitet werden
-			$decoded_response = json_decode('{"errormessage":null, "nextdifficultylevel":3, "standarderror": '. rand(1,5) .',"measure" : -5.65286, "id_next_question": '. rand(1,20) .',"score": 3.4}');
+			$decoded_response = json_decode('{
+				"personID": 2376,
+			   	"theta": -0.866876539473478,
+				"SE":0.10676325431541,
+				"nextItem": '. rand(1,20).'
+			   }');
 
 
 		}

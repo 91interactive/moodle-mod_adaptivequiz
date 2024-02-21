@@ -208,25 +208,67 @@ Remember that the ability measure does have error associated with it. Be sure to
 | disc_[array with numbers] | disc_[2] | Discrimination parameter |					
 				
 
-### Example of questionData structure
+### Data for R-Server
+
+---
+**NOTE**
+The property "pers.est" has following short values:
+- MAP [//]: # Maximum-A-Posteriori
+- EAP [//]: # Expected-A-Posteriori
+- WLE [//]: # Weighted Likelihood Estimation
+- MLE [//]: # Maximum Likelihood Estimation
+
+The property "criteria_adaptive" has following short values:
+- MI [//]: # Maximum Information
+- MEPV [//]: # Minimum Expected Posterior Variance
+- MEI [//]: # Maximum Expected Information
+- IKL [//]: # Integration-based
+
+---
 ```PHP
 {
-	id:"8"    // question id 
-	name:"Question16 Lvl4"     // question name
-	enemyIds: array(1)     // array with all enemy question id's
-		0 : '145'
-		1 : '22'
-	category: "testquestion"     // category
-	diff_cat: array(3)     // array with all category difficulties
-		0 : "1.2"
-		1 : "2.3"
-		2 :	"4.4"
-	adpq : "4"     // adpq tag from adaptiv quiz == difficulty
-	discrimination: array(3)   // discimination parameters
-		0 : "1.2"
-		1 : "2.3"
-		2 :	"4.4"
+	"courseID" : "asasd",
+	"TestID" : "sdsd",
+	"itempool" : {
+		"items":[
+				{"ID": "ID1", "diff": [2,2,3], "disc": 2,"content_area" : ["ca1", "ca2"], "enemy": [2,5,6]},
+				{"ID": "ID2", "diff": 1, "disc": 1,	"content_area" : ["ca1"], "enemy": [3,8]}
+		]	
+	},
+	"settings" : {
+       	"maxItems": 60,
+       	"criteria_not_adaptive": "random",
+       	"ncl_calib": 2,
+	  	"ncl_link": 2,
+	  	"ncl_adaptive": 2,
+	  	"pers.est": "WLE",
+        "criteria_adaptive": "MI",
+	  	"exposure": {
+			"enabled": true,
+			"nitems_exposure": 4	
+		},
+		"content_areas":{
+			"enabled" : true,
+			"area1" : ""
+			"area2" : ""
+			"area3" : ""
+			"area4" : ""
+		}
+	},
+	"person" : {
+       	"personID": "userXYZ"
+    },
+	"test":{  
+		"item": [1,8,24],
+		"itemID":["ID1","ID8", "ID24"],  
+		"scoredResponse":[1,0,1],  
+		"itemtime": [0.23, 23.12, 120.33], 
+		"timeout":  false  
+	}
+
 }
+
+
 ```
 
 
@@ -235,11 +277,10 @@ Values are examples to get the code working
 
 ```PHP
 {
-	"errormessage":null,      // if an error occurs
-	"nextdifficultylevel":3,    // next difficultyLevel
-	"standarderror": '. rand(1,5) .',    // standard error
-	"measure" : -5.65286,    // measure
-	"id_next_question": '. rand(267,286) .',    // id of the next question
-	"score": 3.4    // current calculated score (normally calculated at the end of the test)
+	"personID": 2376, // user id
+	"theta": -0.866876539473478, 
+	"SE":0.10676325431541, // standarderror
+	"nextItem": "89" // next question id
 }
+
 ```
