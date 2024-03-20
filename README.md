@@ -284,3 +284,17 @@ Values are examples to get the code working
 }
 
 ```
+
+## using different question pools
+### Create question categories
+
+- To create question categories, go to the question bank of your course.
+- choose Categories on the dropdown on top left
+- click on the add category button
+- choose your parent category
+- enter a name for your question category
+- click the add category button 
+- after adding all your question categories, return to questions using the dropdown menu on top left
+- now you can select your categories and add your question to it.
+- in your adaptive quiz settings you can use one or more question categories
+- so with different adaptive quizzes you can use different question categories for different question pools
