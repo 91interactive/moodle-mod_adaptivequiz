@@ -168,12 +168,14 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			$data_for_r_server->testID =  $adaptivequiz->id; // test id
 			
 
-			// CS: get all questions from question bank
+			// CS: get the quiz category 
 			$category = $DB->get_record('adaptivequiz_question', ['instance' => $adaptivequiz->id]);
-			$quategoryId = $category->questioncategory;
+			// CS: get all question from selected question categories in question pool
+			$categoryList = adaptivequiz_get_selected_question_cateogires($adaptivequiz->id);
+			
 			$qf = new question_finder();
-			// create question bank via quategoryId
-			$questionIdsFromCategories = $qf->get_questions_from_categories([$quategoryId],null);
+			// create question bank via quategoryIds
+			$questionIdsFromCategories = $qf->get_questions_from_categories($categoryList,null);
 			$questionBankWithIdNumber = question_load_questions($questionIdsFromCategories,'qbe.idnumber');
 
 			// CS: prepare itempool for R-Server
