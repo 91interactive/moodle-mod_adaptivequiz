@@ -43,12 +43,11 @@ use mod_adaptivequiz\local\repository\questions_repository;
 $id = required_param('cmid', PARAM_INT); // Course module id.
 $uniqueid  = optional_param('uniqueid', 0, PARAM_INT);  // Unique id of the attempt.
 $attempteddifficultylevel  = optional_param('dl', 0, PARAM_INT);
-
 if (!$cm = get_coursemodule_from_id('adaptivequiz', $id)) {
-    throw new moodle_exception('invalidcoursemodule');
+	throw new moodle_exception('invalidcoursemodule');
 }
 if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
-    throw new moodle_exception('coursemisconf');
+	throw new moodle_exception('coursemisconf');
 }
 
 global $USER, $DB, $SESSION;
@@ -56,6 +55,7 @@ global $USER, $DB, $SESSION;
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 $passwordattempt = false;
+
 
 try {
     $adaptivequiz  = $DB->get_record('adaptivequiz', array('id' => $cm->instance), '*', MUST_EXIST);
@@ -161,11 +161,8 @@ if (!empty($uniqueid) && confirm_sesskey()) {
             $questionanswerevaluation = new question_answer_evaluation($quba);
             $questionanswerevaluationresult = $questionanswerevaluation->perform();
 			
-			
-			
-			
-			
-			// CS: calling R-Server for next question			
+			// CS: calling R-Server for next question
+			// CS: preparing data for r-server call			
 			$data_for_r_server = new stdClass;
 			$data_for_r_server->courseID = $course->id;  // course id
 			$data_for_r_server->testID =  $adaptivequiz->id; // test id
@@ -204,61 +201,62 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			// CS: prepare settings for R-Server
 			$data_for_r_server->settings = new stdClass;
 			// Settings $adaptivequiz
-			$data_for_r_server->settings->maxItems = $adaptivequiz->testlength; // max questions // test length
-			$data_for_r_server->settings->criteria_not_adaptive = $adaptivequiz->selecttasktypes == 0 ? 'random':'sequential'; // select tast type
-			$data_for_r_server->settings->ncl_calib =$adaptivequiz->numbercalibrationclusters; // number of calibration clusters
-			$data_for_r_server->settings->ncl_link = $adaptivequiz->numberlinkingclusters; // number of linking clusters
-			$data_for_r_server->settings->ncl_adaptive = $adaptivequiz->numberadaptiveclusters; // number of adaptive clusters
+			$data_for_r_server->settings->maxItems = $adaptivequiz->testlength; 
+			$data_for_r_server->settings->criteria_not_adaptive = $adaptivequiz->selecttasktypes == 0 ? 'random':'sequential';
+			$data_for_r_server->settings->ncl_calib =$adaptivequiz->numbercalibrationclusters;
+			$data_for_r_server->settings->ncl_link = $adaptivequiz->numberlinkingclusters;
+			$data_for_r_server->settings->ncl_adaptive = $adaptivequiz->numberadaptiveclusters; 
 			switch ($adaptivequiz->personalparameterestimation) {
 				case '1':
-					$data_for_r_server->settings->pers_est = "MAP"; // personal parameter estimation
+					$data_for_r_server->settings->pers_est = "MAP";
 					break;
 				case '2':
-					$data_for_r_server->settings->pers_est = "EAP"; // personal parameter estimation
+					$data_for_r_server->settings->pers_est = "EAP"; 
 					break;
 				case '3':
-					$data_for_r_server->settings->pers_est = "WLE"; // personal parameter estimation
+					$data_for_r_server->settings->pers_est = "WLE"; 
 					break;
 				case '4':
-					$data_for_r_server->settings->pers_est = "MLE"; // personal parameter estimation
+					$data_for_r_server->settings->pers_est = "MLE"; 
 					break;
 			}
 
 			switch ($adaptivequiz->adaptivepart) {
 				case '1':
-					$data_for_r_server->settings->criteria_adaptive = "MI"; // personal parameter estimation
+					$data_for_r_server->settings->criteria_adaptive = "MI";
 					break;
 				case '2':
-					$data_for_r_server->settings->criteria_adaptive = "MEPV"; // personal parameter estimation
+					$data_for_r_server->settings->criteria_adaptive = "MEPV"; 
 					break;
 				case '3':
-					$data_for_r_server->settings->criteria_adaptive = "MEI"; // personal parameter estimation
+					$data_for_r_server->settings->criteria_adaptive = "MEI"; 
 					break;
 				case '4':
-					$data_for_r_server->settings->criteria_adaptive = "IKL"; // personal parameter estimation
+					$data_for_r_server->settings->criteria_adaptive = "IKL"; 
 					break;
 			}
 			
 			$exposure = new stdClass();
-			$exposure->enabled = $adaptivequiz->randomesque_exposure_control == "1"? true : false;// randomesque exposure control
-			$exposure->nitems_exposure = $adaptivequiz->suitabletasks;	// suitable tasks
+			$exposure->enabled = $adaptivequiz->randomesque_exposure_control == "1"? true : false;
+			$exposure->nitems_exposure = $adaptivequiz->suitabletasks;
 			$data_for_r_server->settings->exposure = $exposure; 
 
 			$contentAreas = new stdClass();
-			$contentAreas->enabled = $adaptivequiz->contentAreas; // User-defined specification of proportions of individual content areas in the overall test?
-			$contentAreas->area1 = $adaptivequiz->contentarea1; // content area 1
-			$contentAreas->area2 = $adaptivequiz->contentarea2; // content area 2
-			$contentAreas->area3 = $adaptivequiz->contentarea3; // content area 3
-			$contentAreas->area4 = $adaptivequiz->contentarea4; // content area 4
-			$data_for_r_server->settings->content_areas = $contentAreas; // content areas
-
+			$contentAreas->enabled = $adaptivequiz->contentAreas; 
+			$contentAreas->area1 = $adaptivequiz->contentarea1; 
+			$contentAreas->area2 = $adaptivequiz->contentarea2; 
+			$contentAreas->area3 = $adaptivequiz->contentarea3; 
+			$contentAreas->area4 = $adaptivequiz->contentarea4; 
+			$data_for_r_server->settings->content_areas = $contentAreas;
+			
+			//CS: user data for r-server
 			$data_for_r_server->person = new stdClass;
 			$data_for_r_server->person->personID = $USER->id;
 
 			// CS: prepare test data for R-Server 
 			$data_for_r_server->test = new stdClass;
 			$data_for_r_server->test->itemID = [];
-			$data_for_r_server->test->item = [];	// $data_for_r_server->test->itemID = array("ID1", "ID8", "ID24");
+			$data_for_r_server->test->item = [];	
 			$data_for_r_server->test->scoredResponse = [];
 			
 			$quSlots = $quba->get_slots();
@@ -267,7 +265,6 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 										
 				array_push($data_for_r_server->test->itemID, $questionBySlot->idnumber);
 				array_push($data_for_r_server->test->item, $questionBySlot->id);
-
 
 				// scoredResponse
 				$qa = $quba->get_attempt_iterator()->offsetGet($slot);
@@ -278,7 +275,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			$data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33); // 
 			$data_for_r_server->test->timeout = false;
 			
-			// CS: TODO test if deprecated ?
+			// CS: prepare answered questions, testsettings and questions for R-Server
 			$data_for_r_server->answeredquestions = $adaptiveattempt->read_attempt_data()->detaildtestresults;
 			$data_for_r_server->testsettings = $adaptivequiz;
 			$data_for_r_server->questionsDatas = $questions;			
@@ -286,20 +283,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			// CS in response we get the next question and the next difficulty level
 			$r_server_response = $adaptiveattempt->call_r_server($data_for_r_server);
 	
-			// Determine the next difficulty level or whether there is an error.
-			// $determinenextdifficultylevelresult = new determine_next_difficulty_result($r_server_response->errormessage, $r_server_response->nextdifficultylevel);
-
-
-            // Increment difficulty level for attempt.
 			
-            // $difflogit = $algo->get_levellogit();
-            // $difflogit = $r_server_response->nextdifficultylevel ?? 1;
-            // if (is_infinite($difflogit)) {
-            //     throw new moodle_exception('unableupdatediffsum', 'adaptivequiz',
-            //         new moodle_url('/mod/adaptivequiz/attempt.php', ['cmid' => $id]));
-            // }
-
-            // $standarderror = $algo->get_standarderror();
 			$standarderror = $r_server_response->SE;
 
             try {
@@ -327,9 +311,6 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 						// get fraction answer
 						$qu->fractionAnswer = $qa->get_fraction();
 						$qu->standarderror = $r_server_response->SE;
-
-						// $qu->score = $r_server_response->score;
-						// $qu->tags = core_tag_tag::get_item_tags_array('core_question', 'question', $quID);
 						
 						// question history in single attempt
 						if($currentDBdetaildtestresults != null && $currentDBdetaildtestresults != "" && $currentDBdetaildtestresults != "null"){
@@ -358,9 +339,6 @@ if (!empty($uniqueid) && confirm_sesskey()) {
                 throw new moodle_exception('unableupdatediffsum', 'adaptivequiz',
                     new moodle_url('/mod/adaptivequiz/attempt.php', ['cmid' => $id]));
             }
-
-			
-
         }
     } catch (question_out_of_sequence_exception $e) {
         $url = new moodle_url('/mod/adaptivequiz/attempt.php', array('cmid' => $id));
@@ -398,12 +376,7 @@ $itemadministrationevaluation = $itemadministration->evaluate_ability_to_adminis
 
 // Check item administration evaluation.
 if ($itemadministrationevaluation->item_administration_is_to_stop()) {
-    // Set the attempt to complete, update the standard error and attempt message, then redirect the user to the attempt-finished
-    // page.
-    // if ($algo instanceof catalgo) {
-    //     $standarderror = $algo->get_standarderror();
-    // }
-
+ 
     $noquestionsfetchedforattempt = $uniqueid == 0;
     if ($noquestionsfetchedforattempt) {
         // The script will try to complete an 'empty' attempt as it couldn't fetch the first question for some reason.
@@ -422,9 +395,6 @@ if ($itemadministrationevaluation->item_administration_is_to_stop()) {
 $slot = $itemadministrationevaluation->next_item()->slot();
 
 $level = $itemadministrationevaluation->next_item()->difficulty_level();
-
-
-			
 
 $headtags = $output->init_metadata($quba, $slot);
 $PAGE->requires->js_init_call('M.mod_adaptivequiz.init_attempt_form', array($viewurl->out(), $adaptivequiz->browsersecurity),
