@@ -298,3 +298,5 @@ Values are examples to get the code working
 - now you can select your categories and add your question to it.
 - in your adaptive quiz settings you can use one or more question categories
 - so with different adaptive quizzes you can use different question categories for different question pools
+
+[Tutorial to create question bank categories](https://moodleuserguides.org/guides/create-a-question-bank-category/)
