@@ -1,0 +1,215 @@
+// question: 0  name: Switch category to $course$/top/Wüste
+$CATEGORY: $course$/top/Wüste
+
+
+// question: 42  name: Wüste 1
+// [id:ID1] [tag:adpq_1] [tag:ca_[rivers;floating\]] [tag:diff_[1.2] [tag:disc_[3.4;2.2;2.3\]] [tag:enemy_[22;11;12;33\]]
+::Wüste 1::[html]<p>Wüste 1 Text?</p>{
+	~%50%<p>richtig</p>
+	~%50%<p>richtig </p>
+	~%-50%<p>falsch</p>
+	~%-50%<p>falsch</p>
+}
+
+
+// question: 43  name: Wüste 10 Lvl2
+// [id:ID10] [tag:ca_[rivers;water\]] [tag:adpq_2] [tag:disc_[2\]] [tag:diff_[3.4] [tag:enemy_[2;23;33;123\]]
+::Wüste 10 Lvl2::[html]<p>Wüste 10 Lvl2 Text?</p>{
+	~%100%<p>richtig</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+}
+
+
+// question: 44  name: Wüste 11 Lvl3
+// [id:ID11] [tag:adpq_3] [tag:ca_[buildings;wooden\]] [tag:disc_[1] [tag:diff_[5.2] [tag:enemy_[44;43;56\]]
+::Wüste 11 Lvl3::[html]<p>Wüste 11 Lvl3 Text?</p>{
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 45  name: Wüste 12 Lvl3
+// [id:ID12] [tag:ca_[rivers;water\]] [tag:adpq_3] [tag:disc_[5] [tag:diff_[2.5] [tag:enemy_[12;51;42;23\]]
+::Wüste 12 Lvl3::[html]<p>Wüste 12 Lvl3 Text?</p>{
+	~%40%<p>richtig</p>
+	~%-40%<p>falsch</p>
+	~%20%<p>richtig</p>
+	~%40%<p>richtig</p>
+	~%-20%<p>falsch</p>
+}
+
+
+// question: 46  name: Wüste 13 Lvl3
+// [id:ID13] [tag:enemy_[22;11;12;33\]] [tag:adpq_3] [tag:ca_[buildings;beton\]] [tag:disc_[3] [tag:diff_[3.1]
+::Wüste 13 Lvl3::[html]<p>Wüste 13 Lvl3 Text?</p>{
+	~%100%<p>richtig</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+}
+
+
+// question: 47  name: Wüste 14 Lvl3
+// [id:ID14] [tag:adpq_3] [tag:disc_[2] [tag:ca_[buildings;plastic\]] [tag:diff_[1.7] [tag:enemy_[34;23;16\]]
+::Wüste 14 Lvl3::[html]<p>Wüste 14 lvl3 Text?</p>{
+	~%-50%<p>falsch</p>
+	~%-50%<p>falsch</p>
+	~%100%<p>richtig</p>
+}
+
+
+// question: 48  name: Wüste 15 Lvl3
+// [id:ID15] [tag:adpq_3] [tag:disc_[4] [tag:ca_[testquestion;sport\]] [tag:diff_[2.2] [tag:enemy_[14;4;26\]]
+::Wüste 15 Lvl3::[html]<p>Wüste 15 Lvl3 Text?</p>{
+	~%-33.33333%<p>falsch</p>
+	~%33.33333%<p>richtig</p>
+	~%-33.33333%<p>falsch</p>
+	~%33.33333%<p>richtig</p>
+	~%-33.33333%<p>falsch</p>
+	~%33.33333%<p>richtig</p>
+}
+
+
+// question: 49  name: Wüste 16 Lvl4
+// [id:ID16] [tag:disc_[1] [tag:ca_[testquestion;sport\]] [tag:adpq_4] [tag:diff_[1.2;2.3;4.4\]] [tag:enemy_[24;113;236\]]
+::Wüste 16 Lvl4::[html]<p>Wüste 16 Lvl4 text?</p>{
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+}
+
+
+// question: 50  name: Wüste 17 Lvl4
+// [id:ID17] [tag:adpq_4] [tag:ca_[testquestion;culture\]] [tag:disc_[6] [tag:diff_[1.3;3.4\]] [tag:enemy_[14;13\]]
+::Wüste 17 Lvl4::[html]<p>Wüste 17 Lvl4 Text?</p>{
+	~%-50%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+	~%-50%<p>falsch</p>
+}
+
+
+// question: 51  name: Wüste 18 Lvl4
+// [id:ID18] [tag:disc_[4] [tag:adpq_4] [tag:ca_[testquestion] [tag:diff_[1.7;2.6;4.2\]] [tag:enemy_[11;22\]]
+::Wüste 18 Lvl4::[html]<p>Wüste 18 Lvl4 Text?</p>{
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%-100%<p>falsch</p>
+}
+
+
+// question: 52  name: Wüste 19 Lvl4
+// [id:ID19] [tag:adpq_4] [tag:disc_[6] [tag:ca_[testquestion] [tag:diff_[1.0;2.1;3.4\]] [tag:enemy_[44]
+::Wüste 19 Lvl4::[html]<p>Wüste 19 Lvl4</p>{
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+	~%-50%<p>falsch</p>
+	~%-50%<p>falsch</p>
+}
+
+
+// question: 53  name: Wüste 2
+// [id:ID2] [tag:adpq_1] [tag:disc_[2\]] [tag:ca_[testquestion] [tag:diff_[1.9] [tag:enemy_[134;143\]]
+::Wüste 2::[html]<p>Wüste 2 Text?</p>{
+	~%-50%<p>falsch</p>
+	~%33.33333%<p>richtig</p>
+	~%33.33333%<p>richtig</p>
+	~%-50%<p>falsch</p>
+	~%33.33333%<p>richtig</p>
+}
+
+
+// question: 54  name: Wüste 20 Lvl4
+// [id:ID20] [tag:disc_[4] [tag:adpq_4] [tag:ca_[testquestion] [tag:enemy_[155] [tag:diff_[3.2]
+::Wüste 20 Lvl4::[html]<p>Wüste 20 Lvl4</p>{
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 55  name: Wüste 3
+// [id:ID3] [tag:adpq_1] [tag:diff_[5.2] [tag:disc_[2] [tag:ca_[testquestion] [tag:enemy_[144]
+::Wüste 3::[html]<p>Wüste 3 Text?</p>{
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 56  name: Wüste 4
+// [id:ID4] [tag:adpq_1] [tag:ca_[rivers;floating\]] [tag:disc_[1] [tag:diff_[3.2] [tag:enemy_[42;55;56\]]
+::Wüste 4::[html]<p>Wüste 4 Text?</p>{
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%-25%<p>falsch</p>
+	~%100%<p>richtig</p>
+}
+
+
+// question: 57  name: Wüste 5
+// [id:ID5] [tag:adpq_1] [tag:diff_[2.5] [tag:disc_[2] [tag:ca_[rivers] [tag:enemy_[4;5;6\]]
+::Wüste 5::[html]<p>Wüste 5 Text?</p>{
+	~%-50%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%-50%<p>falsch</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 58  name: Wüste 6 Lvl2
+// [id:ID6] [tag:adpq_2] [tag:disc_[1] [tag:diff_[5.2] [tag:ca_[rivers] [tag:ca_[lake;water\]] [tag:enemy_[24;33;44\]]
+::Wüste 6 Lvl2::[html]<p>Wüste Lvl2 Text?</p>{
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%25%<p>richtig</p>
+	~%-100%<p>falsch</p>
+}
+
+
+// question: 59  name: Wüste 7 Lvl2
+// [id:ID7] [tag:adpq_2] [tag:disc_[1] [tag:enemy_[44;43;56\]] [tag:ca_[ocean;waves\]] [tag:diff_[4.2]
+::Wüste 7 Lvl2::[html]<p>Wüste 7 Lvl2 Text</p>{
+	~%-100%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 60  name: Wüste 8 Lvl2
+// [id:ID8] [tag:adpq_2] [tag:disc_[4] [tag:diff_[3.2] [tag:ca_[buildings;modern\]] [tag:enemy_[56]
+::Wüste 8 Lvl2::[html]<p>Wüste 8 Lvl2 Text?</p>{
+	~%50%<p>richtig</p>
+	~%-100%<p>falsch</p>
+	~%50%<p>richtig</p>
+}
+
+
+// question: 61  name: Wüste 9 Lvl2
+// [id:ID9] [tag:adpq_2] [tag:disc_[2] [tag:diff_[3.2] [tag:ca_[buildings] [tag:enemy_[14;26\]]
+::Wüste 9 Lvl2::[html]<p>Wüste 9 Lvl2 Text?</p>{
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%-33.33333%<p>falsch</p>
+	~%50%<p>richtig</p>
+	~%50%<p>richtig</p>
+}
+
+
