@@ -3,7 +3,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 42  name: Wasser 1
-// [id:ID1] [tag:adpq_1] [tag:ca_[rivers;floating\]] [tag:diff_[1.2]] [tag:disc_[3.4;2.2;2.3\]] [tag:enemy_[22;11;12;33\]]
+// [id:ID1] [tag:adpq_1] [tag:ca_[rivers;floating\]] [tag:diff_[1.2\]] [tag:disc_[3.4;2.2;2.3\]] [tag:enemy_[22;11;12;33\]]
 ::Wasser 1::[html]<p>Wasser 1 Text?</p>{
 	~%50%<p>richtig</p>
 	~%50%<p>richtig </p>
@@ -13,7 +13,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 43  name: Wasser 10 Lvl2
-// [id:ID10] [tag:ca_[rivers;water\]] [tag:adpq_2] [tag:disc_[2\]] [tag:diff_[3.4]] [tag:enemy_[2;23;33;123\]]
+// [id:ID10] [tag:ca_[rivers;water\]] [tag:adpq_2] [tag:disc_[2\]] [tag:diff_[3.4\]] [tag:enemy_[2;23;33;123\]]
 ::Wasser 10 Lvl2::[html]<p>Wasser 10 Lvl2 Text?</p>{
 	~%100%<p>richtig</p>
 	~%-25%<p>falsch</p>
@@ -24,7 +24,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 44  name: Wasser 11 Lvl3
-// [id:ID11] [tag:adpq_3] [tag:ca_[buildings;wooden\]] [tag:disc_[1]] [tag:diff_[5.2]] [tag:enemy_[44;43;56\]]
+// [id:ID11] [tag:adpq_3] [tag:ca_[buildings;wooden\]] [tag:disc_[1\]] [tag:diff_[5.2\]] [tag:enemy_[44;43;56\]]
 ::Wasser 11 Lvl3::[html]<p>Wasser 11 Lvl3 Text?</p>{
 	~%-33.33333%<p>falsch</p>
 	~%50%<p>richtig</p>
@@ -35,7 +35,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 45  name: Wasser 12 Lvl3
-// [id:ID12] [tag:ca_[rivers;water\]] [tag:adpq_3] [tag:disc_[5]] [tag:diff_[2.5]] [tag:enemy_[12;51;42;23\]]
+// [id:ID12] [tag:ca_[rivers;water\]] [tag:adpq_3] [tag:disc_[5\]] [tag:diff_[2.5\]] [tag:enemy_[12;51;42;23\]]
 ::Wasser 12 Lvl3::[html]<p>Wasser 12 Lvl3 Text?</p>{
 	~%40%<p>richtig</p>
 	~%-40%<p>falsch</p>
@@ -46,7 +46,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 46  name: Wasser 13 Lvl3
-// [id:ID13] [tag:enemy_[22;11;12;33\]] [tag:adpq_3] [tag:ca_[buildings;beton\]] [tag:disc_[3]] [tag:diff_[3.1]]
+// [id:ID13] [tag:enemy_[22;11;12;33\]] [tag:adpq_3] [tag:ca_[buildings;beton\]] [tag:disc_[3\]] [tag:diff_[3.1\]]
 ::Wasser 13 Lvl3::[html]<p>Wasser 13 Lvl3 Text?</p>{
 	~%100%<p>richtig</p>
 	~%-25%<p>falsch</p>
@@ -57,7 +57,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 47  name: Wasser 14 Lvl3
-// [id:ID14] [tag:adpq_3] [tag:disc_[2]] [tag:ca_[buildings;plastic\]] [tag:diff_[1.7]] [tag:enemy_[34;23;16\]]
+// [id:ID14] [tag:adpq_3] [tag:disc_[2\]] [tag:ca_[buildings;plastic\]] [tag:diff_[1.7\]] [tag:enemy_[34;23;16\]]
 ::Wasser 14 Lvl3::[html]<p>Wasser 14 lvl3 Text?</p>{
 	~%-50%<p>falsch</p>
 	~%-50%<p>falsch</p>
@@ -66,7 +66,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 48  name: Wasser 15 Lvl3
-// [id:ID15] [tag:adpq_3] [tag:disc_[4]] [tag:ca_[testquestion;sport\]] [tag:diff_[2.2]] [tag:enemy_[14;4;26\]]
+// [id:ID15] [tag:adpq_3] [tag:disc_[4\]] [tag:ca_[testquestion;sport\]] [tag:diff_[2.2\]] [tag:enemy_[14;4;26\]]
 ::Wasser 15 Lvl3::[html]<p>Wasser 15 Lvl3 Text?</p>{
 	~%-33.33333%<p>falsch</p>
 	~%33.33333%<p>richtig</p>
@@ -89,7 +89,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 50  name: Wasser 17 Lvl4
-// [id:ID17] [tag:adpq_4] [tag:ca_[testquestion;culture\]] [tag:disc_[6]] [tag:diff_[1.3;3.4\]] [tag:enemy_[14;13\]]
+// [id:ID17] [tag:adpq_4] [tag:ca_[testquestion;culture\]] [tag:disc_[6\]] [tag:diff_[1.3;3.4\]] [tag:enemy_[14;13\]]
 ::Wasser 17 Lvl4::[html]<p>Wasser 17 Lvl4 Text?</p>{
 	~%-50%<p>falsch</p>
 	~%50%<p>richtig</p>
@@ -99,7 +99,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 51  name: Wasser 18 Lvl4
-// [id:ID18] [tag:disc_[4]] [tag:adpq_4] [tag:ca_[testquestion]] [tag:diff_[1.7;2.6;4.2\]] [tag:enemy_[11;22\]]
+// [id:ID18] [tag:disc_[4\]] [tag:adpq_4] [tag:ca_[testquestion\]] [tag:diff_[1.7;2.6;4.2\]] [tag:enemy_[11;22\]]
 ::Wasser 18 Lvl4::[html]<p>Wasser 18 Lvl4 Text?</p>{
 	~%25%<p>richtig</p>
 	~%25%<p>richtig</p>
@@ -110,7 +110,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 52  name: Wasser 19 Lvl4
-// [id:ID19] [tag:adpq_4] [tag:disc_[6]] [tag:ca_[testquestion]] [tag:diff_[1.0;2.1;3.4\]] [tag:enemy_[44]]
+// [id:ID19] [tag:adpq_4] [tag:disc_[6\]] [tag:ca_[testquestion\]] [tag:diff_[1.0;2.1;3.4\]] [tag:enemy_[44\]]
 ::Wasser 19 Lvl4::[html]<p>Wasser 19 Lvl4</p>{
 	~%50%<p>richtig</p>
 	~%50%<p>richtig</p>
@@ -131,7 +131,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 54  name: Wasser 20 Lvl4
-// [id:ID20] [tag:disc_[4]] [tag:adpq_4] [tag:ca_[testquestion]] [tag:enemy_[155]] [tag:diff_[3.2]]
+// [id:ID20] [tag:disc_[4\]] [tag:adpq_4] [tag:ca_[testquestion\]] [tag:enemy_[155\]] [tag:diff_[3.2\]]
 ::Wasser 20 Lvl4::[html]<p>Wasser 20 Lvl4</p>{
 	~%-33.33333%<p>falsch</p>
 	~%-33.33333%<p>falsch</p>
@@ -142,7 +142,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 55  name: Wasser 3
-// [id:ID3] [tag:adpq_1] [tag:diff_[5.2]] [tag:disc_[2]] [tag:ca_[testquestion]] [tag:enemy_[144]]
+// [id:ID3] [tag:adpq_1] [tag:diff_[5.2\]] [tag:disc_[2\]] [tag:ca_[testquestion\]] [tag:enemy_[144\]]
 ::Wasser 3::[html]<p>Wasser 3 Text?</p>{
 	~%-33.33333%<p>falsch</p>
 	~%-33.33333%<p>falsch</p>
@@ -153,7 +153,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 56  name: Wasser 4
-// [id:ID4] [tag:adpq_1] [tag:ca_[rivers;floating\]] [tag:disc_[1]] [tag:diff_[3.2]] [tag:enemy_[42;55;56\]]
+// [id:ID4] [tag:adpq_1] [tag:ca_[rivers;floating\]] [tag:disc_[1\]] [tag:diff_[3.2\]] [tag:enemy_[42;55;56\]]
 ::Wasser 4::[html]<p>Wasser 4 Text?</p>{
 	~%-25%<p>falsch</p>
 	~%-25%<p>falsch</p>
@@ -164,7 +164,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 57  name: Wasser 5
-// [id:ID5] [tag:adpq_1] [tag:diff_[2.5]] [tag:disc_[2]] [tag:ca_[rivers]] [tag:enemy_[4;5;6\]]
+// [id:ID5] [tag:adpq_1] [tag:diff_[2.5\]] [tag:disc_[2\]] [tag:ca_[rivers\]] [tag:enemy_[4;5;6\]]
 ::Wasser 5::[html]<p>Wasser 5 Text?</p>{
 	~%-50%<p>falsch</p>
 	~%50%<p>richtig</p>
@@ -174,7 +174,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 58  name: Wasser 6 Lvl2
-// [id:ID6] [tag:adpq_2] [tag:disc_[1]] [tag:diff_[5.2]] [tag:ca_[rivers]] [tag:ca_[lake;water\]] [tag:enemy_[24;33;44\]]
+// [id:ID6] [tag:adpq_2] [tag:disc_[1\]] [tag:diff_[5.2\]] [tag:ca_[rivers\]] [tag:ca_[lake;water\]] [tag:enemy_[24;33;44\]]
 ::Wasser 6 Lvl2::[html]<p>Wasser Lvl2 Text?</p>{
 	~%25%<p>richtig</p>
 	~%25%<p>richtig</p>
@@ -185,7 +185,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 59  name: Wasser 7 Lvl2
-// [id:ID7] [tag:adpq_2] [tag:disc_[1]] [tag:enemy_[44;43;56\]] [tag:ca_[ocean;waves\]] [tag:diff_[4.2]]
+// [id:ID7] [tag:adpq_2] [tag:disc_[1\]] [tag:enemy_[44;43;56\]] [tag:ca_[ocean;waves\]] [tag:diff_[4.2\]]
 ::Wasser 7 Lvl2::[html]<p>Wasser 7 Lvl2 Text</p>{
 	~%-100%<p>falsch</p>
 	~%50%<p>richtig</p>
@@ -194,7 +194,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 60  name: Wasser 8 Lvl2
-// [id:ID8] [tag:adpq_2] [tag:disc_[4]] [tag:diff_[3.2]] [tag:ca_[buildings;modern\]] [tag:enemy_[56]]
+// [id:ID8] [tag:adpq_2] [tag:disc_[4\]] [tag:diff_[3.2\]] [tag:ca_[buildings;modern\]] [tag:enemy_[56\]]
 ::Wasser 8 Lvl2::[html]<p>Wasser 8 Lvl2 Text?</p>{
 	~%50%<p>richtig</p>
 	~%-100%<p>falsch</p>
@@ -203,7 +203,7 @@ $CATEGORY: $course$/top/Wasser
 
 
 // question: 61  name: Wasser 9 Lvl2
-// [id:ID9] [tag:adpq_2] [tag:disc_[2]] [tag:diff_[3.2]] [tag:ca_[buildings]] [tag:enemy_[14;26\]]
+// [id:ID9] [tag:adpq_2] [tag:disc_[2\]] [tag:diff_[3.2\]] [tag:ca_[buildings\]] [tag:enemy_[14;26\]]
 ::Wasser 9 Lvl2::[html]<p>Wasser 9 Lvl2 Text?</p>{
 	~%-33.33333%<p>falsch</p>
 	~%-33.33333%<p>falsch</p>
