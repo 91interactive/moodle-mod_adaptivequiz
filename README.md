@@ -300,3 +300,23 @@ Values are examples to get the code working
 - so with different adaptive quizzes you can use different question categories for different question pools
 
 [Tutorial to create question bank categories](https://moodleuserguides.org/guides/create-a-question-bank-category/)
+```
+
+
+Vorübergehende Fähigkeitsschätzung nach jeder Antwort inkl. Standardfehler
+Finale Fähigkeitsschätzung inkl. Standardfehler
+Beantwortete Aufgaben (IDs)
+Rohantwort pro Aufgabe
+Bewertete Antwort pro Aufgabe
+Bearbeitungszeit pro Aufgabe
+
+{
+	personal_data: {},
+	settings: {
+
+	},
+	questions: [],
+	answered_questions:[],
+	raw_answers: [],
+	answer_times: []
+}
