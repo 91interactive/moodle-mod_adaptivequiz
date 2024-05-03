@@ -145,7 +145,7 @@ class attempt {
      * @param int $time Current timestamp.
      * @throws coding_exception
      */
-	public function update_after_question_answered_with_r_response(float $difficultysum,int $standarderror,int $measure, int $time, string $detaildtestresults): void {
+	public function update_after_question_answered_with_r_response(float $difficultysum,float $standarderror,float $measure, int $time, string $detaildtestresults): void {
         if ($this->adpqattempt === null) {
             throw new coding_exception('attempt record must be set already when updating an attempt with any data');
         }

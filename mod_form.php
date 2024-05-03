@@ -241,7 +241,7 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
         $mform->addHelpButton('messageatlastpage', 'messageatlastpageDescription', 'adaptivequiz');
 
 		// adding checkbox for "User-defined specification of proportions of individual content areas in the overall test?"
-		$mform->addElement('advcheckbox', 'contentAreas', '', get_string('contentAreas','adaptivequiz'), array('group' => 1), array(0, 1));
+		$mform->addElement('advcheckbox', 'contentareas', '', get_string('contentareas','adaptivequiz'), array('group' => 1), array(0, 1));
 		
 		// adding content area fields
 		$mform->addElement('text','contentarea1','Inhaltsbereich1'); // TODO Dynamic naming from an excel table
@@ -252,10 +252,10 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
 		$mform->setType('contentarea3',PARAM_NOTAGS);
 		$mform->addElement('text','contentarea4','Inhaltsbereich4'); // TODO Dynamic naming from an excel table
 		$mform->setType('contentarea4',PARAM_NOTAGS);
-		$mform->hideIf('contentarea1','contentAreas','notchecked');
-		$mform->hideIf('contentarea2','contentAreas','notchecked');
-		$mform->hideIf('contentarea3','contentAreas','notchecked');
-		$mform->hideIf('contentarea4','contentAreas','notchecked');
+		$mform->hideIf('contentarea1','contentareas','notchecked');
+		$mform->hideIf('contentarea2','contentareas','notchecked');
+		$mform->hideIf('contentarea3','contentareas','notchecked');
+		$mform->hideIf('contentarea4','contentareas','notchecked');
 
 
         // Grade settings.

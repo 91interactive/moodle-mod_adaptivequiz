@@ -243,13 +243,13 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			$exposure->nitems_exposure = $adaptivequiz->suitabletasks;
 			$data_for_r_server->settings->exposure = $exposure; 
 
-			$contentAreas = new stdClass();
-			$contentAreas->enabled = $adaptivequiz->contentAreas; 
-			$contentAreas->area1 = $adaptivequiz->contentarea1; 
-			$contentAreas->area2 = $adaptivequiz->contentarea2; 
-			$contentAreas->area3 = $adaptivequiz->contentarea3; 
-			$contentAreas->area4 = $adaptivequiz->contentarea4; 
-			$data_for_r_server->settings->content_areas = $contentAreas;
+			$contentareas = new stdClass();
+			$contentareas->enabled = $adaptivequiz->contentareas; //Warning: Undefined property: stdClass::$contentareas in /var/www/html/mod/adaptivequiz/attempt.php on line 247
+			$contentareas->area1 = $adaptivequiz->contentarea1; 
+			$contentareas->area2 = $adaptivequiz->contentarea2; 
+			$contentareas->area3 = $adaptivequiz->contentarea3; 
+			$contentareas->area4 = $adaptivequiz->contentarea4; 
+			$data_for_r_server->settings->content_areas = $contentareas;
 			
 			//CS: user data for r-server
 			$data_for_r_server->person = new stdClass;

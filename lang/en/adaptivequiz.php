@@ -290,5 +290,5 @@ $string['messageatlastpage']="Message on the last page of the test";
 $string['messageatlastpageDescription']="Message on the last page of the test";
 $string['messageatlastpageDescription_help']="Could be used for individual feedback could be used for individual feedback. In other words, either the same thing is there for everyone, or, if we allow individual feedback is then written on the last page.";
 
-$string['contentAreas'] = "User-defined specification of proportions of individual content areas in the overall test?";
+$string['contentareas'] = "User-defined specification of proportions of individual content areas in the overall test?";
 $string['detaildtestresults'] = 'Detailed test results';
