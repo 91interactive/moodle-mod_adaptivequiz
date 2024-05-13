@@ -289,7 +289,7 @@ class attempt {
 
 	public function call_r_server($data){
 		// TODO - Need to call R-Server here
-		$url = 'https://jsonplaceholder.typicode.com/posts';
+		$url = 'http://ikea-m.uni-frankfurt.de/doCAT';//'https://jsonplaceholder.typicode.com/posts'; //http://ikea-m.uni-frankfurt.de/doCAT
 		$decoded_response = NULL;
 		
 
@@ -319,15 +319,19 @@ class attempt {
 		if ($response === FALSE) {
 			echo 'Fehler beim Senden des POST-Requests.';
 		} else {
-			
-			//CS richtig falsch fragen ab 1 - 20
-			// TODO - Hier muss die Antwort des R-Servers verarbeitet werden
-			$decoded_response = json_decode('{
-				"personID": 2376,
-			   	"theta": -0.866876539473478,
-				"SE":0.10676325431541,
-				"nextItem": '. rand(1,20).'
-			   }');
+			// debugging('this is r-server-response:' . $response);
+
+			$decoded_response = json_decode($response);
+			if(false){
+				//CS richtig falsch fragen ab 1 - 20
+				// TODO - Hier muss die Antwort des R-Servers verarbeitet werden
+				$decoded_response = json_decode('{
+					"personID": 2376,
+					"theta": -0.866876539473478,
+					"SE":0.10676325431541,
+					"nextItem": '. rand(1,20).'
+				}');
+			}
 
 
 		}

@@ -205,7 +205,7 @@ Remember that the ability measure does have error associated with it. Be sure to
 | enemey_[array with number] | enemy_[23;31;11] | Enemy question Ids |
 | ca_[array with strings] | ca_[building;wooden] | Categoryname |
 | diff_[array with floats] | diff_[1.2;3.4;5.5] | Category difficulties. Can have multiple float values. <br/>One value on dichotomies questions or multiple values possible on polytomes values separated with ;<br/>Examples:  <br/>cat_diff_[1.2] for dichotomies questions<br/>cat_diff_[1.2;2.34;5.54]  |
-| disc_[array with numbers] | disc_[2] | Discrimination parameter |					
+| disc_[array with numbers] | disc_[2;3] | Discrimination parameter |					
 				
 
 ### Data for R-Server

@@ -274,8 +274,8 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 				array_push($data_for_r_server->test->scoredResponse,$fraction);
 				
 			}
-			$data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33); // 
-			$data_for_r_server->test->timeout = false;
+			$data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33); // todo rm: write correct times
+			$data_for_r_server->test->timeout = false; // todo rm: calculate correct value
 			
 			// CS: prepare answered questions, testsettings and questions for R-Server
 			$data_for_r_server->answeredquestions = $adaptiveattempt->read_attempt_data()->detaildtestresults;
