@@ -35,7 +35,7 @@ if ($ADMIN->fulltree) {
         'adaptivequiz/startinglevel',
         get_string('startinglevel', 'adaptivequiz'),
         get_string('startinglevel_help', 'adaptivequiz'),
-        0,
+        1,
         PARAM_INT
     ));
 
@@ -43,7 +43,7 @@ if ($ADMIN->fulltree) {
         'adaptivequiz/lowestlevel',
         get_string('lowestlevel', 'adaptivequiz'),
         get_string('lowestlevel_help', 'adaptivequiz'),
-        0,
+        1,
         PARAM_INT
     ));
 
@@ -51,7 +51,7 @@ if ($ADMIN->fulltree) {
         'adaptivequiz/highestlevel',
         get_string('highestlevel', 'adaptivequiz'),
         get_string('highestlevel_help', 'adaptivequiz'),
-        0,
+        100,
         PARAM_INT
     ));
 
@@ -59,7 +59,7 @@ if ($ADMIN->fulltree) {
         'adaptivequiz/minimumquestions',
         get_string('minimumquestions', 'adaptivequiz'),
         get_string('minimumquestions_help', 'adaptivequiz'),
-        0,
+        1,
         PARAM_INT
     ));
 
@@ -67,7 +67,7 @@ if ($ADMIN->fulltree) {
         'adaptivequiz/maximumquestions',
         get_string('maximumquestions', 'adaptivequiz'),
         get_string('maximumquestions_help', 'adaptivequiz'),
-        0,
+        1000,
         PARAM_INT
     ));
 
