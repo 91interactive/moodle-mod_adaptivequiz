@@ -33,7 +33,7 @@
 		<FIELD NAME="selecttasktypes" TYPE="char" LENGTH="10" NOTNULL="true" COMMENT="Type of for non adaptive tests"></FIELD>
 		<FIELD NAME="numbercalibrationclusters" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Number of calibration clusters"></FIELD>
 		<FIELD NAME="numberlinkingclusters" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Number of linking clusters"></FIELD>
-		<FIELD NAME="numberadaptivclusters" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Number of adaptive clusters"></FIELD>
+		<FIELD NAME="numberadaptiveclusters" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Number of adaptive clusters"></FIELD>
 		<FIELD NAME="personalparameterestimation" TYPE="char" LENGTH="10" NOTNULL="true" COMMENT="Personal parameter estimation"></FIELD>
 		<FIELD NAME="adaptivepart" TYPE="char" LENGTH="10" NOTNULL="true" COMMENT="Tasks Adaptive part"></FIELD>
 		<FIELD NAME="randomesque_exposure_control" TYPE="int" LENGTH="2" NOTNULL="true" COMMENT="Randomesque Exposure Control"></FIELD>

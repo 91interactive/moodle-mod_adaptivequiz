@@ -262,9 +262,9 @@ $string['numberlinkingclusters'] = "Number of linking clusters";
 $string['numberlinkingclustersDescription'] = "Number of linking clusters";
 $string['numberlinkingclustersDescription_help'] = "Number of task clusters that contain link tasks (items for linking the report metric over time). Linking tasks already have a parameter estimate. Linking clusters are given to each respondent.";
 
-$string['numberadaptivclusters'] = "Number of adaptive clusters";
-$string['numberadaptivclustersDescription'] = "Number of adaptive clusters";
-$string['numberadaptivclustersDescription_help'] = "Number of task clusters in which tasks are selected adaptively. Tasks here already have parameter estimation.";
+$string['numberadaptiveclusters'] = "Number of adaptive clusters";
+$string['numberadaptiveclustersDescription'] = "Number of adaptive clusters";
+$string['numberadaptiveclustersDescription_help'] = "Number of task clusters in which tasks are selected adaptively. Tasks here already have parameter estimation.";
 
 $string['personalparameterestimation'] = "Personal parameter estimation";
 $string['personalparameterestimationDescription'] = "Personal parameter estimation";

@@ -55,9 +55,9 @@ $string['numberlinkingclusters'] = "Anzahl Linkingcluster";
 $string['numberlinkingclustersDescription'] = "Anzahl Linkingcluster";
 $string['numberlinkingclustersDescription_help'] = "Anzahl an Aufgabenclustern, die Linkaufgaben (Items zur Verlinkung der Berichtsmetrik über die Zeit) enthalten. Linkaufgaben haben bereits eine Parameterschätzung. Linkingcluster werden jeder Testperson vorgegeben.";
 
-$string['numberadaptivclusters'] = "Anzahl adaptiver Cluster";
-$string['numberadaptivclustersDescription'] = "Anzahl adaptiver Cluster";
-$string['numberadaptivclustersDescription_help'] = "Anzahl an Aufgabenclustern, in denen Aufgaben adaptiv gewählt werden. Aufgaben hier verfügen bereits über eine Parameterschätzung.";
+$string['numberadaptiveclusters'] = "Anzahl adaptiver Cluster";
+$string['numberadaptiveclustersDescription'] = "Anzahl adaptiver Cluster";
+$string['numberadaptiveclustersDescription_help'] = "Anzahl an Aufgabenclustern, in denen Aufgaben adaptiv gewählt werden. Aufgaben hier verfügen bereits über eine Parameterschätzung.";
 
 $string['personalparameterestimation'] = "Personenparameterschätzung";
 $string['personalparameterestimationDescription'] = "Personenparameterschätzung";

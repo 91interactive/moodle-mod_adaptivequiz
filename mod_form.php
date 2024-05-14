@@ -205,10 +205,10 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
         $mform->addHelpButton('numberlinkingclusters', 'numberlinkingclustersDescription', 'adaptivequiz');
 
 		// Adding the standard "Number of adaptive clusters" field.
-		$mform->addElement('text','numberadaptivclusters',get_string('numberadaptivclusters','adaptivequiz')); // should be only intergers
-		$mform->setType('numberadaptivclusters', PARAM_INT);
-        $mform->addRule('numberadaptivclusters', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addHelpButton('numberadaptivclusters', 'numberadaptivclustersDescription', 'adaptivequiz');
+		$mform->addElement('text','numberadaptiveclusters',get_string('numberadaptiveclusters','adaptivequiz')); // should be only intergers
+		$mform->setType('numberadaptiveclusters', PARAM_INT);
+        $mform->addRule('numberadaptiveclusters', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('numberadaptiveclusters', 'numberadaptiveclustersDescription', 'adaptivequiz');
 		
 		// Adding the standard "Personal parameter estimation" field.
 		$mform->addElement('select', 'personalparameterestimation', get_string('personalparameterestimation', 'adaptivequiz'),  ["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"],["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"]);
@@ -362,8 +362,8 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
 		if (0 >= $data['numberlinkingclusters']) {
             $errors['numberlinkingclusters'] = get_string('formelementnegative', 'adaptivequiz');
         }
-		if (0 >= $data['numberadaptivclusters']) {
-            $errors['numberadaptivclusters'] = get_string('formelementnegative', 'adaptivequiz');
+		if (0 >= $data['numberadaptiveclusters']) {
+            $errors['numberadaptiveclusters'] = get_string('formelementnegative', 'adaptivequiz');
         }
 		if($data['randomesque_exposure_control']){
 			if (0 >= $data['suitabletasks']) {
