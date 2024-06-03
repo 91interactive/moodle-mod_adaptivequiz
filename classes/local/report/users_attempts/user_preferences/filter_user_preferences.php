@@ -19,9 +19,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\users_attempts\user_preferences;
+namespace mod_catadaptivequiz\local\report\users_attempts\user_preferences;
 
-use mod_adaptivequiz\local\report\users_attempts\filter\filter_options;
+use mod_catadaptivequiz\local\report\users_attempts\filter\filter_options;
 
 final class filter_user_preferences {
 

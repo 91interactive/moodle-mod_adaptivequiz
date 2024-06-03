@@ -1,4 +1,4 @@
-@mod @mod_adaptivequiz
+@mod @mod_catadaptivequiz
 Feature: Attempt an adaptive quiz
   In order to demonstrate what I know using the adaptive quiz strategy
   As a student

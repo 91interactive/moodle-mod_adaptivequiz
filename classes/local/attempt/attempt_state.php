@@ -23,7 +23,7 @@
 
 declare(strict_types=1);
 
-namespace mod_adaptivequiz\local\attempt;
+namespace mod_catadaptivequiz\local\attempt;
 
 final class attempt_state {
 

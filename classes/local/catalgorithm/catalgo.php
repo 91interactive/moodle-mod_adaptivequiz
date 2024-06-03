@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local\catalgorithm;
+namespace mod_catadaptivequiz\local\catalgorithm;
 
 use coding_exception;
-use mod_adaptivequiz\local\question\question_answer_evaluation_result;
-use mod_adaptivequiz\local\question\questions_answered_summary;
-use mod_adaptivequiz\local\report\questions_difficulty_range;
+use mod_catadaptivequiz\local\question\question_answer_evaluation_result;
+use mod_catadaptivequiz\local\question\questions_answered_summary;
+use mod_catadaptivequiz\local\report\questions_difficulty_range;
 use moodle_exception;
 use stdClass;
 
@@ -28,7 +28,7 @@ use stdClass;
  *
  * It also recommends whether the calculation has reached an acceptable level of error.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 onwards Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -141,7 +141,7 @@ class catalgo {
         $this->difficultysum = $attemptdifficultysum;
 
         if (!$questionanswerevaluationresult->answer_was_given()) {
-            return determine_next_difficulty_result::with_error(get_string('errorlastattpquest', 'adaptivequiz'));
+            return determine_next_difficulty_result::with_error(get_string('errorlastattpquest', 'catadaptivequiz'));
         }
 
         $questionsattemptednum++;
@@ -162,7 +162,7 @@ class catalgo {
 
         // Test that the sum of incorrect and correct answers equal to the sum of question attempted.
         if ($answersummary->sum_of_answers() != $questionsattemptednum) {
-            return determine_next_difficulty_result::with_error(get_string('errorsumrightwrong', 'adaptivequiz'));
+            return determine_next_difficulty_result::with_error(get_string('errorsumrightwrong', 'catadaptivequiz'));
         }
 
         $this->measure = self::estimate_measure($this->difficultysum, $questionsattemptednum,
@@ -185,7 +185,7 @@ class catalgo {
             $val->definederror = self::convert_logit_to_percent($quizdefinederror);
             $val->definederror = 100 * round($val->definederror, 2);
 
-            return determine_next_difficulty_result::with_error(get_string('calcerrorwithinlimits', 'adaptivequiz', $val));
+            return determine_next_difficulty_result::with_error(get_string('calcerrorwithinlimits', 'catadaptivequiz', $val));
         }
 
         return determine_next_difficulty_result::with_next_difficulty_level_determined($this->nextdifficulty);

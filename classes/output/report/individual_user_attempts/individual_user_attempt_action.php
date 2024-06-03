@@ -17,12 +17,12 @@
 /**
  * Contains definition of a renderable for an action available for an individual user attempt in the report.
  *
- * @package   mod_adaptivequiz
+ * @package   mod_catadaptivequiz
  * @copyright 2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\output\report\individual_user_attempts;
+namespace mod_catadaptivequiz\output\report\individual_user_attempts;
 
 use moodle_url;
 use pix_icon;
@@ -33,7 +33,7 @@ use templatable;
 /**
  * Definition of a renderable for an action available for an individual user attempt in the report.
  *
- * @package mod_adaptivequiz
+ * @package mod_catadaptivequiz
  */
 final class individual_user_attempt_action implements renderable, templatable {
 

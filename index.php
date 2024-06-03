@@ -21,9 +21,9 @@
  */
 
 require_once(dirname(__FILE__).'/../../config.php');
-require_once($CFG->dirroot.'/mod/adaptivequiz/lib.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/lib.php');
 
-use mod_adaptivequiz\event\course_module_instance_list_viewed;
+use mod_catadaptivequiz\event\course_module_instance_list_viewed;
 
 $id = required_param('id', PARAM_INT);   // Course.
 
@@ -35,15 +35,15 @@ course_module_instance_list_viewed::create_from_course($course)->trigger();
 
 $coursecontext = context_course::instance($course->id);
 
-$PAGE->set_url('/mod/adaptivequiz/index.php', array('id' => $id));
+$PAGE->set_url('/mod/catadaptivequiz/index.php', array('id' => $id));
 $PAGE->set_title(format_string($course->fullname));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($coursecontext);
 
 echo $OUTPUT->header();
 
-if (!$adaptivequizinstances = get_all_instances_in_course('adaptivequiz', $course)) {
-    notice(get_string('nonewmodules', 'adaptivequiz'), new moodle_url('/course/view.php', array('id' => $course->id)));
+if (!$adaptivequizinstances = get_all_instances_in_course('catadaptivequiz', $course)) {
+    notice(get_string('nonewmodules', 'catadaptivequiz'), new moodle_url('/course/view.php', array('id' => $course->id)));
 }
 
 $table = new html_table();
@@ -61,12 +61,12 @@ if ($course->format == 'weeks') {
 foreach ($adaptivequizinstances as $adaptivequizinstance) {
     if (!$adaptivequizinstance->visible) {
         $link = html_writer::link(
-            new moodle_url('/mod/adaptivequiz/view.php', array('id' => $adaptivequizinstance->coursemodule)),
+            new moodle_url('/mod/catadaptivequiz/view.php', array('id' => $adaptivequizinstance->coursemodule)),
             format_string($adaptivequizinstance->name, true),
             array('class' => 'dimmed'));
     } else {
         $link = html_writer::link(
-            new moodle_url('/mod/adaptivequiz/view.php', array('id' => $adaptivequizinstance->coursemodule)),
+            new moodle_url('/mod/catadaptivequiz/view.php', array('id' => $adaptivequizinstance->coursemodule)),
             format_string($adaptivequizinstance->name, true));
     }
 
@@ -77,6 +77,6 @@ foreach ($adaptivequizinstances as $adaptivequizinstance) {
     }
 }
 
-echo $OUTPUT->heading(get_string('modulenameplural', 'adaptivequiz'), 2);
+echo $OUTPUT->heading(get_string('modulenameplural', 'catadaptivequiz'), 2);
 echo html_writer::table($table);
 echo $OUTPUT->footer();

@@ -19,15 +19,15 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\completion;
+namespace mod_catadaptivequiz\completion;
 
 use advanced_testcase;
 use cm_info;
 use context_module;
-use mod_adaptivequiz\local\attempt\attempt;
+use mod_catadaptivequiz\local\attempt\attempt;
 
 /**
- * @covers \mod_adaptivequiz\completion\custom_completion
+ * @covers \mod_catadaptivequiz\completion\custom_completion
  */
 class custom_completion_test extends advanced_testcase {
 
@@ -37,7 +37,7 @@ class custom_completion_test extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
 
-        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $adaptivequiz = $adaptivequizgenerator->create_instance(['course' => $course->id, 'completionattemptcompleted' => 1]);
 
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id, $course->id);

@@ -14,20 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local\questionanalysis;
+namespace mod_catadaptivequiz\local\questionanalysis;
 
 use context;
 use InvalidArgumentException;
-use mod_adaptivequiz\local\catalgorithm\catalgo;
-use mod_adaptivequiz\local\questionanalysis\statistics\question_statistic;
-use mod_adaptivequiz\local\questionanalysis\statistics\question_statistic_result;
+use mod_catadaptivequiz\local\catalgorithm\catalgo;
+use mod_catadaptivequiz\local\questionanalysis\statistics\question_statistic;
+use mod_catadaptivequiz\local\questionanalysis\statistics\question_statistic_result;
 use question_definition;
 use stdClass;
 
 /**
  * This class provides a mechanism for analysing the usage, performance, and efficacy of a single question in an adaptive quiz.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 Middlebury College {@link http://www.middlebury.edu/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -77,7 +77,7 @@ class question_analyser {
     /**
      * Add a usage result for this question.
      *
-     * @param int $attemptid Id of a record from {adaptivequiz_attempt}.
+     * @param int $attemptid Id of a record from {catadaptivequiz_attempt}.
      * @param stdClass $user Normally a record from {users}, or and object with 'firstname' and 'lastname' properties.
      * @param attempt_score $score The user's score on this attempt.
      * @param bool $correct True if the user answered correctly.

@@ -22,11 +22,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\users_attempts\user_preferences;
+namespace mod_catadaptivequiz\local\report\users_attempts\user_preferences;
 
 final class user_preferences_repository {
 
-    private const PREFERENCE_NAME = 'adaptivequiz_users_attempts_report';
+    private const PREFERENCE_NAME = 'catadaptivequiz_users_attempts_report';
 
     public static function save(user_preferences $prefs): void {
         global $SESSION;

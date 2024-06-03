@@ -17,7 +17,7 @@
 /**
  * Plugin's settings.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2023 Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,55 +26,55 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_heading(
-        'adaptivequizdefaultsettingsheading',
-        get_string('settingsdefaultsettingsheading', 'adaptivequiz'),
-        get_string('settingsdefaultsettingsheadinginfo', 'adaptivequiz')
+        'catadaptivequizdefaultsettingsheading',
+        get_string('settingsdefaultsettingsheading', 'catadaptivequiz'),
+        get_string('settingsdefaultsettingsheadinginfo', 'catadaptivequiz')
     ));
 
     $settings->add(new admin_setting_configtext(
-        'adaptivequiz/startinglevel',
-        get_string('startinglevel', 'adaptivequiz'),
-        get_string('startinglevel_help', 'adaptivequiz'),
+        'catadaptivequiz/startinglevel',
+        get_string('startinglevel', 'catadaptivequiz'),
+        get_string('startinglevel_help', 'catadaptivequiz'),
         1,
         PARAM_INT
     ));
 
     $settings->add(new admin_setting_configtext(
-        'adaptivequiz/lowestlevel',
-        get_string('lowestlevel', 'adaptivequiz'),
-        get_string('lowestlevel_help', 'adaptivequiz'),
+        'catadaptivequiz/lowestlevel',
+        get_string('lowestlevel', 'catadaptivequiz'),
+        get_string('lowestlevel_help', 'catadaptivequiz'),
         1,
         PARAM_INT
     ));
 
     $settings->add(new admin_setting_configtext(
-        'adaptivequiz/highestlevel',
-        get_string('highestlevel', 'adaptivequiz'),
-        get_string('highestlevel_help', 'adaptivequiz'),
+        'catadaptivequiz/highestlevel',
+        get_string('highestlevel', 'catadaptivequiz'),
+        get_string('highestlevel_help', 'catadaptivequiz'),
         100,
         PARAM_INT
     ));
 
     $settings->add(new admin_setting_configtext(
-        'adaptivequiz/minimumquestions',
-        get_string('minimumquestions', 'adaptivequiz'),
-        get_string('minimumquestions_help', 'adaptivequiz'),
+        'catadaptivequiz/minimumquestions',
+        get_string('minimumquestions', 'catadaptivequiz'),
+        get_string('minimumquestions_help', 'catadaptivequiz'),
         1,
         PARAM_INT
     ));
 
     $settings->add(new admin_setting_configtext(
-        'adaptivequiz/maximumquestions',
-        get_string('maximumquestions', 'adaptivequiz'),
-        get_string('maximumquestions_help', 'adaptivequiz'),
+        'catadaptivequiz/maximumquestions',
+        get_string('maximumquestions', 'catadaptivequiz'),
+        get_string('maximumquestions_help', 'catadaptivequiz'),
         1000,
         PARAM_INT
     ));
 
     $settings->add(new admin_setting_configtext(
-        'adaptivequiz/standarderror',
-        get_string('standarderror', 'adaptivequiz'),
-        get_string('standarderror_help', 'adaptivequiz'),
+        'catadaptivequiz/standarderror',
+        get_string('standarderror', 'catadaptivequiz'),
+        get_string('standarderror_help', 'catadaptivequiz'),
         5,
         PARAM_FLOAT
     ));

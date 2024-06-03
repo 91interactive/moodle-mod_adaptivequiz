@@ -22,9 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\questionanalysis\statistics;
+namespace mod_catadaptivequiz\local\questionanalysis\statistics;
 
-use mod_adaptivequiz\local\questionanalysis\question_analyser;
+use mod_catadaptivequiz\local\questionanalysis\question_analyser;
 
 interface question_statistic {
     /**

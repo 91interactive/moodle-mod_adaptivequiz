@@ -23,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report;
+namespace mod_catadaptivequiz\local\report;
 
 use stdClass;
 
@@ -53,7 +53,7 @@ final class questions_difficulty_range {
     }
 
     /**
-     * @param stdClass $instance A record from {adaptivequiz}.
+     * @param stdClass $instance A record from {catadaptivequiz}.
      */
     public static function from_activity_instance(stdClass $instance): self {
         return new self($instance->lowestlevel, $instance->highestlevel);

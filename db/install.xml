@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/adaptivequiz/db" VERSION="20221102" COMMENT="XMLDB file for Moodle mod/adaptivequiz"
+<XMLDB PATH="mod/catadaptivequiz/db" VERSION="20221102" COMMENT="XMLDB file for Moodle mod/catadaptivequiz"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="adaptivequiz" COMMENT="Adaptive quiz instances table" NEXT="adaptivequiz_question">
+    <TABLE NAME="catadaptivequiz" COMMENT="Adaptive quiz instances table" NEXT="catadaptivequiz_question">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="course id foreign key"/>
@@ -51,7 +51,7 @@
         <KEY NAME="course_foreign" TYPE="foreign" FIELDS="course" REFTABLE="course" REFFIELDS="id" COMMENT="Foreign key to the course table."/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="adaptivequiz_question" COMMENT="An association table for activity instance and question categories.">
+    <TABLE NAME="catadaptivequiz_question" COMMENT="An association table for activity instance and question categories.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="instance" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Activity instance id.  Foreign key to activityquiz."/>
@@ -59,11 +59,11 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="instance_foreign" TYPE="foreign" FIELDS="instance" REFTABLE="adaptivequiz" REFFIELDS="id" COMMENT="Foreign key to adaptivequiz table."/>
+        <KEY NAME="instance_foreign" TYPE="foreign" FIELDS="instance" REFTABLE="catadaptivequiz" REFFIELDS="id" COMMENT="Foreign key to catadaptivequiz table."/>
         <KEY NAME="questioncategory_foreign" TYPE="foreign" FIELDS="questioncategory" REFTABLE="question_categories" REFFIELDS="id" COMMENT="Foreign key to questino_categories table."/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="adaptivequiz_attempt" COMMENT="Logging of attempts">
+    <TABLE NAME="catadaptivequiz_attempt" COMMENT="Logging of attempts">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="instance"/>
         <FIELD NAME="instance" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Activity instance the attempt was for"/>
@@ -72,7 +72,7 @@
         <FIELD NAME="attemptstate" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" COMMENT="The state of the attempt"/>
         <FIELD NAME="attemptstopcriteria" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The reason why the attempt was stopped"/>
         <FIELD NAME="questionsattempted" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The number of question attempted"/>
-		<FIELD NAME="detaildtestresults" TYPE="text" LENGTH="255" NOTNULL="false" DEFAULT="null" SEQUENCE="false" COMMENT="List of questionId, raw answers and rated answers"/>
+		<FIELD NAME="detaildtestresults" TYPE="text" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="List of questionId, raw answers and rated answers"/>
         <FIELD NAME="difficultysum" TYPE="number" LENGTH="10" NOTNULL="true" DEFAULT="0.0" SEQUENCE="false" DECIMALS="7" COMMENT="The sum of difficulty levels attempted measured in logits"/>
         <FIELD NAME="standarderror" TYPE="number" LENGTH="10" NOTNULL="true" DEFAULT="0.0" SEQUENCE="false" DECIMALS="5" COMMENT="The standard error that was achieved during the attempt"/>
         <FIELD NAME="measure" TYPE="number" LENGTH="10" NOTNULL="true" DEFAULT="0.0" SEQUENCE="false" DECIMALS="5" COMMENT="The attempt ability measure in logits"/>
@@ -81,7 +81,7 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="instance_foreign"/>
-        <KEY NAME="instance_foreign" TYPE="foreign" FIELDS="instance" REFTABLE="adaptivequiz" REFFIELDS="id" COMMENT="Foreign key to adaptivequiz table."/>
+        <KEY NAME="instance_foreign" TYPE="foreign" FIELDS="instance" REFTABLE="catadaptivequiz" REFFIELDS="id" COMMENT="Foreign key to catadaptivequiz table."/>
         <KEY NAME="userid_foreign" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" COMMENT="Foreign key to user table."/>
         <KEY NAME="uniqueid_foreign" TYPE="foreign" FIELDS="uniqueid" REFTABLE="question_usages" REFFIELDS="id" COMMENT="Foreign key to question_usages table."/>
       </KEYS>

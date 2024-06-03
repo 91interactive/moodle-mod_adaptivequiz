@@ -21,11 +21,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\users_attempts\sql;
+namespace mod_catadaptivequiz\local\report\users_attempts\sql;
 
 use core\dml\sql_join;
 use core_user\fields;
-use mod_adaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz\local\attempt\attempt_state;
 
 final class sql_and_params {
 
@@ -127,7 +127,7 @@ final class sql_and_params {
             ->get_sql('u', false, '', '', false)->selects
             . ', ' . $attemptsql;
 
-        $from = '{adaptivequiz_attempt} aa JOIN {user} u ON u.id = aa.userid';
+        $from = '{catadaptivequiz_attempt} aa JOIN {user} u ON u.id = aa.userid';
         $where = self::base_where_sql() . ' AND aa.instance = :instance';
         $params = array_merge($params, ['instance' => $adaptivequizid]);
 
@@ -142,7 +142,7 @@ final class sql_and_params {
         $from = "
             {user} u
             $enrolledjoin->joins
-            LEFT JOIN {adaptivequiz_attempt} aa ON (aa.userid = u.id AND aa.instance = :instance)
+            LEFT JOIN {catadaptivequiz_attempt} aa ON (aa.userid = u.id AND aa.instance = :instance)
         ";
         $where = $enrolledjoin->wheres . ' AND aa.id IS NULL';
         $params = array_merge(['instance' => $adaptivequizid], $enrolledjoin->params);
@@ -160,7 +160,7 @@ final class sql_and_params {
         $from = "
             {user} u
             $enrolledjoin->joins
-            JOIN {adaptivequiz_attempt} aa ON (aa.userid = u.id AND aa.instance = :instance)
+            JOIN {catadaptivequiz_attempt} aa ON (aa.userid = u.id AND aa.instance = :instance)
         ";
         $where = $enrolledjoin->wheres;
         $params = array_merge($params, ['instance' => $adaptivequizid], $enrolledjoin->params);
@@ -175,7 +175,7 @@ final class sql_and_params {
 
         $fields = 'DISTINCT u.id' . fields::for_name()->including('email')->get_sql('u')->selects
             . ', ' . $attemptsql;
-        $from = '{adaptivequiz_attempt} aa JOIN {user} u ON u.id = aa.userid';
+        $from = '{catadaptivequiz_attempt} aa JOIN {user} u ON u.id = aa.userid';
         $where = self::base_where_sql() . "
             AND aa.instance = :instance AND NOT EXISTS (
                 SELECT DISTINCT u.id FROM {user} u
@@ -193,39 +193,39 @@ final class sql_and_params {
     private static function attempt_sql_and_params(): array {
         return [
             '(
-                SELECT COUNT(*) FROM {adaptivequiz_attempt} caa
+                SELECT COUNT(*) FROM {catadaptivequiz_attempt} caa
                 WHERE caa.userid = u.id AND caa.instance = aa.instance
             ) AS attemptsnum,
             (
-                SELECT maa.measure FROM {adaptivequiz_attempt} maa
+                SELECT maa.measure FROM {catadaptivequiz_attempt} maa
                 WHERE maa.instance = aa.instance AND maa.userid = u.id AND maa.attemptstate = :attemptstate1
                 AND maa.standarderror > 0.0
                 ORDER BY measure DESC
                 LIMIT 1
             ) AS measure,
             (
-                SELECT saa.standarderror FROM {adaptivequiz_attempt} saa
+                SELECT saa.standarderror FROM {catadaptivequiz_attempt} saa
                 WHERE saa.instance = aa.instance AND saa.userid = u.id AND saa.attemptstate = :attemptstate2
                 AND saa.standarderror > 0.0
                 ORDER BY measure DESC
                 LIMIT 1
             ) AS stderror,
             (
-                SELECT taa.timemodified FROM {adaptivequiz_attempt} taa
+                SELECT taa.timemodified FROM {catadaptivequiz_attempt} taa
                 WHERE taa.instance = aa.instance AND taa.userid = u.id AND taa.attemptstate = :attemptstate3
                 AND taa.standarderror > 0.0
                 ORDER BY measure DESC
                 LIMIT 1
             ) AS attempttimefinished,
             (
-                SELECT iaa.id FROM {adaptivequiz_attempt} iaa
+                SELECT iaa.id FROM {catadaptivequiz_attempt} iaa
                 WHERE iaa.instance = aa.instance AND iaa.userid = u.id AND iaa.attemptstate = :attemptstate4
                 AND iaa.standarderror > 0.0
                 ORDER BY measure DESC
                 LIMIT 1
             ) AS attemptid,
 			(
-				SELECT GROUP_CONCAT(detaildtestresults SEPARATOR ", ") as detaildtestresults from mdl_adaptivequiz_attempt paa
+				SELECT GROUP_CONCAT(detaildtestresults SEPARATOR ", ") as detaildtestresults from mdl_catadaptivequiz_attempt paa
 				WHERE  paa.instance = aa.instance AND paa.userid = u.id AND detaildtestresults IS NOT NULL
 			) AS detaildtestresults'
             ,

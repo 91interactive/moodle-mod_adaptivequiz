@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local\itemadministration;
+namespace mod_catadaptivequiz\local\itemadministration;
 
-use mod_adaptivequiz\local\attempt\attempt;
-use mod_adaptivequiz\local\catalgorithm\catalgo;
-use mod_adaptivequiz\local\catalgorithm\determine_next_difficulty_result;
-use mod_adaptivequiz\local\fetchquestion;
-use mod_adaptivequiz\local\report\questions_difficulty_range;
+use mod_catadaptivequiz\local\attempt\attempt;
+use mod_catadaptivequiz\local\catalgorithm\catalgo;
+use mod_catadaptivequiz\local\catalgorithm\determine_next_difficulty_result;
+use mod_catadaptivequiz\local\fetchquestion;
+use mod_catadaptivequiz\local\report\questions_difficulty_range;
 use question_bank;
 use question_engine;
 use question_state_gaveup;
@@ -36,7 +36,7 @@ use stdClass;
  *
  * At first step this is mainly extraction of some code from the irrelevant class.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2023 Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -102,14 +102,14 @@ final class item_administration {
         if (!$this->level_in_bounds($nextdifficultylevel, $adaptivequiz)) {
 
             return item_administration_evaluation::with_stoppage_reason(
-                get_string('leveloutofbounds', 'adaptivequiz', $nextdifficultylevel)
+                get_string('leveloutofbounds', 'catadaptivequiz', $nextdifficultylevel)
             );
         }
 
         // Check if the attempt has reached the maximum number of questions attempted.
         if ($questionsattempted >= $adaptivequiz->maximumquestions) {
 
-            return item_administration_evaluation::with_stoppage_reason(get_string('maxquestattempted', 'adaptivequiz'));
+            return item_administration_evaluation::with_stoppage_reason(get_string('maxquestattempted', 'catadaptivequiz'));
         }
 
         // Find the last question viewed/answered by the user.
@@ -163,7 +163,7 @@ final class item_administration {
 
             // If this condition is met, then something went wrong because the slot id is empty BUT the questions attempted is
             // greater than zero. Stop the attempt.
-            return item_administration_evaluation::with_stoppage_reason(get_string('errorattemptstate', 'adaptivequiz'));
+            return item_administration_evaluation::with_stoppage_reason(get_string('errorattemptstate', 'catadaptivequiz'));
         }
 
         // If the slot property is set, then we have a question that is ready to be attempted.  No more process is required.
@@ -182,7 +182,7 @@ final class item_administration {
         if (empty($status)) {
 
             return item_administration_evaluation::with_stoppage_reason(
-                get_string('errorfetchingquest', 'adaptivequiz', $nextdifficultylevel)
+                get_string('errorfetchingquest', 'catadaptivequiz', $nextdifficultylevel)
             );
         }
 
@@ -193,7 +193,7 @@ final class item_administration {
      * This function checks to see if the difficulty level is out of the boundaries set for the attempt.
      *
      * @param int $level The difficulty level requested.
-     * @param stdClass $adaptivequiz An {adaptivequiz} record.
+     * @param stdClass $adaptivequiz An {catadaptivequiz} record.
      * @return bool
      */
     private function level_in_bounds(int $level, stdClass $adaptivequiz): bool {
@@ -250,7 +250,7 @@ final class item_administration {
         if (empty($questionids)) {
 
             return item_administration_evaluation::with_stoppage_reason(
-                get_string('errorfetchingquest', 'adaptivequiz', $nextdifficultylevel)
+                get_string('errorfetchingquest', 'catadaptivequiz', $nextdifficultylevel)
             );
         }
 

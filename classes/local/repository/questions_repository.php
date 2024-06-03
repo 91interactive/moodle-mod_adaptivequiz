@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\repository;
+namespace mod_catadaptivequiz\local\repository;
 
 use coding_exception;
 use core_question\local\bank\question_version_status;

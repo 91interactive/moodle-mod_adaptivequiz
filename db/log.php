@@ -17,7 +17,7 @@
 /**
  * Definition of log events for the adaptive quiz module.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @category   log
  * @copyright  2013 onwards Remote-Learner {@link http://www.remote-learner.ca/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,16 +28,16 @@ defined('MOODLE_INTERNAL') || die();
 global $DB;
 
 $logs = array(
-    array('module' => 'adaptivequiz', 'action' => 'view', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'add', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'update', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'report', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'attempt', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'submit', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'review', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'start attempt', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'close attempt', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'start attempt', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'continue attempt', 'mtable' => 'adaptivequiz', 'field' => 'name'),
-    array('module' => 'adaptivequiz', 'action' => 'start attempt', 'mtable' => 'adaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'view', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'add', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'update', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'report', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'attempt', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'submit', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'review', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'start attempt', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'close attempt', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'start attempt', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'continue attempt', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
+    array('module' => 'catadaptivequiz', 'action' => 'start attempt', 'mtable' => 'catadaptivequiz', 'field' => 'name'),
 );

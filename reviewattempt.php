@@ -24,22 +24,22 @@
 
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/tag/lib.php');
-require_once($CFG->dirroot . '/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot . '/mod/catadaptivequiz/locallib.php');
 
 $attemptid = required_param('attempt', PARAM_INT);
 $page = optional_param('page', 0, PARAM_INT);
 $tab = optional_param('tab', 'attemptsummary', PARAM_ALPHA);
 
-$attempt = $DB->get_record('adaptivequiz_attempt', ['id' => $attemptid], '*', MUST_EXIST);
-$adaptivequiz = $DB->get_record('adaptivequiz', ['id' => $attempt->instance], '*', MUST_EXIST);
-$cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id, $adaptivequiz->course, false, MUST_EXIST);
+$attempt = $DB->get_record('catadaptivequiz_attempt', ['id' => $attemptid], '*', MUST_EXIST);
+$adaptivequiz = $DB->get_record('catadaptivequiz', ['id' => $attempt->instance], '*', MUST_EXIST);
+$cm = get_coursemodule_from_instance('catadaptivequiz', $adaptivequiz->id, $adaptivequiz->course, false, MUST_EXIST);
 $course = $DB->get_record('course', ['id' => $adaptivequiz->course], '*', MUST_EXIST);
 
 require_login($course, true, $cm);
 
 $context = context_module::instance($cm->id);
 
-require_capability('mod/adaptivequiz:viewreport', $context);
+require_capability('mod/catadaptivequiz:viewreport', $context);
 
 $user = $DB->get_record('user', ['id' => $attempt->userid], '*', MUST_EXIST);
 $quba = question_engine::load_questions_usage_by_activity($attempt->uniqueid);
@@ -48,18 +48,18 @@ $a = new stdClass();
 $a->quizname = format_string($adaptivequiz->name);
 $a->fullname = fullname($user);
 $a->finished = userdate($attempt->timemodified);
-$title = get_string('reportattemptreviewpageheading', 'adaptivequiz', $a);
+$title = get_string('reportattemptreviewpageheading', 'catadaptivequiz', $a);
 
-$PAGE->set_url('/mod/adaptivequiz/reviewattempt.php', ['attempt' => $attempt->id, 'tab' => $tab]);
+$PAGE->set_url('/mod/catadaptivequiz/reviewattempt.php', ['attempt' => $attempt->id, 'tab' => $tab]);
 $PAGE->set_title($title);
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 $PAGE->navbar->add(get_string('reports'));
-$PAGE->navbar->add(get_string('reportuserattemptstitleshort', 'adaptivequiz', fullname($user)),
-    new moodle_url('/mod/adaptivequiz/viewattemptreport.php', ['userid' => $user->id, 'cmid' => $cm->id]));
-$PAGE->navbar->add(get_string('reviewattempt', 'adaptivequiz'));
+$PAGE->navbar->add(get_string('reportuserattemptstitleshort', 'catadaptivequiz', fullname($user)),
+    new moodle_url('/mod/catadaptivequiz/viewattemptreport.php', ['userid' => $user->id, 'cmid' => $cm->id]));
+$PAGE->navbar->add(get_string('reviewattempt', 'catadaptivequiz'));
 
-$renderer = $PAGE->get_renderer('mod_adaptivequiz');
+$renderer = $PAGE->get_renderer('mod_catadaptivequiz');
 
 echo $renderer->print_header();
 echo $renderer->heading($title);

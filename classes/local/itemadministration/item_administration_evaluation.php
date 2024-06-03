@@ -16,14 +16,14 @@
 
 declare(strict_types=1);
 
-namespace mod_adaptivequiz\local\itemadministration;
+namespace mod_catadaptivequiz\local\itemadministration;
 
 use coding_exception;
 
 /**
  * A value object representing result of assessing whether the next item (question) can be administered during a CAT session.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2023 Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

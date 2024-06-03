@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local\questionanalysis;
+namespace mod_catadaptivequiz\local\questionanalysis;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -23,15 +23,15 @@ require_once($CFG->dirroot.'/tag/lib.php');
 use core_tag_tag;
 use Exception;
 use InvalidArgumentException;
-use mod_adaptivequiz\local\attempt\attempt_state;
-use mod_adaptivequiz\local\questionanalysis\statistics\question_statistic;
+use mod_catadaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz\local\questionanalysis\statistics\question_statistic;
 use question_engine;
 use stdClass;
 
 /**
  * Questions-analyser class. The class provides a mechanism for loading and analysing question usage, performance, and efficacy.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -62,10 +62,10 @@ class quiz_analyser {
     public function load_attempts($instance) {
         global $DB;
 
-        $adaptivequiz  = $DB->get_record('adaptivequiz', ['id' => $instance], '*');
+        $adaptivequiz  = $DB->get_record('catadaptivequiz', ['id' => $instance], '*');
 
         // Get all of the completed attempts for this adaptive quiz instance.
-        $attempts  = $DB->get_records('adaptivequiz_attempt',
+        $attempts  = $DB->get_records('catadaptivequiz_attempt',
             ['instance' => $instance, 'attemptstate' => attempt_state::COMPLETED]);
 
         foreach ($attempts as $attempt) {
@@ -76,7 +76,7 @@ class quiz_analyser {
             $user = $DB->get_record('user', ['id' => $attempt->userid]);
             if (!$user) {
                 $user = new stdClass();
-                $user->firstname = get_string('unknownuser', 'adaptivequiz');
+                $user->firstname = get_string('unknownuser', 'catadaptivequiz');
                 $user->lastname = '#' . $attempt->userid;
             }
 
@@ -130,9 +130,9 @@ class quiz_analyser {
      */
     public function get_header() {
         $header = array();
-        $header['id'] = get_string('id', 'adaptivequiz');
-        $header['name'] = get_string('adaptivequizname', 'adaptivequiz');
-        $header['level'] = get_string('attemptquestion_level', 'adaptivequiz');
+        $header['id'] = get_string('id', 'catadaptivequiz');
+        $header['name'] = get_string('catadaptivequizname', 'catadaptivequiz');
+        $header['level'] = get_string('attemptquestion_level', 'catadaptivequiz');
         foreach ($this->statistics as $key => $statistic) {
             $header[$key] = $statistic->get_display_name();
         }

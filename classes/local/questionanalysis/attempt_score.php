@@ -22,9 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\questionanalysis;
+namespace mod_catadaptivequiz\local\questionanalysis;
 
-use mod_adaptivequiz\local\catalgorithm\catalgo;
+use mod_catadaptivequiz\local\catalgorithm\catalgo;
 
 class attempt_score {
 

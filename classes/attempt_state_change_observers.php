@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz;
+namespace mod_catadaptivequiz;
 
 use completion_info;
 use core\event\base;
@@ -32,10 +32,10 @@ class attempt_state_change_observers {
         global $DB;
 
         // Update completion state if enabled.
-        if (!$attempt = $event->get_record_snapshot('adaptivequiz_attempt', $event->objectid)) {
+        if (!$attempt = $event->get_record_snapshot('catadaptivequiz_attempt', $event->objectid)) {
             return;
         }
-        if (!$adaptivequiz = $DB->get_record('adaptivequiz', ['id' => $attempt->instance])) {
+        if (!$adaptivequiz = $DB->get_record('catadaptivequiz', ['id' => $attempt->instance])) {
             return;
         }
         if (!$course = $DB->get_record('course', ['id' => $adaptivequiz->course])) {
@@ -49,7 +49,7 @@ class attempt_state_change_observers {
         if (!$adaptivequiz->completionattemptcompleted) {
             return;
         }
-        if (!$cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id, $adaptivequiz->course)) {
+        if (!$cm = get_coursemodule_from_instance('catadaptivequiz', $adaptivequiz->id, $adaptivequiz->course)) {
             return;
         }
         $completion->update_state($cm, COMPLETION_COMPLETE, $event->userid);

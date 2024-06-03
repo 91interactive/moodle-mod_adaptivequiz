@@ -19,7 +19,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\individual_user_attempts;
+namespace mod_catadaptivequiz\local\report\individual_user_attempts;
 
 final class filter {
 

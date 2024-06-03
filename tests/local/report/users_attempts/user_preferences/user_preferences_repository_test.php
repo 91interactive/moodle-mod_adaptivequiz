@@ -19,12 +19,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\users_attempts\user_preferences;
+namespace mod_catadaptivequiz\local\report\users_attempts\user_preferences;
 
 use advanced_testcase;
 
 /**
- * @covers \mod_adaptivequiz\local\report\users_attempts\user_preferences\user_preferences_repository
+ * @covers \mod_catadaptivequiz\local\report\users_attempts\user_preferences\user_preferences_repository
  */
 class user_preferences_repository_test extends advanced_testcase {
 

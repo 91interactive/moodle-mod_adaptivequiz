@@ -23,17 +23,17 @@
  */
 
 require_once(dirname(__FILE__).'/../../config.php');
-require_once($CFG->dirroot.'/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/locallib.php');
 
-use mod_adaptivequiz\local\report\individual_user_attempts\filter as user_attempts_table;
-use mod_adaptivequiz\local\report\individual_user_attempts\table as individual_user_attempts_table;
-use mod_adaptivequiz\local\report\questions_difficulty_range;
+use mod_catadaptivequiz\local\report\individual_user_attempts\filter as user_attempts_table;
+use mod_catadaptivequiz\local\report\individual_user_attempts\table as individual_user_attempts_table;
+use mod_catadaptivequiz\local\report\questions_difficulty_range;
 
 $id = required_param('cmid', PARAM_INT);
 $userid = required_param('userid', PARAM_INT);
 
-$cm = get_coursemodule_from_id('adaptivequiz', $id, 0, false, MUST_EXIST);
-$adaptivequiz = $DB->get_record('adaptivequiz', ['id' => $cm->instance], '*', MUST_EXIST);
+$cm = get_coursemodule_from_id('catadaptivequiz', $id, 0, false, MUST_EXIST);
+$adaptivequiz = $DB->get_record('catadaptivequiz', ['id' => $cm->instance], '*', MUST_EXIST);
 $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 $user = $DB->get_record('user', ['id' => $userid], '*', MUST_EXIST);
 
@@ -41,21 +41,21 @@ require_login($course, true, $cm);
 
 $context = context_module::instance($cm->id);
 
-require_capability('mod/adaptivequiz:viewreport', $context);
+require_capability('mod/catadaptivequiz:viewreport', $context);
 
 $PAGE->set_context($context);
-$PAGE->set_url('/mod/adaptivequiz/viewattemptreport.php', ['cmid' => $cm->id, 'userid' => $user->id]);
+$PAGE->set_url('/mod/catadaptivequiz/viewattemptreport.php', ['cmid' => $cm->id, 'userid' => $user->id]);
 
 $a = new stdClass();
 $a->quizname = format_string($adaptivequiz->name);
 $a->username = fullname($user);
-$title = get_string('reportindividualuserattemptpageheading', 'adaptivequiz', $a);
+$title = get_string('reportindividualuserattemptpageheading', 'catadaptivequiz', $a);
 $PAGE->set_title($title);
 
 $PAGE->set_heading(format_string($course->fullname));
 
-/** @var mod_adaptivequiz_renderer $renderer */
-$renderer = $PAGE->get_renderer('mod_adaptivequiz');
+/** @var mod_catadaptivequiz_renderer $renderer */
+$renderer = $PAGE->get_renderer('mod_catadaptivequiz');
 
 $header = $renderer->print_header();
 $footer = $renderer->print_footer();

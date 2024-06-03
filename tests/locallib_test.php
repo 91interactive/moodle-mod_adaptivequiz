@@ -22,21 +22,21 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz;
+namespace mod_catadaptivequiz;
 
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-require_once($CFG->dirroot.'/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/locallib.php');
 
 use advanced_testcase;
 use context_module;
-use mod_adaptivequiz\event\attempt_completed;
-use mod_adaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz\event\attempt_completed;
+use mod_catadaptivequiz\local\attempt\attempt_state;
 
 /**
- * @group mod_adaptivequiz
+ * @group mod_catadaptivequiz
  */
 class locallib_test extends advanced_testcase {
 
@@ -56,7 +56,7 @@ class locallib_test extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course(array('name' => 'Some course', 'category' => $category->id));
 
         // Create activity.
-        $generator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $generator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $adaptivequiz = $generator->create_instance(array('course' => $course->id));
 
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id);
@@ -64,11 +64,11 @@ class locallib_test extends advanced_testcase {
     }
 
     /**
-     * This functions loads data via the tests/fixtures/mod_adaptivequiz.xml file
+     * This functions loads data via the tests/fixtures/mod_catadaptivequiz.xml file
      */
     protected function setup_test_data_xml() {
         $this->dataset_from_files(
-            [__DIR__.'/fixtures/mod_adaptivequiz.xml']
+            [__DIR__.'/fixtures/mod_catadaptivequiz.xml']
         )->to_database();
     }
 

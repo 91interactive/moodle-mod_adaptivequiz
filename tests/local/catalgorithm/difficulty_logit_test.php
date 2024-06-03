@@ -20,14 +20,14 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\catalgorithm;
+namespace mod_catadaptivequiz\local\catalgorithm;
 
 use base_testcase;
 use InvalidArgumentException;
 
 /**
- * @group mod_adaptivequiz
- * @covers \mod_adaptivequiz\local\catalgorithm\difficulty_logit
+ * @group mod_catadaptivequiz
+ * @covers \mod_catadaptivequiz\local\catalgorithm\difficulty_logit
  */
 class difficulty_logit_test extends base_testcase {
 

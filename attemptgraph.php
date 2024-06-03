@@ -23,11 +23,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use mod_adaptivequiz\local\catalgorithm\catalgo;
+use mod_catadaptivequiz\local\catalgorithm\catalgo;
 
 require_once(dirname(__FILE__).'/../../config.php');
 require_once($CFG->dirroot.'/tag/lib.php');
-require_once($CFG->dirroot.'/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/locallib.php');
 require_once($CFG->dirroot.'/lib/graphlib.php');
 
 $id = required_param('cmid', PARAM_INT);
@@ -35,7 +35,7 @@ $uniqueid = required_param('uniqueid', PARAM_INT);
 $userid = required_param('userid', PARAM_INT);
 $page = optional_param('page', 0, PARAM_INT);
 
-if (!$cm = get_coursemodule_from_id('adaptivequiz', $id)) {
+if (!$cm = get_coursemodule_from_id('catadaptivequiz', $id)) {
     throw new moodle_exception('invalidcoursemodule');
 }
 if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
@@ -45,13 +45,13 @@ if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 
-require_capability('mod/adaptivequiz:viewreport', $context);
+require_capability('mod/catadaptivequiz:viewreport', $context);
 
 $param = array('uniqueid' => $uniqueid, 'userid' => $userid, 'activityid' => $cm->instance);
 $sql = 'SELECT a.name, a.highestlevel, a.lowestlevel, a.startinglevel, aa.timecreated, aa.timemodified, aa.attemptstate,
                aa.attemptstopcriteria, aa.questionsattempted, aa.difficultysum, aa.standarderror, aa.measure
-          FROM {adaptivequiz} a
-          JOIN {adaptivequiz_attempt} aa ON a.id = aa.instance
+          FROM {catadaptivequiz} a
+          JOIN {catadaptivequiz_attempt} aa ON a.id = aa.instance
          WHERE aa.uniqueid = :uniqueid
                AND aa.userid = :userid
                AND a.id = :activityid
@@ -60,13 +60,13 @@ $adaptivequiz  = $DB->get_record_sql($sql, $param);
 $user = $DB->get_record('user', array('id' => $userid));
 if (!$user) {
     $user = new stdClass();
-    $user->firstname = get_string('unknownuser', 'adaptivequiz');
+    $user->firstname = get_string('unknownuser', 'catadaptivequiz');
     $user->lastname = '#'.$userid;
 }
 
 $g = new graph(750, 300);
 $g->parameter['title'] = format_string($adaptivequiz->name).' for '.$user->firstname." ".$user->lastname;
-$g->parameter['y_label_left'] = get_string('attemptquestion_ability', 'adaptivequiz');
+$g->parameter['y_label_left'] = get_string('attemptquestion_ability', 'catadaptivequiz');
 $g->parameter['legend']        = 'outside-top';
 $g->parameter['legend_border'] = 'black';
 $g->parameter['legend_offset'] = 4;
@@ -149,14 +149,14 @@ $g->y_data['error_max'] = $errormaximums;
 $g->y_data['error_min'] = $errorminimums;
 
 $g->y_format['qdiff'] = array('colour' => 'blue', 'line' => 'brush', 'brush_size' => 2, 'shadow' => 'none',
-    'legend' => get_string('attemptquestion_level', 'adaptivequiz'));
+    'legend' => get_string('attemptquestion_level', 'catadaptivequiz'));
 $g->y_format['target_level'] = array('colour' => 'green', 'line' => 'brush', 'brush_size' => 1, 'shadow' => 'none',
-    'legend' => get_string('graphlegend_target', 'adaptivequiz'));
+    'legend' => get_string('graphlegend_target', 'catadaptivequiz'));
 $g->y_format['ability'] = array('colour' => 'red', 'line' => 'brush', 'brush_size' => 2, 'shadow' => 'none',
-    'legend' => get_string('attemptquestion_ability', 'adaptivequiz'));
+    'legend' => get_string('attemptquestion_ability', 'catadaptivequiz'));
 $g->colour['pink'] = imagecolorallocate($g->image, 0xFF, 0xE5, 0xE5);
 $g->y_format['error_max'] = array('colour' => 'pink', 'area' => 'fill', 'shadow' => 'none',
-    'legend' => get_string('graphlegend_error', 'adaptivequiz'));
+    'legend' => get_string('graphlegend_error', 'catadaptivequiz'));
 $g->y_format['error_min'] = array('colour' => 'white', 'area' => 'fill', 'shadow' => 'none');
 
 $g->parameter['y_min_left'] = $adaptivequiz->lowestlevel;

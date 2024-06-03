@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\output;
+namespace mod_catadaptivequiz\output;
 
 use renderable;
 use stdClass;
@@ -42,7 +42,7 @@ final class ability_measure implements renderable {
     public $highestquestiondifficulty;
 
     /**
-     * A convenience method to convert the object to what {@link mod_adaptivequiz_renderer::format_measure()} expects
+     * A convenience method to convert the object to what {@link mod_catadaptivequiz_renderer::format_measure()} expects
      * to produce a formatted ability measure.
      */
     public function as_object_to_format(): stdClass {
@@ -57,7 +57,7 @@ final class ability_measure implements renderable {
     /**
      * A named constructor to set up the object and increase code readability.
      *
-     * @param stdClass $adaptivequiz A record from {adaptivequiz}. lowestlevel and highestlevel are the expected fields.
+     * @param stdClass $adaptivequiz A record from {catadaptivequiz}. lowestlevel and highestlevel are the expected fields.
      * @param float $measurevalue
      * @return self
      */

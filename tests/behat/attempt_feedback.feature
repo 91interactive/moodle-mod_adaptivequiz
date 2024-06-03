@@ -1,4 +1,4 @@
-@mod @mod_adaptivequiz
+@mod @mod_catadaptivequiz
 Feature: Attempt feedback
   In order to get inspired and engaged
   As a student

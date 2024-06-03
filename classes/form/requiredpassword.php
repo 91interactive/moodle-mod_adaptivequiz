@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\form;
+namespace mod_catadaptivequiz\form;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -52,7 +52,7 @@ class requiredpassword extends moodleform {
         }
 
         $mform->addElement('header', 'passwordheader', get_string('password'));
-        $mform->addElement('static', 'passwordmessage', '', get_string('requirepasswordmessage', 'adaptivequiz'));
+        $mform->addElement('static', 'passwordmessage', '', get_string('requirepasswordmessage', 'catadaptivequiz'));
 
         $attr = array('style' => 'color:red;', 'class' => 'wrongpassword');
         $html = html_writer::start_tag('div', $attr);
@@ -63,7 +63,7 @@ class requiredpassword extends moodleform {
 
         // Don't use the 'proper' field name of 'password' since that get's
         // Firefox's password auto-complete over-excited.
-        $mform->addElement('password', 'quizpassword', get_string('enterrequiredpassword', 'adaptivequiz'));
+        $mform->addElement('password', 'quizpassword', get_string('enterrequiredpassword', 'catadaptivequiz'));
 
         $this->add_action_buttons(true, get_string('continue'));
     }

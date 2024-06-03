@@ -23,26 +23,26 @@
  */
 
 require_once(__DIR__ . '/../../config.php');
-require_once($CFG->dirroot . '/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot . '/mod/catadaptivequiz/locallib.php');
 
-use mod_adaptivequiz\output\ability_measure;
+use mod_catadaptivequiz\output\ability_measure;
 
 $cmid = required_param('cmid', PARAM_INT); // Course module id.
 $instance = required_param('id', PARAM_INT); // Activity instance id.
 $uniqueid = required_param('uattid', PARAM_INT); // Attempt unique id.
 
-if (!$cm = get_coursemodule_from_id('adaptivequiz', $cmid)) {
+if (!$cm = get_coursemodule_from_id('catadaptivequiz', $cmid)) {
     throw new moodle_exception('invalidcoursemodule');
 }
 if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
     throw new moodle_exception('coursemisconf');
 }
 
-$adaptivequiz = $DB->get_record('adaptivequiz', ['id' => $cm->instance], '*', MUST_EXIST);
+$adaptivequiz = $DB->get_record('catadaptivequiz', ['id' => $cm->instance], '*', MUST_EXIST);
 
 $abilitymeasurerenderable = null;
 if ($adaptivequiz->showabilitymeasure) {
-    $abilitymeasurevalue = $DB->get_field('adaptivequiz_attempt', 'measure', ['uniqueid' => $uniqueid], MUST_EXIST);
+    $abilitymeasurevalue = $DB->get_field('catadaptivequiz_attempt', 'measure', ['uniqueid' => $uniqueid], MUST_EXIST);
     $abilitymeasurerenderable = ability_measure::of_attempt_on_adaptive_quiz($adaptivequiz, $abilitymeasurevalue);
 }
 
@@ -56,17 +56,17 @@ $validattempt = adaptivequiz_uniqueid_part_of_attempt($uniqueid, $instance, $USE
 
 // Display an error message if this is not the owner of the attempt.
 if (!$validattempt) {
-    $url = new moodle_url('/mod/adaptivequiz/attempt.php', array('cmid' => $cm->id));
-    throw new moodle_exception('notyourattempt', 'adaptivequiz', $url);
+    $url = new moodle_url('/mod/catadaptivequiz/attempt.php', array('cmid' => $cm->id));
+    throw new moodle_exception('notyourattempt', 'catadaptivequiz', $url);
 }
 
-$PAGE->set_url('/mod/adaptivequiz/view.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/catadaptivequiz/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($adaptivequiz->name));
 $PAGE->set_context($context);
 $PAGE->activityheader->disable();
 $PAGE->add_body_class('limitedwidth');
 
-$output = $PAGE->get_renderer('mod_adaptivequiz');
+$output = $PAGE->get_renderer('mod_catadaptivequiz');
 
 // Init secure window if enabled.
 $popup = false;

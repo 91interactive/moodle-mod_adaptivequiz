@@ -17,7 +17,7 @@
 /**
  * Contains function with the definition of upgrade steps for the plugin.
  *
- * @package   mod_adaptivequiz
+ * @package   mod_catadaptivequiz
  * @copyright 2013 Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright 2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,14 +28,14 @@
  *
  * @param mixed $oldversion
  */
-function xmldb_adaptivequiz_upgrade($oldversion) {
+function xmldb_catadaptivequiz_upgrade($oldversion) {
     global $CFG, $DB;
 
     $dbman = $DB->get_manager();
 
     if ($oldversion < 2014020400) {
         // Define field grademethod.
-        $table = new xmldb_table('adaptivequiz');
+        $table = new xmldb_table('catadaptivequiz');
         $field = new xmldb_field('grademethod', XMLDB_TYPE_INTEGER, '3', null, XMLDB_NOTNULL, null, 1, 'startinglevel');
 
         // Conditionally add field grademethod.
@@ -44,11 +44,11 @@ function xmldb_adaptivequiz_upgrade($oldversion) {
         }
 
         // Quiz savepoint reached.
-        upgrade_mod_savepoint(true, 2014020400, 'adaptivequiz');
+        upgrade_mod_savepoint(true, 2014020400, 'catadaptivequiz');
     }
 
     if ($oldversion < 2022012600) {
-        $table = new xmldb_table('adaptivequiz');
+        $table = new xmldb_table('catadaptivequiz');
         $field = new xmldb_field('showabilitymeasure', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, false, '0',
             'attemptfeedbackformat');
 
@@ -56,22 +56,22 @@ function xmldb_adaptivequiz_upgrade($oldversion) {
             $dbman->add_field($table, $field);
         }
 
-        upgrade_mod_savepoint(true, 2022012600, 'adaptivequiz');
+        upgrade_mod_savepoint(true, 2022012600, 'catadaptivequiz');
     }
 
     if ($oldversion < 2022092600) {
-        $table = new xmldb_table('adaptivequiz');
+        $table = new xmldb_table('catadaptivequiz');
         $field = new xmldb_field('completionattemptcompleted', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, false, 0);
 
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        upgrade_mod_savepoint(true, 2022092600, 'adaptivequiz');
+        upgrade_mod_savepoint(true, 2022092600, 'catadaptivequiz');
     }
 
     if ($oldversion < 2022110200) {
-        $table = new xmldb_table('adaptivequiz');
+        $table = new xmldb_table('catadaptivequiz');
         $field = new xmldb_field('showattemptprogress', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0,
             'showabilitymeasure');
 
@@ -79,11 +79,11 @@ function xmldb_adaptivequiz_upgrade($oldversion) {
             $dbman->add_field($table, $field);
         }
 
-        upgrade_mod_savepoint(true, 2022110200, 'adaptivequiz');
+        upgrade_mod_savepoint(true, 2022110200, 'catadaptivequiz');
     }
 
 	if ($oldversion < 2023021500) {
-        $table = new xmldb_table('adaptivequiz_attempt');
+        $table = new xmldb_table('catadaptivequiz_attempt');
         $field = new xmldb_field('detaildtestresults', XMLDB_TYPE_TEXT, '255', null, null, null, null,
             'questionsattempted');
 
@@ -91,7 +91,7 @@ function xmldb_adaptivequiz_upgrade($oldversion) {
             $dbman->add_field($table, $field);
         }
 
-        upgrade_mod_savepoint(true, 2023021500, 'adaptivequiz ');
+        upgrade_mod_savepoint(true, 2023021500, 'catadaptivequiz');
     }
     return true;
 }

@@ -14,29 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local\attempt;
+namespace mod_catadaptivequiz\local\attempt;
 
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once($CFG->dirroot.'/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/locallib.php');
 
 use advanced_testcase;
 use coding_exception;
 use context_module;
-use mod_adaptivequiz\event\attempt_completed;
-use mod_adaptivequiz\local\fetchquestion;
+use mod_catadaptivequiz\event\attempt_completed;
+use mod_catadaptivequiz\local\fetchquestion;
 use question_usage_by_activity;
 use stdClass;
 
 /**
  * Tests for the attempt class.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @covers \mod_adaptivequiz\local\attempt
+ * @covers \mod_catadaptivequiz\local\attempt
  */
 class attempt_test extends advanced_testcase {
     /** @var stdClass $activityinstance adaptivequiz activity instance object */
@@ -77,7 +77,7 @@ class attempt_test extends advanced_testcase {
         $this->setAdminUser();
 
         // Create activity.
-        $generator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $generator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $options = array(
             'highestlevel' => 10,
             'lowestlevel' => 1,
@@ -173,7 +173,7 @@ class attempt_test extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
 
-        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $adaptivequiz = $adaptivequizgenerator->create_instance(['course' => $course->id]);
 
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id, $course->id);
@@ -190,7 +190,7 @@ class attempt_test extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
 
-        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $adaptivequiz = $adaptivequizgenerator->create_instance(['course' => $course->id]);
 
         // No attempt exists for the user at the moment.
@@ -209,7 +209,7 @@ class attempt_test extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
 
-        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $adaptivequiz = $adaptivequizgenerator->create_instance(['course' => $course->id]);
 
         attempt::create($adaptivequiz, $user->id);
@@ -240,7 +240,7 @@ class attempt_test extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
 
-        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $adaptivequiz = $adaptivequizgenerator->create_instance(['course' => $course->id]);
 
         $attempt = attempt::create($adaptivequiz, $user->id);
@@ -291,7 +291,7 @@ class attempt_test extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
 
-        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $adaptivequiz = $adaptivequizgenerator->create_instance(['course' => $course->id]);
 
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id, $course->id);
@@ -325,7 +325,7 @@ class attempt_test extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
 
-        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $adaptivequizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $adaptivequiz = $adaptivequizgenerator->create_instance(['course' => $course->id]);
 
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id, $course->id);

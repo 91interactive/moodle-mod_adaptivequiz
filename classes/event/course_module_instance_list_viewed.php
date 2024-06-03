@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\event;
+namespace mod_catadaptivequiz\event;
 
 class course_module_instance_list_viewed extends \core\event\course_module_instance_list_viewed {
     /**

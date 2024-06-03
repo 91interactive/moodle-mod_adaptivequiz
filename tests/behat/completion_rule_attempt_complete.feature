@@ -1,4 +1,4 @@
-@mod @mod_adaptivequiz
+@mod @mod_catadaptivequiz
 Feature: Set activity as completed when at least one attempt is completed
   In order to control whether the activity has been complete by students
   As a teacher

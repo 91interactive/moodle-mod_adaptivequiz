@@ -19,14 +19,14 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\users_attempts\user_preferences;
+namespace mod_catadaptivequiz\local\report\users_attempts\user_preferences;
 
 use basic_testcase;
-use mod_adaptivequiz\local\report\users_attempts\filter\filter_options;
+use mod_catadaptivequiz\local\report\users_attempts\filter\filter_options;
 use stdClass;
 
 /**
- * @covers \mod_adaptivequiz\local\report\users_attempts\user_preferences\user_preferences
+ * @covers \mod_catadaptivequiz\local\report\users_attempts\user_preferences\user_preferences
  */
 class user_preferences_test extends basic_testcase {
 

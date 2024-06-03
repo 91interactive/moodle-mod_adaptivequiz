@@ -22,14 +22,14 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz;
+namespace mod_catadaptivequiz;
 
 use advanced_testcase;
 use context_module;
 use mod_quiz_generator;
 
 /**
- * @group mod_adaptivequiz
+ * @group mod_catadaptivequiz
  * @covers \mod_adaptivequiz_generator
  */
 class generator_test extends advanced_testcase {
@@ -45,7 +45,7 @@ class generator_test extends advanced_testcase {
         $this->assertEquals(0, $DB->count_records('adaptivequiz'));
 
         /** @var mod_quiz_generator $generator */
-        $generator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $generator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $this->assertInstanceOf('mod_adaptivequiz_generator', $generator);
         $this->assertEquals('adaptivequiz', $generator->get_modulename());
 

@@ -16,7 +16,7 @@
 
 declare(strict_types=1);
 
-namespace mod_adaptivequiz\output;
+namespace mod_catadaptivequiz\output;
 
 use renderable;
 use renderer_base;
@@ -25,7 +25,7 @@ use templatable;
 /**
  * Output object to display the number of questions answered out of total question number through an attempt.
  *
- * @package   mod_adaptivequiz
+ * @package   mod_catadaptivequiz
  * @copyright 2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

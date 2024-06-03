@@ -22,22 +22,22 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local;
+namespace mod_catadaptivequiz\local;
 
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once($CFG->dirroot.'/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/locallib.php');
 
 use advanced_testcase;
 use coding_exception;
-use mod_adaptivequiz\local\question\difficulty_questions_mapping;
-use mod_adaptivequiz\local\repository\questions_number_per_difficulty;
+use mod_catadaptivequiz\local\question\difficulty_questions_mapping;
+use mod_catadaptivequiz\local\repository\questions_number_per_difficulty;
 use stdClass;
 
 /**
- * @group mod_adaptivequiz
- * @covers \mod_adaptivequiz\local\fetchquestion
+ * @group mod_catadaptivequiz
+ * @covers \mod_catadaptivequiz\local\fetchquestion
  */
 class fetchquestion_test extends advanced_testcase {
     /** @var stdClass $activityinstance adaptivequiz activity instance object */
@@ -81,7 +81,7 @@ class fetchquestion_test extends advanced_testcase {
         $this->setAdminUser();
 
         // Create activity.
-        $generator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $generator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $options = array(
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -118,7 +118,7 @@ class fetchquestion_test extends advanced_testcase {
         $this->setAdminUser();
 
         // Create activity.
-        $generator = $this->getDataGenerator()->get_plugin_generator('mod_adaptivequiz');
+        $generator = $this->getDataGenerator()->get_plugin_generator('mod_catadaptivequiz');
         $options = array(
                 'highestlevel' => 10,
                 'lowestlevel' => 1,

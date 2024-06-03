@@ -14,26 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local\itemadministration;
+namespace mod_catadaptivequiz\local\itemadministration;
 
 use advanced_testcase;
 use context_course;
 use context_module;
-use mod_adaptivequiz\local\attempt\attempt;
-use mod_adaptivequiz\local\catalgorithm\determine_next_difficulty_result;
-use mod_adaptivequiz\local\fetchquestion;
-use mod_adaptivequiz\local\question\difficulty_questions_mapping;
+use mod_catadaptivequiz\local\attempt\attempt;
+use mod_catadaptivequiz\local\catalgorithm\determine_next_difficulty_result;
+use mod_catadaptivequiz\local\fetchquestion;
+use mod_catadaptivequiz\local\question\difficulty_questions_mapping;
 use question_bank;
 use question_engine;
 
 /**
  * Unit tests for the item administration class.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2023 Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * @covers \mod_adaptivequiz\local\itemadministration\item_administration
+ * @covers \mod_catadaptivequiz\local\itemadministration\item_administration
  */
 class item_administration_test extends advanced_testcase {
 
@@ -42,7 +42,7 @@ class item_administration_test extends advanced_testcase {
 
         $course = $this->getDataGenerator()->create_course();
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -56,7 +56,7 @@ class item_administration_test extends advanced_testcase {
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id);
         $context = context_module::instance($cm->id);
 
-        $quba = question_engine::make_questions_usage_by_activity('mod_adaptivequiz', $context);
+        $quba = question_engine::make_questions_usage_by_activity('mod_catadaptivequiz', $context);
         $fetchquestion = new fetchquestion($adaptivequiz, 1, $adaptivequiz->lowestlevel, $adaptivequiz->highestlevel);
 
         $administration = new item_administration($quba, $fetchquestion);
@@ -87,7 +87,7 @@ class item_administration_test extends advanced_testcase {
 
         $course = $this->getDataGenerator()->create_course();
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -101,7 +101,7 @@ class item_administration_test extends advanced_testcase {
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id);
         $context = context_module::instance($cm->id);
 
-        $quba = question_engine::make_questions_usage_by_activity('mod_adaptivequiz', $context);
+        $quba = question_engine::make_questions_usage_by_activity('mod_catadaptivequiz', $context);
         $fetchquestion = new fetchquestion($adaptivequiz, 1, $adaptivequiz->lowestlevel, $adaptivequiz->highestlevel);
 
         $administration = new item_administration($quba, $fetchquestion);
@@ -137,7 +137,7 @@ class item_administration_test extends advanced_testcase {
 
         $course = $this->getDataGenerator()->create_course();
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -152,7 +152,7 @@ class item_administration_test extends advanced_testcase {
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id);
         $context = context_module::instance($cm->id);
 
-        $quba = question_engine::make_questions_usage_by_activity('mod_adaptivequiz', $context);
+        $quba = question_engine::make_questions_usage_by_activity('mod_catadaptivequiz', $context);
         $fetchquestion = new fetchquestion($adaptivequiz, 1, $adaptivequiz->lowestlevel, $adaptivequiz->highestlevel);
 
         $administration = new item_administration($quba, $fetchquestion);
@@ -198,7 +198,7 @@ class item_administration_test extends advanced_testcase {
 
         $course = $this->getDataGenerator()->create_course();
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -213,7 +213,7 @@ class item_administration_test extends advanced_testcase {
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id);
         $context = context_module::instance($cm->id);
 
-        $quba = question_engine::make_questions_usage_by_activity('mod_adaptivequiz', $context);
+        $quba = question_engine::make_questions_usage_by_activity('mod_catadaptivequiz', $context);
         $fetchquestion = new fetchquestion($adaptivequiz, 1, $adaptivequiz->lowestlevel, $adaptivequiz->highestlevel);
 
         $administration = new item_administration($quba, $fetchquestion);
@@ -263,7 +263,7 @@ class item_administration_test extends advanced_testcase {
         ]);
 
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -280,7 +280,7 @@ class item_administration_test extends advanced_testcase {
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id);
         $context = context_module::instance($cm->id);
 
-        $quba = question_engine::make_questions_usage_by_activity('mod_adaptivequiz', $context);
+        $quba = question_engine::make_questions_usage_by_activity('mod_catadaptivequiz', $context);
         $quba->set_preferred_behaviour(attempt::ATTEMPTBEHAVIOUR);
 
         // Given a question was attempted.
@@ -349,7 +349,7 @@ class item_administration_test extends advanced_testcase {
         ]);
 
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -366,7 +366,7 @@ class item_administration_test extends advanced_testcase {
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id);
         $context = context_module::instance($cm->id);
 
-        $quba = question_engine::make_questions_usage_by_activity('mod_adaptivequiz', $context);
+        $quba = question_engine::make_questions_usage_by_activity('mod_catadaptivequiz', $context);
         $quba->set_preferred_behaviour(attempt::ATTEMPTBEHAVIOUR);
 
         $fetchquestion = new fetchquestion($adaptivequiz, 1, $adaptivequiz->lowestlevel, $adaptivequiz->highestlevel);
@@ -417,7 +417,7 @@ class item_administration_test extends advanced_testcase {
         ]);
 
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -434,7 +434,7 @@ class item_administration_test extends advanced_testcase {
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id);
         $context = context_module::instance($cm->id);
 
-        $quba = question_engine::make_questions_usage_by_activity('mod_adaptivequiz', $context);
+        $quba = question_engine::make_questions_usage_by_activity('mod_catadaptivequiz', $context);
         $quba->set_preferred_behaviour(attempt::ATTEMPTBEHAVIOUR);
 
         $fetchquestion = new fetchquestion($adaptivequiz, 1, $adaptivequiz->lowestlevel, $adaptivequiz->highestlevel);
@@ -530,7 +530,7 @@ class item_administration_test extends advanced_testcase {
         ]);
 
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -547,7 +547,7 @@ class item_administration_test extends advanced_testcase {
         $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id);
         $context = context_module::instance($cm->id);
 
-        $quba = question_engine::make_questions_usage_by_activity('mod_adaptivequiz', $context);
+        $quba = question_engine::make_questions_usage_by_activity('mod_catadaptivequiz', $context);
         $quba->set_preferred_behaviour(attempt::ATTEMPTBEHAVIOUR);
 
         // Given several questions were attempted.

@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot.'/mod/adaptivequiz/backup/moodle2/restore_adaptivequiz_stepslib.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/backup/moodle2/restore_adaptivequiz_stepslib.php');
 
 class restore_adaptivequiz_activity_task extends restore_activity_task {
     /**
@@ -39,7 +39,7 @@ class restore_adaptivequiz_activity_task extends restore_activity_task {
      */
     protected function define_my_steps() {
         // Adaptivequiz only has one structure step.
-        $this->add_step(new restore_adaptivequiz_activity_structure_step('adaptivequiz_structure', 'adaptivequiz.xml'));
+        $this->add_step(new restore_adaptivequiz_activity_structure_step('adaptivequiz_structure', 'catadaptivequiz.xml'));
     }
 
     /**
@@ -49,7 +49,7 @@ class restore_adaptivequiz_activity_task extends restore_activity_task {
      */
     public static function define_decode_contents() {
         $contents = array();
-        $contents[] = new restore_decode_content('adaptivequiz', array('intro'), 'adaptivequiz');
+        $contents[] = new restore_decode_content('catadaptivequiz', array('intro'), 'catadaptivequiz');
         return $contents;
     }
 
@@ -61,9 +61,9 @@ class restore_adaptivequiz_activity_task extends restore_activity_task {
     public static function define_decode_rules() {
         $rules = array();
 
-        $rules[] = new restore_decode_rule('ADAPTIVEQUIZVIEWBYID', '/mod/adaptivequiz/view.php?id=$1', 'course_module');
-        $rules[] = new restore_decode_rule('ADAPTIVEQUIZVIEWBYQ', '/mod/adaptivequiz/view.php?q=$1', 'adaptivequiz');
-        $rules[] = new restore_decode_rule('ADAPTIVEQUIZINDEX', '/mod/adaptivequiz/index.php?id=$1', 'course');
+        $rules[] = new restore_decode_rule('ADAPTIVEQUIZVIEWBYID', '/mod/catadaptivequiz/view.php?id=$1', 'course_module');
+        $rules[] = new restore_decode_rule('ADAPTIVEQUIZVIEWBYQ', '/mod/catadaptivequiz/view.php?q=$1', 'catadaptivequiz');
+        $rules[] = new restore_decode_rule('ADAPTIVEQUIZINDEX', '/mod/catadaptivequiz/index.php?id=$1', 'course');
 
         return $rules;
     }

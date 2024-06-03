@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\output;
+namespace mod_catadaptivequiz\output;
 
 use renderable;
 use stdClass;
@@ -50,9 +50,9 @@ final class user_attempt_summary implements renderable {
     public $highestquestiondifficulty;
 
     /**
-     * @param stdClass $attempt A record from {adaptivequiz_attempt}. attemptstate, timemodified, measure are
+     * @param stdClass $attempt A record from {catadaptivequiz_attempt}. attemptstate, timemodified, measure are
      * the expected fields.
-     * @param stdClass $adaptivequiz A record from {adaptivequiz}. lowestlevel, highestlevel, showabilitymeasure are
+     * @param stdClass $adaptivequiz A record from {catadaptivequiz}. lowestlevel, highestlevel, showabilitymeasure are
      * the expected fields.
      */
     public static function from_db_records(stdClass $attempt, stdClass $adaptivequiz): self {

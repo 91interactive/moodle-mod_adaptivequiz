@@ -23,8 +23,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulenameplural'] = 'Questionnaires adaptatifs';
-$string['modulename'] = 'Questionnaire adaptatif';
+$string['modulenameplural'] = 'CAT Questionnaires adaptatifs';
+$string['modulename'] = 'CAT Questionnaire adaptatif';
 $string['modulename_help'] = 'L’application Questionnaire adaptative permet à un enseignant de créer des questionnaires mesurant efficacement les capacités des candidats.Les questionnaires adaptatifs sont composés de questions selectionnées dans la banque d\'items et répertoriées selon leur niveau de difficulté.Les items sont choisis pour correspondre au niveau de capacité estimé du candidat en cours. Si le candidat répond correctement à un item, un item plus difficile lui est ensuite proposé. Si le candidat répond de manière incorrecte à un item, un item moins difficile lui est ensuite proposé. Cette technique prendra la forme d’une série d’items convergeant vers le niveau réel du candidat. Le test s’arrête quand le niveau du ou des candidats est déterminé avec la précision souhaitée. Cette application est particulièrement adaptée pour déterminer un niveau sur une échelle de mesure unidimensionnelle. Bien que l’échelle de mesure puisse être très large, les items eux, doivent tous fournir un niveau ou une indication d’aptitude étalonnés sur la même échelle. Par exemple, pour un test de positionnement, les items placés bas dans l’échelle de mesure et auxquelles les débutants sont capables de répondre correctement, devraient recevoir une réponse correcte de la part des experts, à l’inverse les questions placées plus haut dans  l’échelle de mesure ne devraient recevoir de réponse correcte que par les experts ou grâce à la chance. Les items ne discriminant pas les candidats de différents niveaux de capacité rendront le test inefficace et pourront mener à des résultats non concluants.
 
 Les questions utilisées dans « questionnaire adaptatif » doivent :
@@ -40,15 +40,15 @@ Le questionnaire adaptatif peut être configuré pour :
 * définir un nombre maximum de questions pouvant faire l’objet d’une réponse
 
 La description et le processus de tests dans cette application sont basées sur <a href="http://www.rasch.org/memo69.pdf">Computer-Adaptive Testing: A Methodology Whose Time Has Come</a> by John Michael Linacre, Ph.D. MESA Psychometric Laboratory - University of Chicago. MESA Memorandum No. 69.';
-$string['pluginadministration'] = 'questionnaire adaptatif';
-$string['pluginname'] = 'questionnaire adaptatif';
+$string['pluginadministration'] = 'CAT questionnaire adaptatif';
+$string['pluginname'] = 'CAT questionnaire adaptatif';
 $string['nonewmodules'] = 'Aucune occurrence de questionnaire adaptatif n’a été trouvée';
-$string['adaptivequizname'] = 'Nom';
-$string['adaptivequizname_help'] = 'Entrez le nom de l’occurence questionnaire adaptatif';
-$string['adaptivequiz:addinstance'] = 'Ajoutez un nouveau questionnaire adaptatif';
-$string['adaptivequiz:viewreport'] = 'Voir les rapports du questionnaire adaptatif';
-$string['adaptivequiz:reviewattempts'] = 'Revoir les propositions du questionnaire adaptatif';
-$string['adaptivequiz:attempt'] = 'Débuter un test adaptatif';
+$string['catadaptivequizname'] = 'Nom';
+$string['catadaptivequizname_help'] = 'Entrez le nom de l’occurence questionnaire adaptatif';
+$string['catadaptivequiz:addinstance'] = 'Ajoutez un nouveau questionnaire adaptatif';
+$string['catadaptivequiz:viewreport'] = 'Voir les rapports du questionnaire adaptatif';
+$string['catadaptivequiz:reviewattempts'] = 'Revoir les propositions du questionnaire adaptatif';
+$string['catadaptivequiz:attempt'] = 'Débuter un test adaptatif';
 $string['attemptsallowed'] = 'Nombre de tentative autorisée';
 $string['attemptsallowed_help'] = 'Nombre de tentative autorisée pour le candidat';
 $string['requirepassword'] = 'Mot de passe requis';

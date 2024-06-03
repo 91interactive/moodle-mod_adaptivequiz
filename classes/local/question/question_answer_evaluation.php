@@ -16,14 +16,14 @@
 
 declare(strict_types=1);
 
-namespace mod_adaptivequiz\local\question;
+namespace mod_catadaptivequiz\local\question;
 
 use question_usage_by_activity;
 
 /**
  * Serves to extract the logic of assessing whether a question was answered correctly and whether it was answered at all.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2023 Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

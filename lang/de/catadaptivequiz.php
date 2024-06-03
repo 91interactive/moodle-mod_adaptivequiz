@@ -17,7 +17,7 @@
 /**
  * English language pack for Adaptive Quiz
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @category   string
  * @copyright  2023 YOUR NAME <your@email.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,10 +25,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'Adaptive Quiz';
-$string['modulenameplural'] = 'Adaptive Quizs';
-$string['pluginadministration'] = 'Adaptive Quiz administration';
-$string['pluginname'] = 'Adaptive Quiz';
+$string['modulename'] = 'CAT Adaptive Quiz';
+$string['modulenameplural'] = 'CAT Adaptive Quizs';
+$string['pluginadministration'] = 'CAT Adaptive Quiz administration';
+$string['pluginname'] = 'CAT Adaptive Quiz';
 
 $string['testlength'] = 'Test Länge';
 $string['testlengthDescription'] = 'Anzahl an vorzugebenden Aufgaben';
@@ -87,3 +87,9 @@ $string['contentareas'] = "Benutzerdefinierte Angabe von Anteilen einzelner Inha
 $string['formtextareaempty'] = 'Textarea darf nicht leer sein';
 $string['detaildtestresults'] = 'Detailierte Test Ergebnisse';
 
+$string['catadaptivequizname'] = 'Name';
+$string['catadaptivequizname_help'] = 'Geben Sie den Namen der Adaptive Quiz-Instanz ein';
+$string['catadaptivequiz:addinstance'] = 'Neuen adaptiven Test hinzufügen';
+$string['catadaptivequiz:viewreport'] = 'Berichte des adaptiven Tests anzeigen';
+$string['catadaptivequiz:reviewattempts'] = 'Überprüfen Sie die Abgaben des adaptiven Tests';
+$string['catadaptivequiz:attempt'] = 'Versuch adaptiver Test';

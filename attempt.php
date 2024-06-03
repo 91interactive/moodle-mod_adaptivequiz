@@ -17,33 +17,33 @@
 /**
  * Adaptive quiz attempt script.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 onwards Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once(__DIR__ . '/../../config.php');
-require_once($CFG->dirroot . '/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot . '/mod/catadaptivequiz/locallib.php');
 require_once($CFG->dirroot . '/tag/lib.php');
 require_once($CFG->libdir . '/questionlib.php');
 
-use mod_adaptivequiz\local\adaptive_quiz_requires;
-use mod_adaptivequiz\local\attempt\attempt;
-use mod_adaptivequiz\local\attempt\cat_calculation_steps_result;
-use mod_adaptivequiz\local\catalgorithm\catalgo;
-use mod_adaptivequiz\local\fetchquestion;
-use mod_adaptivequiz\local\itemadministration\item_administration;
-use mod_adaptivequiz\local\question\question_answer_evaluation;
-use mod_adaptivequiz\local\question\questions_answered_summary_provider;
-use mod_adaptivequiz\local\report\questions_difficulty_range;
-use mod_adaptivequiz\local\catalgorithm\determine_next_difficulty_result;
-use mod_adaptivequiz\local\repository\questions_repository;
+use mod_catadaptivequiz\local\adaptive_quiz_requires;
+use mod_catadaptivequiz\local\attempt\attempt;
+use mod_catadaptivequiz\local\attempt\cat_calculation_steps_result;
+use mod_catadaptivequiz\local\catalgorithm\catalgo;
+use mod_catadaptivequiz\local\fetchquestion;
+use mod_catadaptivequiz\local\itemadministration\item_administration;
+use mod_catadaptivequiz\local\question\question_answer_evaluation;
+use mod_catadaptivequiz\local\question\questions_answered_summary_provider;
+use mod_catadaptivequiz\local\report\questions_difficulty_range;
+use mod_catadaptivequiz\local\catalgorithm\determine_next_difficulty_result;
+use mod_catadaptivequiz\local\repository\questions_repository;
 
 $id = required_param('cmid', PARAM_INT); // Course module id.
 $uniqueid  = optional_param('uniqueid', 0, PARAM_INT);  // Unique id of the attempt.
 $attempteddifficultylevel  = optional_param('dl', 0, PARAM_INT);
-if (!$cm = get_coursemodule_from_id('adaptivequiz', $id)) {
+if (!$cm = get_coursemodule_from_id('catadaptivequiz', $id)) {
 	throw new moodle_exception('invalidcoursemodule');
 }
 if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
@@ -58,9 +58,9 @@ $passwordattempt = false;
 
 
 try {
-    $adaptivequiz  = $DB->get_record('adaptivequiz', array('id' => $cm->instance), '*', MUST_EXIST);
+    $adaptivequiz  = $DB->get_record('catadaptivequiz', array('id' => $cm->instance), '*', MUST_EXIST);
 } catch (dml_exception $e) {
-    $url = new moodle_url('/mod/adaptivequiz/attempt.php', array('cmid' => $id));
+    $url = new moodle_url('/mod/catadaptivequiz/attempt.php', array('cmid' => $id));
     $debuginfo = '';
 
     if (!empty($e->debuginfo)) {
@@ -71,15 +71,15 @@ try {
 }
 
 // Setup page global for standard viewing.
-$viewurl = new moodle_url('/mod/adaptivequiz/view.php', array('id' => $cm->id));
-$PAGE->set_url('/mod/adaptivequiz/view.php', array('cmid' => $cm->id));
+$viewurl = new moodle_url('/mod/catadaptivequiz/view.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/catadaptivequiz/view.php', array('cmid' => $cm->id));
 $PAGE->set_title(format_string($adaptivequiz->name));
 $PAGE->set_context($context);
 $PAGE->activityheader->disable();
 $PAGE->add_body_class('limitedwidth');
 
 // Check if the user has the attempt capability.
-require_capability('mod/adaptivequiz:attempt', $context);
+require_capability('mod/catadaptivequiz:attempt', $context);
 
 try {
     (new adaptive_quiz_requires())
@@ -87,8 +87,8 @@ try {
 } catch (moodle_exception $activityavailabilityexception) {
     throw new moodle_exception(
         'activityavailabilitystudentnotification',
-        'adaptivequiz',
-        new moodle_url('/mod/adaptivequiz/view.php', ['id' => $cm->id])
+        'catadaptivequiz',
+        new moodle_url('/mod/catadaptivequiz/view.php', ['id' => $cm->id])
     );
 }
 
@@ -96,11 +96,11 @@ try {
 $count = adaptivequiz_count_user_previous_attempts($adaptivequiz->id, $USER->id);
 
 if (!adaptivequiz_allowed_attempt($adaptivequiz->attempts, $count)) {
-    throw new moodle_exception('noattemptsallowed', 'adaptivequiz');
+    throw new moodle_exception('noattemptsallowed', 'catadaptivequiz');
 }
 
 // Create an instance of the module renderer class.
-$output = $PAGE->get_renderer('mod_adaptivequiz');
+$output = $PAGE->get_renderer('mod_catadaptivequiz');
 // Setup password required form.
 $mform = $output->display_password_form($cm->id);
 // Check if a password is required.
@@ -137,7 +137,7 @@ $r_server_response = null;
 if (!empty($uniqueid) && confirm_sesskey()) {
     // Check if the uniqueid belongs to the same attempt record the user is currently using.
     if (!adaptivequiz_uniqueid_part_of_attempt($uniqueid, $cm->instance, $USER->id)) {
-        throw new moodle_exception('uniquenotpartofattempt', 'adaptivequiz');
+        throw new moodle_exception('uniquenotpartofattempt', 'catadaptivequiz');
     }
 
     // Process student's responses.
@@ -169,7 +169,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			
 
 			// CS: get the quiz category 
-			$category = $DB->get_record('adaptivequiz_question', ['instance' => $adaptivequiz->id]);
+			$category = $DB->get_record('catadaptivequiz_question', ['instance' => $adaptivequiz->id]);
 			// CS: get all question from selected question categories in question pool
 			$categoryList = adaptivequiz_get_selected_question_cateogires($adaptivequiz->id);
 			
@@ -244,7 +244,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			$data_for_r_server->settings->exposure = $exposure; 
 
 			$contentareas = new stdClass();
-			$contentareas->enabled = $adaptivequiz->contentareas; //Warning: Undefined property: stdClass::$contentareas in /var/www/html/mod/adaptivequiz/attempt.php on line 247
+			$contentareas->enabled = $adaptivequiz->contentareas; //Warning: Undefined property: stdClass::$contentareas in /var/www/html/mod/catadaptivequiz/attempt.php on line 247
 			$contentareas->area1 = $adaptivequiz->contentarea1; 
 			$contentareas->area2 = $adaptivequiz->contentarea2; 
 			$contentareas->area3 = $adaptivequiz->contentarea3; 
@@ -280,7 +280,23 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			// CS: prepare answered questions, testsettings and questions for R-Server
 			$data_for_r_server->answeredquestions = $adaptiveattempt->read_attempt_data()->detaildtestresults;
 			$data_for_r_server->testsettings = $adaptivequiz;
-			$data_for_r_server->questionsDatas = $questions;			
+
+// $quizid = $adaptivequiz->id;
+// $quiz = $DB->get_record('quiz', array('id' => $quizid), '*', MUST_EXIST);
+
+// // Get the quiz slots (question ids are stored in slots)
+// $slots = $DB->get_records('quiz_slots', array('quizid' => $quiz->id), 'slot');
+
+// // Fetch each question
+// $questions = array();
+// // foreach ($slots as $slot) {
+// //     $question = $DB->get_record('question', array('id' => $slot->questionid), '*', MUST_EXIST);
+// //     $questions[] = $question;
+// // }
+
+// $data_for_r_server->questionsDatas = $questions;
+
+			// $data_for_r_server->questionsDatas = $questions;	// Warning: Undefined variable $questions in /var/www/html/mod/catadaptivequiz/attempt.php on line 283	
 			
 			// CS in response we get the next question and the next difficulty level
 			$r_server_response = $adaptiveattempt->call_r_server($data_for_r_server);
@@ -296,7 +312,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 				$lastSlot = end($quSlots);
 				$qa = $quba->get_attempt_iterator()->offsetGet($lastSlot);
 								
-				$currentDBentry = $DB->get_record('adaptivequiz_attempt',array('uniqueid'=>$uniqueid), '*', MUST_EXIST);
+				$currentDBentry = $DB->get_record('catadaptivequiz_attempt',array('uniqueid'=>$uniqueid), '*', MUST_EXIST);
 				
 				$currentDBdetaildtestresults = json_decode($currentDBentry->detaildtestresults) ?? '';
 				
@@ -338,16 +354,16 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 
 			
             } catch (Exception $exception) {
-                throw new moodle_exception('unableupdatediffsum', 'adaptivequiz',
-                    new moodle_url('/mod/adaptivequiz/attempt.php', ['cmid' => $id]));
+                throw new moodle_exception('unableupdatediffsum', 'catadaptivequiz',
+                    new moodle_url('/mod/catadaptivequiz/attempt.php', ['cmid' => $id]));
             }
         }
     } catch (question_out_of_sequence_exception $e) {
-        $url = new moodle_url('/mod/adaptivequiz/attempt.php', array('cmid' => $id));
+        $url = new moodle_url('/mod/catadaptivequiz/attempt.php', array('cmid' => $id));
         throw new moodle_exception('submissionoutofsequencefriendlymessage', 'question', $url);
 
     } catch (Exception $e) {
-        $url = new moodle_url('/mod/adaptivequiz/attempt.php', array('cmid' => $id));
+        $url = new moodle_url('/mod/catadaptivequiz/attempt.php', array('cmid' => $id));
         $debuginfo = '';
 
         if (!empty($e->debuginfo)) {
@@ -361,7 +377,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 // Initialize quba.
 $qubaid = $adaptiveattempt->read_attempt_data()->uniqueid;
 $quba = ($qubaid == 0)
-    ? question_engine::make_questions_usage_by_activity('mod_adaptivequiz', $context)
+    ? question_engine::make_questions_usage_by_activity('mod_catadaptivequiz', $context)
     : question_engine::load_questions_usage_by_activity($qubaid);
 if ($qubaid == 0) {
     $quba->set_preferred_behaviour(attempt::ATTEMPTBEHAVIOUR);
@@ -383,13 +399,13 @@ if ($itemadministrationevaluation->item_administration_is_to_stop()) {
     if ($noquestionsfetchedforattempt) {
         // The script will try to complete an 'empty' attempt as it couldn't fetch the first question for some reason.
         // This is an invalid behaviour, which could be caused by a misconfigured questions pool. Stop it here.
-        throw new moodle_exception('attemptnofirstquestion', 'adaptivequiz',
-            (new moodle_url('/mod/adaptivequiz/view.php', ['id' => $cm->id]))->out());
+        throw new moodle_exception('attemptnofirstquestion', 'catadaptivequiz',
+            (new moodle_url('/mod/catadaptivequiz/view.php', ['id' => $cm->id]))->out());
     }
 
     $adaptiveattempt->complete($context, $r_server_response->SE, $itemadministrationevaluation->stoppage_reason(), time());
 
-    redirect(new moodle_url('/mod/adaptivequiz/attemptfinished.php',
+    redirect(new moodle_url('/mod/catadaptivequiz/attemptfinished.php',
         ['cmid' => $cm->id, 'id' => $cm->instance, 'uattid' => $uniqueid]));
 }
 
@@ -399,7 +415,7 @@ $slot = $itemadministrationevaluation->next_item()->slot();
 $level = $itemadministrationevaluation->next_item()->difficulty_level();
 
 $headtags = $output->init_metadata($quba, $slot);
-$PAGE->requires->js_init_call('M.mod_adaptivequiz.init_attempt_form', array($viewurl->out(), $adaptivequiz->browsersecurity),
+$PAGE->requires->js_init_call('M.mod_catadaptivequiz.init_attempt_form', array($viewurl->out(), $adaptivequiz->browsersecurity),
     false, $output->adaptivequiz_get_js_module());
 
 // Init secure window if enabled.
@@ -416,7 +432,7 @@ $condition = adaptivequiz_user_entered_password($adaptivequiz->id);
 
 if (!empty($adaptivequiz->password) && empty($condition)) {
     if ($passwordattempt) {
-        $mform->set_data(array('message' => get_string('wrongpassword', 'adaptivequiz')));
+        $mform->set_data(array('message' => get_string('wrongpassword', 'catadaptivequiz')));
     }
 
     $mform->display();

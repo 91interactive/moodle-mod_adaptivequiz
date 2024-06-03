@@ -19,7 +19,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\users_attempts\filter;
+namespace mod_catadaptivequiz\local\report\users_attempts\filter;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -39,33 +39,33 @@ final class filter_form extends moodleform {
      */
     public function add_action_buttons($cancel = true, $submitlabel=null) {
         $form =& $this->_form;
-        $form->addElement('submit', 'prefssubmit', get_string('reportattemptsfilterformsubmit', 'adaptivequiz'));
+        $form->addElement('submit', 'prefssubmit', get_string('reportattemptsfilterformsubmit', 'catadaptivequiz'));
     }
 
     protected function definition() {
         $form = $this->_form;
 
-        $form->addElement('header', 'filterheader', get_string('reportattemptsfilterformheader', 'adaptivequiz'));
+        $form->addElement('header', 'filterheader', get_string('reportattemptsfilterformheader', 'catadaptivequiz'));
 
         $enrolmentoptions = [
             filter_options::ENROLLED_USERS_WITH_NO_ATTEMPTS
-                => get_string('reportattemptsenrolledwithnoattempts', 'adaptivequiz'),
+                => get_string('reportattemptsenrolledwithnoattempts', 'catadaptivequiz'),
             filter_options::ENROLLED_USERS_WITH_ATTEMPTS
-                => get_string('reportattemptsenrolledwithattempts', 'adaptivequiz'),
+                => get_string('reportattemptsenrolledwithattempts', 'catadaptivequiz'),
             filter_options::BOTH_ENROLLED_AND_NOT_ENROLLED_USERS_WITH_ATTEMPTS
-                => get_string('reportattemptsbothenrolledandnotenrolled', 'adaptivequiz'),
+                => get_string('reportattemptsbothenrolledandnotenrolled', 'catadaptivequiz'),
             filter_options::NOT_ENROLLED_USERS_WITH_ATTEMPTS
-                => get_string('reportattemptsnotenrolled', 'adaptivequiz')
+                => get_string('reportattemptsnotenrolled', 'catadaptivequiz')
         ];
-        $form->addElement('select', 'users', get_string('reportattemptsfilterusers', 'adaptivequiz'),
+        $form->addElement('select', 'users', get_string('reportattemptsfilterusers', 'catadaptivequiz'),
             $enrolmentoptions);
         $form->setDefault('users', filter_options::users_option_default());
 
         $form->addElement('advcheckbox', 'includeinactiveenrolments',
-            get_string('reportattemptsfilterincludeinactiveenrolments', 'adaptivequiz'), '&nbsp;', null, [0, 1]);
+            get_string('reportattemptsfilterincludeinactiveenrolments', 'catadaptivequiz'), '&nbsp;', null, [0, 1]);
         $form->setDefault('includeinactiveenrolments', filter_options::INCLUDE_INACTIVE_ENROLMENTS_DEFAULT);
         $form->addHelpButton('includeinactiveenrolments', 'reportattemptsfilterincludeinactiveenrolments',
-            'adaptivequiz');
+            'catadaptivequiz');
         $form->disabledIf('includeinactiveenrolments', 'users', 'eq',
             filter_options::BOTH_ENROLLED_AND_NOT_ENROLLED_USERS_WITH_ATTEMPTS);
 

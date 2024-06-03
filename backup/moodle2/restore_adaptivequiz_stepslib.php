@@ -32,14 +32,14 @@ class restore_adaptivequiz_activity_structure_step extends restore_questions_act
         $paths = array();
         $userinfo = $this->get_setting_value('userinfo');
 
-        $adaptivequiz = new restore_path_element('adaptivequiz', '/activity/adaptivequiz');
+        $adaptivequiz = new restore_path_element('catadaptivequiz', '/activity/catadaptivequiz');
         $paths[] = $adaptivequiz;
 
-        $paths[] = new restore_path_element('adaptivequiz_question',
-            '/activity/adaptivequiz/adatpivequestioncats/adatpivequestioncat');
+        $paths[] = new restore_path_element('catadaptivequiz_question',
+            '/activity/catadaptivequiz/adatpivequestioncats/adatpivequestioncat');
 
         if ($userinfo) {
-            $attempt = new restore_path_element('adaptivequiz_attempt', '/activity/adaptivequiz/adaptiveattempts/adaptiveattempt');
+            $attempt = new restore_path_element('adaptivequiz_attempt', '/activity/catadaptivequiz/adaptiveattempts/adaptiveattempt');
             $paths[] = $attempt;
 
             // Add states and sessions.
@@ -64,7 +64,7 @@ class restore_adaptivequiz_activity_structure_step extends restore_questions_act
         $data->timecreated = $this->apply_date_offset($data->timecreated);
         $data->timemodified = $this->apply_date_offset($data->timemodified);
         // Insert the quiz record.
-        $newitemid = $DB->insert_record('adaptivequiz', $data);
+        $newitemid = $DB->insert_record('catadaptivequiz', $data);
         // Immediately after inserting "activity" record, call this.
         $this->apply_activity_instance($newitemid);
     }
@@ -79,13 +79,13 @@ class restore_adaptivequiz_activity_structure_step extends restore_questions_act
         $data = (object)$data;
         $oldid = $data->id;
 
-        $data->instance = $this->get_new_parentid('adaptivequiz');
+        $data->instance = $this->get_new_parentid('catadaptivequiz');
         // Check if catid is not empty and update the record with the new category id.
         $catid = $this->get_mappingid('question_category', $data->questioncategory);
         if (!empty($catid)) {
             $data->questioncategory = $catid;
         }
-        $DB->insert_record('adaptivequiz_question', $data);
+        $DB->insert_record('catadaptivequiz_question', $data);
     }
 
     /**
@@ -96,7 +96,7 @@ class restore_adaptivequiz_activity_structure_step extends restore_questions_act
         $data = (object)$data;
         $oldid = $data->id;
 
-        $data->instance = $this->get_new_parentid('adaptivequiz');
+        $data->instance = $this->get_new_parentid('catadaptivequiz');
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->timemodified = $this->apply_date_offset($data->timemodified);
 
@@ -116,10 +116,10 @@ class restore_adaptivequiz_activity_structure_step extends restore_questions_act
         $oldid = $data->id;
         $data->uniqueid = $newusageid;
 
-        $newitemid = $DB->insert_record('adaptivequiz_attempt', $data);
+        $newitemid = $DB->insert_record('catadaptivequiz_attempt', $data);
 
         // Save quiz_attempt->id mapping, because logs use it. (logs will be implemented latter).
-        $this->set_mapping('adaptivequiz_attempt', $oldid, $newitemid, false);
+        $this->set_mapping('catadaptivequiz_attempt', $oldid, $newitemid, false);
     }
 
     /**
@@ -128,6 +128,6 @@ class restore_adaptivequiz_activity_structure_step extends restore_questions_act
     protected function after_execute() {
         parent::after_execute();
         // Add quiz related files, no need to match by itemname (just internally handled context).
-        $this->add_related_files('mod_adaptivequiz', 'intro', null);
+        $this->add_related_files('mod_catadaptivequiz', 'intro', null);
     }
 }

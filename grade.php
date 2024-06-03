@@ -29,7 +29,7 @@ $itemnumber = optional_param('itemnumber', 0, PARAM_INT); // Item number, may be
                                                           // grade per user.
 $userid = optional_param('userid', 0, PARAM_INT); // Graded user ID (optional).
 
-if (!$cm = get_coursemodule_from_id('adaptivequiz', $id)) {
+if (!$cm = get_coursemodule_from_id('catadaptivequiz', $id)) {
     throw new moodle_exception('invalidcoursemodule');
 }
 if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
@@ -38,17 +38,17 @@ if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
 
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
-if (has_capability('mod/adaptivequiz:viewreport', $context)) {
+if (has_capability('mod/catadaptivequiz:viewreport', $context)) {
     $params = array('cmid' => $id);
     if ($userid) {
         $params['userid'] = $userid;
-        $url = new moodle_url('/mod/adaptivequiz/viewattemptreport.php', $params);
+        $url = new moodle_url('/mod/catadaptivequiz/viewattemptreport.php', $params);
     } else {
-        $url = new moodle_url('/mod/adaptivequiz/viewreport.php', $params);
+        $url = new moodle_url('/mod/catadaptivequiz/viewreport.php', $params);
     }
 } else {
     $params = array('id' => $id);
-    $url = new moodle_url('/mod/adaptivequiz/view.php', $params);
+    $url = new moodle_url('/mod/catadaptivequiz/view.php', $params);
 }
 
 redirect($url);

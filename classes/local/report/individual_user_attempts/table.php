@@ -17,20 +17,20 @@
 /**
  * Contains definition of the table class for the user attempts report.
  *
- * @package   mod_adaptivequiz
+ * @package   mod_catadaptivequiz
  * @copyright 2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\individual_user_attempts;
+namespace mod_catadaptivequiz\local\report\individual_user_attempts;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/tablelib.php');
 
-use mod_adaptivequiz\local\attempt\attempt_state;
-use mod_adaptivequiz\local\report\questions_difficulty_range;
-use mod_adaptivequiz_renderer;
+use mod_catadaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz\local\report\questions_difficulty_range;
+use mod_catadaptivequiz_renderer;
 use moodle_url;
 use stdClass;
 use table_sql;
@@ -38,12 +38,12 @@ use table_sql;
 /**
  * Definition of the table class for the user attempts report.
  *
- * @package mod_adaptivequiz
+ * @package mod_catadaptivequiz
  */
 final class table extends table_sql {
 
     /**
-     * @var mod_adaptivequiz_renderer $renderer
+     * @var mod_catadaptivequiz_renderer $renderer
      */
     private $renderer;
 
@@ -63,7 +63,7 @@ final class table extends table_sql {
     private $cmid;
 
     public function __construct(
-        mod_adaptivequiz_renderer $renderer,
+        mod_catadaptivequiz_renderer $renderer,
         filter $filter,
         moodle_url $baseurl,
         questions_difficulty_range $questionsdifficultyrange,
@@ -85,10 +85,10 @@ final class table extends table_sql {
 
     protected function col_attemptstate(stdClass $row): string {
         if (0 == strcmp(attempt_state::IN_PROGRESS, $row->attemptstate)) {
-            return get_string('recentinprogress', 'adaptivequiz');
+            return get_string('recentinprogress', 'catadaptivequiz');
         }
 
-        return get_string('recentcomplete', 'adaptivequiz');
+        return get_string('recentcomplete', 'catadaptivequiz');
     }
 
     protected function col_score(stdClass $row): string {
@@ -116,7 +116,7 @@ final class table extends table_sql {
     /**
      * A hook to format the output of actions column for an attempt row.
      *
-     * @param stdClass $row A row from the {adaptivequiz_attempt}.
+     * @param stdClass $row A row from the {catadaptivequiz_attempt}.
      */
     protected function col_actions(stdClass $row): string {
         return $this->renderer->individual_user_attempt_actions($row);
@@ -126,12 +126,12 @@ final class table extends table_sql {
         $this->define_columns(['attemptstate', 'attemptstopcriteria', 'questionsattempted', 'score',
             'timecreated', 'timemodified', 'actions']);
         $this->define_headers([
-            get_string('attemptstate', 'adaptivequiz'),
-            get_string('attemptstopcriteria', 'adaptivequiz'),
-            get_string('questionsattempted', 'adaptivequiz'),
-            get_string('score', 'adaptivequiz'),
-            get_string('attemptstarttime', 'adaptivequiz'),
-            get_string('attemptfinishedtimestamp', 'adaptivequiz'),
+            get_string('attemptstate', 'catadaptivequiz'),
+            get_string('attemptstopcriteria', 'catadaptivequiz'),
+            get_string('questionsattempted', 'catadaptivequiz'),
+            get_string('score', 'catadaptivequiz'),
+            get_string('attemptstarttime', 'catadaptivequiz'),
+            get_string('attemptfinishedtimestamp', 'catadaptivequiz'),
             '',
         ]);
         $this->set_content_alignment_in_columns();
@@ -144,9 +144,9 @@ final class table extends table_sql {
         $this->set_sql(
             'id, userid, uniqueid, attemptstopcriteria, measure, attemptstate, questionsattempted,timemodified,
             standarderror AS stderror, timecreated',
-            '{adaptivequiz_attempt}',
-            'instance = :adaptivequiz AND userid = :userid',
-            ['adaptivequiz' => $this->filter->adaptivequizid, 'userid' => $this->filter->userid]
+            '{catadaptivequiz_attempt}',
+            'instance = :catadaptivequiz AND userid = :userid',
+            ['catadaptivequiz' => $this->filter->adaptivequizid, 'userid' => $this->filter->userid]
         );
     }
 

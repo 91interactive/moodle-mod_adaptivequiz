@@ -14,17 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local\questionanalysis\statistics;
+namespace mod_catadaptivequiz\local\questionanalysis\statistics;
 
 use html_writer;
-use mod_adaptivequiz\local\questionanalysis\question_analyser;
+use mod_catadaptivequiz\local\questionanalysis\question_analyser;
 use moodle_url;
 use stdClass;
 
 /**
  * This interface defines the methods required for pluggable statistics that may be added to the question analysis.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 Middlebury College {@link http://www.middlebury.edu/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -37,7 +37,7 @@ class answers_statistic implements question_statistic {
      * @return string
      */
     public function get_display_name () {
-        return get_string('answers_display_name', 'adaptivequiz');
+        return get_string('answers_display_name', 'catadaptivequiz');
     }
 
     /**
@@ -76,10 +76,10 @@ class answers_statistic implements question_statistic {
         ob_start();
         print html_writer::end_tag('tr');
         print html_writer::start_tag('tr');
-        print html_writer::tag('th', get_string('attemptquestion_ability', 'adaptivequiz'));
-        print html_writer::tag('th', get_string('user', 'adaptivequiz'));
-        print html_writer::tag('th', get_string('result', 'adaptivequiz'));
-        print html_writer::tag('th', get_string('answer', 'adaptivequiz'));
+        print html_writer::tag('th', get_string('attemptquestion_ability', 'catadaptivequiz'));
+        print html_writer::tag('th', get_string('user', 'catadaptivequiz'));
+        print html_writer::tag('th', get_string('result', 'catadaptivequiz'));
+        print html_writer::tag('th', get_string('answer', 'catadaptivequiz'));
         print html_writer::tag('th', '');
         print html_writer::end_tag('tr');
         $headings = ob_get_clean();
@@ -89,7 +89,7 @@ class answers_statistic implements question_statistic {
 
         print html_writer::start_tag('thead');
         print html_writer::start_tag('tr');
-        print html_writer::tag('th', get_string('highlevelusers', 'adaptivequiz').':',
+        print html_writer::tag('th', get_string('highlevelusers', 'catadaptivequiz').':',
             array('colspan' => '5', 'class' => 'section'));
         print $headings;
         print html_writer::end_tag('thead');
@@ -106,7 +106,7 @@ class answers_statistic implements question_statistic {
 
         print html_writer::start_tag('thead');
         print html_writer::start_tag('tr');
-        print html_writer::tag('th', get_string('midlevelusers', 'adaptivequiz').':',
+        print html_writer::tag('th', get_string('midlevelusers', 'catadaptivequiz').':',
             array('colspan' => '5', 'class' => 'section'));
         print $headings;
         print html_writer::end_tag('thead');
@@ -123,7 +123,7 @@ class answers_statistic implements question_statistic {
 
         print html_writer::start_tag('thead');
         print html_writer::start_tag('tr');
-        print html_writer::tag('th', get_string('lowlevelusers', 'adaptivequiz').':',
+        print html_writer::tag('th', get_string('lowlevelusers', 'catadaptivequiz').':',
             array('colspan' => '5', 'class' => 'section'));
         print $headings;
         print html_writer::end_tag('thead');
@@ -172,14 +172,14 @@ class answers_statistic implements question_statistic {
             $class = 'adpq_incorrect';
         }
 
-        $url = new moodle_url('/mod/adaptivequiz/reviewattempt.php', ['attempt' => $result->attemptid]);
+        $url = new moodle_url('/mod/catadaptivequiz/reviewattempt.php', ['attempt' => $result->attemptid]);
 
         print html_writer::start_tag('tr', array('class' => $class));
         print html_writer::tag('td', round($result->score->measured_ability_in_scale(), 2));
         print html_writer::tag('td', $result->user->firstname." ".$result->user->lastname);
         print html_writer::tag('td', (($result->correct) ? "correct" : "incorrect"));
         print html_writer::tag('td', $result->answer);
-        print html_writer::tag('td', html_writer::link($url, get_string('reviewattempt', 'adaptivequiz')));
+        print html_writer::tag('td', html_writer::link($url, get_string('reviewattempt', 'catadaptivequiz')));
         print html_writer::end_tag('tr');
     }
 }

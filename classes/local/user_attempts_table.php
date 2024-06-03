@@ -21,23 +21,23 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local;
+namespace mod_catadaptivequiz\local;
 
 use coding_exception;
 use help_icon;
-use mod_adaptivequiz\local\attempt\attempt_state;
-use mod_adaptivequiz_renderer;
+use mod_catadaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz_renderer;
 use moodle_url;
 use stdClass;
 use table_sql;
 
 final class user_attempts_table extends table_sql {
     /**
-     * @var mod_adaptivequiz_renderer $renderer
+     * @var mod_catadaptivequiz_renderer $renderer
      */
     private $renderer;
 
-    public function __construct(mod_adaptivequiz_renderer $renderer) {
+    public function __construct(mod_catadaptivequiz_renderer $renderer) {
         parent::__construct('userattemptstable');
 
         $this->renderer = $renderer;
@@ -47,7 +47,7 @@ final class user_attempts_table extends table_sql {
      * A convenience function to call a bunch of init methods.
      *
      * @param moodle_url $baseurl
-     * @param stdClass $adaptivequiz A record form {adaptivequiz}. id, lowestlevel, highestlevel, showabilitymeasure are
+     * @param stdClass $adaptivequiz A record form {catadaptivequiz}. id, lowestlevel, highestlevel, showabilitymeasure are
      * the expected fields.
      * @param int $userid
      * @throws coding_exception
@@ -60,11 +60,11 @@ final class user_attempts_table extends table_sql {
         $this->define_columns($columns);
 
         $headers = [
-            get_string('attempt_state', 'adaptivequiz'),
-            get_string('attemptfinishedtimestamp', 'adaptivequiz'),
+            get_string('attempt_state', 'catadaptivequiz'),
+            get_string('attemptfinishedtimestamp', 'catadaptivequiz'),
         ];
         if ($adaptivequiz->showabilitymeasure) {
-            $headers[] = get_string('abilityestimated', 'adaptivequiz') . ' / ' .
+            $headers[] = get_string('abilityestimated', 'catadaptivequiz') . ' / ' .
                 $adaptivequiz->lowestlevel . ' - ' . $adaptivequiz->highestlevel;
         }
         $this->define_headers($headers);
@@ -74,13 +74,13 @@ final class user_attempts_table extends table_sql {
         $this->collapsible(false);
         $this->sortable(false, 'timefinished', SORT_DESC);
         $this->define_help_for_headers(
-            [2 => new help_icon('abilityestimated', 'adaptivequiz')]
+            [2 => new help_icon('abilityestimated', 'catadaptivequiz')]
         );
         $this->set_column_css_classes();
         $this->set_content_alignment_in_columns();
         $this->define_baseurl($baseurl);
         $this->set_sql('a.id, a.attemptstate AS state, a.timemodified AS timefinished, a.measure,a.detaildtestresults, q.highestlevel, ' .
-            'q.lowestlevel', '{adaptivequiz_attempt} a, {adaptivequiz} q', 'a.instance = q.id AND q.id = ? ' .
+            'q.lowestlevel', '{adaptivequiz_attempt} a, {catadaptivequiz} q', 'a.instance = q.id AND q.id = ? ' .
             'AND userid = ?', [$adaptivequiz->id, $userid]);
     }
 
@@ -88,7 +88,7 @@ final class user_attempts_table extends table_sql {
      * @throws coding_exception
      */
     protected function col_state(stdClass $row): string {
-        return get_string('recent' . $row->state, 'adaptivequiz');
+        return get_string('recent' . $row->state, 'catadaptivequiz');
     }
 
     protected function col_timefinished(stdClass $row): string {

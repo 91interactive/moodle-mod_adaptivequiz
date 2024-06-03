@@ -22,11 +22,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\users_attempts\sql;
+namespace mod_catadaptivequiz\local\report\users_attempts\sql;
 
 use context;
-use mod_adaptivequiz\local\report\users_attempts\filter\filter;
-use mod_adaptivequiz\local\report\users_attempts\filter\filter_options;
+use mod_catadaptivequiz\local\report\users_attempts\filter\filter;
+use mod_catadaptivequiz\local\report\users_attempts\filter\filter_options;
 
 final class sql_resolver {
 
@@ -40,7 +40,7 @@ final class sql_resolver {
             return $sqlandparams;
         }
 
-        $enrolledjoin = get_enrolled_with_capabilities_join($context, '', 'mod/adaptivequiz:attempt',
+        $enrolledjoin = get_enrolled_with_capabilities_join($context, '', 'mod/catadaptivequiz:attempt',
             $filter->groupid, self::resolve_active_enrolment_flag($filter->users, $filter->includeinactiveenrolments));
 
         if ($filter->users == filter_options::ENROLLED_USERS_WITH_NO_ATTEMPTS) {

@@ -19,14 +19,14 @@
  * This module was created as a collaborative effort between Middlebury College
  * and Remote Learner.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 onwards Remote-Learner {@link http://www.remote-learner.ca/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-M.mod_adaptivequiz = M.mod_adaptivequiz || {};
+M.mod_catadaptivequiz = M.mod_catadaptivequiz || {};
 
-M.mod_adaptivequiz.init_attempt_form = function(Y, url, secure) {
+M.mod_catadaptivequiz.init_attempt_form = function(Y, url, secure) {
     // Check if the page is on the password required page
     if (null == document.getElementById('id_quizpassword')) {
         M.core_question_engine.init_form(Y, '#responseform');
@@ -34,47 +34,47 @@ M.mod_adaptivequiz.init_attempt_form = function(Y, url, secure) {
     } else {
         if ('1' == secure) {
             Y.on('click', function(e) {
-                M.mod_adaptivequiz.secure_window.close(url, 0)
+                M.mod_catadaptivequiz.secure_window.close(url, 0)
             }, '#id_cancel');
         }
     }
 };
 
-M.mod_adaptivequiz.secure_window = {
+M.mod_catadaptivequiz.secure_window = {
     init: function(Y) {
         if (window.location.href.substring(0, 4) == 'file') {
             window.location = 'about:blank';
         }
-        Y.delegate('contextmenu', M.mod_adaptivequiz.secure_window.prevent, document, '*');
-        Y.delegate('mousedown',   M.mod_adaptivequiz.secure_window.prevent_mouse, document, '*');
-        Y.delegate('mouseup',     M.mod_adaptivequiz.secure_window.prevent_mouse, document, '*');
-        Y.delegate('dragstart',   M.mod_adaptivequiz.secure_window.prevent, document, '*');
-        Y.delegate('selectstart', M.mod_adaptivequiz.secure_window.prevent, document, '*');
-        Y.delegate('cut',         M.mod_adaptivequiz.secure_window.prevent, document, '*');
-        Y.delegate('copy',        M.mod_adaptivequiz.secure_window.prevent, document, '*');
-        Y.delegate('paste',       M.mod_adaptivequiz.secure_window.prevent, document, '*');
-        M.mod_adaptivequiz.secure_window.clear_status;
+        Y.delegate('contextmenu', M.mod_catadaptivequiz.secure_window.prevent, document, '*');
+        Y.delegate('mousedown',   M.mod_catadaptivequiz.secure_window.prevent_mouse, document, '*');
+        Y.delegate('mouseup',     M.mod_catadaptivequiz.secure_window.prevent_mouse, document, '*');
+        Y.delegate('dragstart',   M.mod_catadaptivequiz.secure_window.prevent, document, '*');
+        Y.delegate('selectstart', M.mod_catadaptivequiz.secure_window.prevent, document, '*');
+        Y.delegate('cut',         M.mod_catadaptivequiz.secure_window.prevent, document, '*');
+        Y.delegate('copy',        M.mod_catadaptivequiz.secure_window.prevent, document, '*');
+        Y.delegate('paste',       M.mod_catadaptivequiz.secure_window.prevent, document, '*');
+        M.mod_catadaptivequiz.secure_window.clear_status;
         Y.on('beforeprint', function() {
             Y.one(document.body).setStyle('display', 'none');
         }, window);
         Y.on('afterprint', function() {
             Y.one(document.body).setStyle('display', 'block');
         }, window);
-        Y.on('key', M.mod_adaptivequiz.secure_window.prevent, '*', 'press:67,86,88+ctrl');
-        Y.on('key', M.mod_adaptivequiz.secure_window.prevent, '*', 'up:67,86,88+ctrl');
-        Y.on('key', M.mod_adaptivequiz.secure_window.prevent, '*', 'down:67,86,88+ctrl');
-        Y.on('key', M.mod_adaptivequiz.secure_window.prevent, '*', 'press:67,86,88+meta');
-        Y.on('key', M.mod_adaptivequiz.secure_window.prevent, '*', 'up:67,86,88+meta');
-        Y.on('key', M.mod_adaptivequiz.secure_window.prevent, '*', 'down:67,86,88+meta');
+        Y.on('key', M.mod_catadaptivequiz.secure_window.prevent, '*', 'press:67,86,88+ctrl');
+        Y.on('key', M.mod_catadaptivequiz.secure_window.prevent, '*', 'up:67,86,88+ctrl');
+        Y.on('key', M.mod_catadaptivequiz.secure_window.prevent, '*', 'down:67,86,88+ctrl');
+        Y.on('key', M.mod_catadaptivequiz.secure_window.prevent, '*', 'press:67,86,88+meta');
+        Y.on('key', M.mod_catadaptivequiz.secure_window.prevent, '*', 'up:67,86,88+meta');
+        Y.on('key', M.mod_catadaptivequiz.secure_window.prevent, '*', 'down:67,86,88+meta');
     },
 
     clear_status: function() {
         window.status = '';
-        setTimeout(M.mod_adaptivequiz.secure_window.clear_status, 10);
+        setTimeout(M.mod_catadaptivequiz.secure_window.clear_status, 10);
     },
 
     prevent: function(e) {
-        alert(M.str.adaptivequiz.functiondisabledbysecuremode);
+        alert(M.str.catadaptivequiz.functiondisabledbysecuremode);
         e.halt();
     },
 
@@ -105,7 +105,7 @@ M.mod_adaptivequiz.secure_window = {
 
     init_close_button: function(Y, url) {
         Y.on('click', function(e) {
-            M.mod_adaptivequiz.secure_window.close(url, 0)
+            M.mod_catadaptivequiz.secure_window.close(url, 0)
         }, '#secureclosebutton');
     },
 
@@ -121,7 +121,7 @@ M.mod_adaptivequiz.secure_window = {
     }
 };
 
-M.mod_adaptivequiz.init_comment_popup = function(Y) {
+M.mod_catadaptivequiz.init_comment_popup = function(Y) {
     // Add a close button to the window.
     var closebutton = Y.Node.create('<input type="button" />');
     closebutton.set('value', M.util.get_string('cancel', 'moodle'));
@@ -129,7 +129,7 @@ M.mod_adaptivequiz.init_comment_popup = function(Y) {
     Y.on('click', function() { window.close() }, closebutton);
 }
 
-M.mod_adaptivequiz.init_reviewattempt = function(Y) {
+M.mod_catadaptivequiz.init_reviewattempt = function(Y) {
     Y.one('#adpq_scoring_table').hide();
     Y.one('#adpq_scoring_table_link_icon').setContent('&#9654;');
 

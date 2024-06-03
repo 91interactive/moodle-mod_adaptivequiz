@@ -24,7 +24,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\repository;
+namespace mod_catadaptivequiz\local\repository;
 
 final class questions_number_per_difficulty {
     /**

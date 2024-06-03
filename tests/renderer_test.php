@@ -22,13 +22,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz;
+namespace mod_catadaptivequiz;
 
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once($CFG->dirroot.'/mod/adaptivequiz/locallib.php');
-require_once($CFG->dirroot.'/mod/adaptivequiz/renderer.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/locallib.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/renderer.php');
 require_once($CFG->dirroot.'/tag/lib.php');
 
 use advanced_testcase;
@@ -38,7 +38,7 @@ use moodle_url;
 use stdClass;
 
 /**
- * @group mod_adaptivequiz
+ * @group mod_catadaptivequiz
  * @covers \mod_adaptivequiz_renderer
  */
 class renderer_test extends advanced_testcase {
@@ -48,14 +48,14 @@ class renderer_test extends advanced_testcase {
      */
     public function test_adaptivequiz_get_js_module(): void {
         $dummypage = new moodle_page();
-        $target = 'mod_adaptivequiz';
+        $target = 'mod_catadaptivequiz';
         $renderer = new mod_adaptivequiz_renderer($dummypage, $target);
         $output = $renderer->adaptivequiz_get_js_module();
 
         $this->assertArrayHasKey('name', $output);
-        $this->assertContains('mod_adaptivequiz', $output);
+        $this->assertContains('mod_catadaptivequiz', $output);
         $this->assertArrayHasKey('fullpath', $output);
-        $this->assertContains('/mod/adaptivequiz/module.js', $output);
+        $this->assertContains('/mod/catadaptivequiz/module.js', $output);
         $this->assertArrayHasKey('requires', $output);
         $this->assertEquals(
             ['base', 'dom', 'event-delegate', 'event-key', 'core_question_engine', 'moodle-core-formchangechecker'],
@@ -69,7 +69,7 @@ class renderer_test extends advanced_testcase {
      */
     public function test_init_metadata_with_integer() {
         $dummypage = new moodle_page();
-        $target = 'mod_adaptivequiz';
+        $target = 'mod_catadaptivequiz';
         $renderer = new mod_adaptivequiz_renderer($dummypage, $target);
 
         $mockquba = $this->createPartialMock('question_usage_by_activity', ['render_question_head_html']);
@@ -86,7 +86,7 @@ class renderer_test extends advanced_testcase {
      */
     public function test_print_form_and_button() {
         $dummypage = new moodle_page();
-        $target = 'mod_adaptivequiz';
+        $target = 'mod_catadaptivequiz';
         $renderer = new mod_adaptivequiz_renderer($dummypage, $target);
         $url = new moodle_url('/test/phpunittest/test.php', array('cmid' => 99));
         $text = 'phpunit test button';
@@ -108,25 +108,25 @@ class renderer_test extends advanced_testcase {
      */
     public function test_format_report_table_headers() {
         $dummypage = new moodle_page();
-        $target = 'mod_adaptivequiz';
+        $target = 'mod_catadaptivequiz';
         $renderer = new mod_adaptivequiz_renderer($dummypage, $target);
         $dummycm = new stdClass();
         $dummycm->id = 99;
 
         $output = $renderer->format_report_table_headers($dummycm, 'stderror', 'ASC');
         $this->assertEquals(6, count($output));
-        $this->assertStringContainsString('/mod/adaptivequiz/viewreport.php', $output[0]);
+        $this->assertStringContainsString('/mod/catadaptivequiz/viewreport.php', $output[0]);
         $this->assertStringContainsString('sort=firstname&amp;sortdir=ASC', $output[0]);
         $this->assertStringContainsString('sort=lastname&amp;sortdir=ASC', $output[0]);
-        $this->assertStringContainsString('/mod/adaptivequiz/viewreport.php', $output[1]);
+        $this->assertStringContainsString('/mod/catadaptivequiz/viewreport.php', $output[1]);
         $this->assertStringContainsString('sort=email&amp;sortdir=ASC', $output[1]);
-        $this->assertStringContainsString('/mod/adaptivequiz/viewreport.php', $output[2]);
+        $this->assertStringContainsString('/mod/catadaptivequiz/viewreport.php', $output[2]);
         $this->assertStringContainsString('sort=attempts&amp;sortdir=ASC', $output[2]);
-        $this->assertStringContainsString('/mod/adaptivequiz/viewreport.php', $output[3]);
+        $this->assertStringContainsString('/mod/catadaptivequiz/viewreport.php', $output[3]);
         $this->assertStringContainsString('sort=measure&amp;sortdir=ASC', $output[3]);
-        $this->assertStringContainsString('/mod/adaptivequiz/viewreport.php', $output[4]);
+        $this->assertStringContainsString('/mod/catadaptivequiz/viewreport.php', $output[4]);
         $this->assertStringContainsString('sort=stderror&amp;sortdir=DESC', $output[4]);
-        $this->assertStringContainsString('/mod/adaptivequiz/viewreport.php', $output[5]);
+        $this->assertStringContainsString('/mod/catadaptivequiz/viewreport.php', $output[5]);
         $this->assertStringContainsString('sort=timemodified&amp;sortdir=ASC', $output[5]);
     }
 }

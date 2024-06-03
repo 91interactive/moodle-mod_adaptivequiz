@@ -24,15 +24,15 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/adaptivequiz/lib.php');
+require_once($CFG->dirroot . '/mod/catadaptivequiz/lib.php');
 require_once($CFG->dirroot . '/question/editlib.php');
 require_once($CFG->dirroot . '/lib/questionlib.php');
 require_once($CFG->dirroot . '/question/engine/lib.php');
 
 use core_question\local\bank\question_edit_contexts;
-use mod_adaptivequiz\event\attempt_completed;
-use mod_adaptivequiz\local\attempt\attempt_state;
-use mod_adaptivequiz\local\catalgorithm\catalgo;
+use mod_catadaptivequiz\event\attempt_completed;
+use mod_catadaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz\local\catalgorithm\catalgo;
 use qbank_managecategories\helper as qbank_managecategories_helper;
 
 // Default tagging used.
@@ -117,7 +117,7 @@ function adaptivequiz_get_selected_question_cateogires($instance) {
         return array();
     }
 
-    $records = $DB->get_records('adaptivequiz_question', array('instance' => $instance));
+    $records = $DB->get_records('catadaptivequiz_question', array('instance' => $instance));
 
     if (empty($records)) {
         return array();
@@ -145,7 +145,7 @@ function adaptivequiz_count_user_previous_attempts($instanceid = 0, $userid = 0)
     }
 
     $param = array('instance' => $instanceid, 'userid' => $userid, 'attemptstate' => attempt_state::COMPLETED);
-    $count = $DB->count_records('adaptivequiz_attempt', $param);
+    $count = $DB->count_records('catadaptivequiz_attempt', $param);
 
     return $count;
 }
@@ -175,7 +175,7 @@ function adaptivequiz_uniqueid_part_of_attempt($uniqueid, $instance, $userid) {
     global $DB;
 
     $param = array('uniqueid' => $uniqueid, 'instance' => $instance, 'userid' => $userid);
-    return $DB->record_exists('adaptivequiz_attempt', $param);
+    return $DB->record_exists('catadaptivequiz_attempt', $param);
 }
 
 /**
@@ -189,8 +189,8 @@ function adaptivequiz_min_attempts_reached($uniqueid, $instance, $userid) {
     global $DB;
 
     $sql = "SELECT adpq.id
-             FROM {adaptivequiz} adpq
-             JOIN {adaptivequiz_attempt} adpqa ON adpq.id = adpqa.instance
+             FROM {catadaptivequiz} adpq
+             JOIN {catadaptivequiz_attempt} adpqa ON adpq.id = adpqa.instance
             WHERE adpqa.uniqueid = :uniqueid
                   AND adpqa.instance = :instance
                   AND adpqa.userid = :userid
@@ -238,9 +238,9 @@ function adaptivequiz_get_difficulty_from_tags(array $tags) {
  */
 function adaptivequiz_get_grading_options() {
     return array(
-        ADAPTIVEQUIZ_GRADEHIGHEST => get_string('gradehighest', 'adaptivequiz'),
-        ADAPTIVEQUIZ_ATTEMPTFIRST => get_string('attemptfirst', 'adaptivequiz'),
-        ADAPTIVEQUIZ_ATTEMPTLAST  => get_string('attemptlast', 'adaptivequiz')
+        ADAPTIVEQUIZ_GRADEHIGHEST => get_string('gradehighest', 'catadaptivequiz'),
+        ADAPTIVEQUIZ_ATTEMPTFIRST => get_string('attemptfirst', 'catadaptivequiz'),
+        ADAPTIVEQUIZ_ATTEMPTLAST  => get_string('attemptlast', 'catadaptivequiz')
     );
 }
 
@@ -266,8 +266,8 @@ function adaptivequiz_get_user_grades($adaptivequiz, $userid = 0) {
     }
     $sql = "SELECT aa.uniqueid, aa.userid, aa.measure, aa.timemodified, aa.timecreated, a.highestlevel,
                a.lowestlevel
-          FROM {adaptivequiz_attempt} aa
-          JOIN {adaptivequiz} a ON aa.instance = a.id
+          FROM {catadaptivequiz_attempt} aa
+          JOIN {catadaptivequiz} a ON aa.instance = a.id
          WHERE aa.instance = :instance
                AND aa.attemptstate = :attemptstate
                $userwhere";

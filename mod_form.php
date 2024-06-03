@@ -17,19 +17,19 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/course/moodleform_mod.php');
-require_once($CFG->dirroot . '/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot . '/mod/catadaptivequiz/locallib.php');
 
-use mod_adaptivequiz\local\repository\questions_repository;
+use mod_catadaptivequiz\local\repository\questions_repository;
 
 /**
  * Definition of activity settings form.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_adaptivequiz_mod_form extends moodleform_mod {
+class mod_catadaptivequiz_mod_form extends moodleform_mod {
 
     /**
      * Form definition.
@@ -39,13 +39,13 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
 
         $mform = $this->_form;
 
-        $pluginconfig = get_config('adaptivequiz');
+        $pluginconfig = get_config('catadaptivequiz');
 
         // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
         // Adding the standard "name" field.
-        $mform->addElement('text', 'name', get_string('adaptivequizname', 'adaptivequiz'), ['size' => '64']);
+        $mform->addElement('text', 'name', get_string('catadaptivequizname', 'catadaptivequiz'), ['size' => '64']);
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -53,7 +53,7 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
         }
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
-        $mform->addHelpButton('name', 'adaptivequizname', 'adaptivequiz');
+        $mform->addHelpButton('name', 'catadaptivequizname', 'catadaptivequiz');
 
         // Adding the standard "intro" and "introformat" fields.
         // Use the non deprecated function if it exists.
@@ -69,22 +69,22 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
         for ($i = 1; $i <= ADAPTIVEQUIZMAXATTEMPT; $i++) {
             $attemptoptions[$i] = $i;
         }
-        $mform->addElement('select', 'attempts', get_string('attemptsallowed', 'adaptivequiz'), $attemptoptions);
+        $mform->addElement('select', 'attempts', get_string('attemptsallowed', 'catadaptivequiz'), $attemptoptions);
         $mform->setDefault('attempts', 0);
-        $mform->addHelpButton('attempts', 'attemptsallowed', 'adaptivequiz');
+        $mform->addHelpButton('attempts', 'attemptsallowed', 'catadaptivequiz');
 
         // Require password to begin adaptivequiz attempt.
-        $mform->addElement('passwordunmask', 'password', get_string('requirepassword', 'adaptivequiz'));
+        $mform->addElement('passwordunmask', 'password', get_string('requirepassword', 'catadaptivequiz'));
         $mform->setType('password', PARAM_TEXT);
-        $mform->addHelpButton('password', 'requirepassword', 'adaptivequiz');
+        $mform->addHelpButton('password', 'requirepassword', 'catadaptivequiz');
 
         // Browser security choices.
         $options = [
             get_string('no'),
             get_string('yes'),
         ];
-        $mform->addElement('select', 'browsersecurity', get_string('browsersecurity', 'adaptivequiz'), $options);
-        $mform->addHelpButton('browsersecurity', 'browsersecurity', 'adaptivequiz');
+        $mform->addElement('select', 'browsersecurity', get_string('browsersecurity', 'catadaptivequiz'), $options);
+        $mform->addHelpButton('browsersecurity', 'browsersecurity', 'catadaptivequiz');
         $mform->setDefault('browsersecurity', 0);
 
         // Retireve a list of available course categories.
@@ -92,156 +92,156 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
         $options = adaptivequiz_get_question_categories($this->context);
         $selquestcat = adaptivequiz_get_selected_question_cateogires($this->_instance);
 
-        $select = $mform->addElement('select', 'questionpool', get_string('questionpool', 'adaptivequiz'), $options);
-        $mform->addHelpButton('questionpool', 'questionpool', 'adaptivequiz');
+        $select = $mform->addElement('select', 'questionpool', get_string('questionpool', 'catadaptivequiz'), $options);
+        $mform->addHelpButton('questionpool', 'questionpool', 'catadaptivequiz');
         $select->setMultiple(true);
         $mform->addRule('questionpool', null, 'required', null, 'client');
         $mform->getElement('questionpool')->setSelected($selquestcat);
 
 		// Adding the standard "starting level of difficulty" field.
-        $mform->addElement('text', 'startinglevel', get_string('startinglevel', 'adaptivequiz'),
+        $mform->addElement('text', 'startinglevel', get_string('startinglevel', 'catadaptivequiz'),
             ['size' => '3', 'maxlength' => '3']);
-        $mform->addHelpButton('startinglevel', 'startinglevel', 'adaptivequiz');
-        $mform->addRule('startinglevel', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addRule('startinglevel', get_string('formelementnumeric', 'adaptivequiz'), 'numeric', null, 'client');
+        $mform->addHelpButton('startinglevel', 'startinglevel', 'catadaptivequiz');
+        $mform->addRule('startinglevel', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addRule('startinglevel', get_string('formelementnumeric', 'catadaptivequiz'), 'numeric', null, 'client');
         $mform->setType('startinglevel', PARAM_INT);
         $mform->setDefault('startinglevel', $pluginconfig->startinglevel);
 
 		// Adding the standard "lowest level of difficulty" field.
-        $mform->addElement('text', 'lowestlevel', get_string('lowestlevel', 'adaptivequiz'),
+        $mform->addElement('text', 'lowestlevel', get_string('lowestlevel', 'catadaptivequiz'),
             ['size' => '3', 'maxlength' => '3']);
-        $mform->addHelpButton('lowestlevel', 'lowestlevel', 'adaptivequiz');
-        $mform->addRule('lowestlevel', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addRule('lowestlevel', get_string('formelementnumeric', 'adaptivequiz'), 'numeric', null, 'client');
+        $mform->addHelpButton('lowestlevel', 'lowestlevel', 'catadaptivequiz');
+        $mform->addRule('lowestlevel', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addRule('lowestlevel', get_string('formelementnumeric', 'catadaptivequiz'), 'numeric', null, 'client');
         $mform->setType('lowestlevel', PARAM_INT);
         $mform->setDefault('lowestlevel', $pluginconfig->lowestlevel);
 
 		// Adding the standard "highest level of difficulty" field.
-        $mform->addElement('text', 'highestlevel', get_string('highestlevel', 'adaptivequiz'),
+        $mform->addElement('text', 'highestlevel', get_string('highestlevel', 'catadaptivequiz'),
             ['size' => '3', 'maxlength' => '3']);
-        $mform->addHelpButton('highestlevel', 'highestlevel', 'adaptivequiz');
-        $mform->addRule('highestlevel', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addRule('highestlevel', get_string('formelementnumeric', 'adaptivequiz'), 'numeric', null, 'client');
+        $mform->addHelpButton('highestlevel', 'highestlevel', 'catadaptivequiz');
+        $mform->addRule('highestlevel', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addRule('highestlevel', get_string('formelementnumeric', 'catadaptivequiz'), 'numeric', null, 'client');
         $mform->setType('highestlevel', PARAM_INT);
         $mform->setDefault('highestlevel', $pluginconfig->highestlevel);
 
 		// Adding the standard "attempt feedback" field.
-        $mform->addElement('textarea', 'attemptfeedback', get_string('attemptfeedback', 'adaptivequiz'),
+        $mform->addElement('textarea', 'attemptfeedback', get_string('attemptfeedback', 'catadaptivequiz'),
             'wrap="virtual" rows="10" cols="50"');
-        $mform->addHelpButton('attemptfeedback', 'attemptfeedback', 'adaptivequiz');
+        $mform->addHelpButton('attemptfeedback', 'attemptfeedback', 'catadaptivequiz');
         $mform->setType('attemptfeedback', PARAM_NOTAGS);
 
 		// Adding the standard "show ability measure to students" field.
-        $mform->addElement('select', 'showabilitymeasure', get_string('showabilitymeasure', 'adaptivequiz'),
+        $mform->addElement('select', 'showabilitymeasure', get_string('showabilitymeasure', 'catadaptivequiz'),
             [get_string('no'), get_string('yes')]);
-        $mform->addHelpButton('showabilitymeasure', 'showabilitymeasure', 'adaptivequiz');
+        $mform->addHelpButton('showabilitymeasure', 'showabilitymeasure', 'catadaptivequiz');
         $mform->setDefault('showabilitymeasure', 0);
 
 		// Adding the standard "show quiz progress to students" field.
-        $mform->addElement('select', 'showattemptprogress', get_string('modformshowattemptprogress', 'adaptivequiz'),
+        $mform->addElement('select', 'showattemptprogress', get_string('modformshowattemptprogress', 'catadaptivequiz'),
             [get_string('no'), get_string('yes')]);
-        $mform->addHelpButton('showattemptprogress', 'modformshowattemptprogress', 'adaptivequiz');
+        $mform->addHelpButton('showattemptprogress', 'modformshowattemptprogress', 'catadaptivequiz');
         $mform->setDefault('showattemptprogress', 0);
 
         // Adding the "Stopping conditions" fieldset, where all the common settings are showed.
-        $mform->addElement('header', 'stopingconditionshdr', get_string('stopingconditionshdr', 'adaptivequiz'));
+        $mform->addElement('header', 'stopingconditionshdr', get_string('stopingconditionshdr', 'catadaptivequiz'));
 
 		// Adding the standard "minimum number of questions" field.
-        $mform->addElement('text', 'minimumquestions', get_string('minimumquestions', 'adaptivequiz'),
+        $mform->addElement('text', 'minimumquestions', get_string('minimumquestions', 'catadaptivequiz'),
             ['size' => '3', 'maxlength' => '3']);
-        $mform->addHelpButton('minimumquestions', 'minimumquestions', 'adaptivequiz');
-        $mform->addRule('minimumquestions', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addRule('minimumquestions', get_string('formelementnumeric', 'adaptivequiz'), 'numeric', null, 'client');
+        $mform->addHelpButton('minimumquestions', 'minimumquestions', 'catadaptivequiz');
+        $mform->addRule('minimumquestions', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addRule('minimumquestions', get_string('formelementnumeric', 'catadaptivequiz'), 'numeric', null, 'client');
         $mform->setType('minimumquestions', PARAM_INT);
         $mform->setDefault('minimumquestions', $pluginconfig->minimumquestions);
 
 		// Adding the standard "maximum number of questions" field.
-        $mform->addElement('text', 'maximumquestions', get_string('maximumquestions', 'adaptivequiz'),
+        $mform->addElement('text', 'maximumquestions', get_string('maximumquestions', 'catadaptivequiz'),
             ['size' => '3', 'maxlength' => '3']);
-        $mform->addHelpButton('maximumquestions', 'maximumquestions', 'adaptivequiz');
-        $mform->addRule('maximumquestions', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addRule('maximumquestions', get_string('formelementnumeric', 'adaptivequiz'), 'numeric', null, 'client');
+        $mform->addHelpButton('maximumquestions', 'maximumquestions', 'catadaptivequiz');
+        $mform->addRule('maximumquestions', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addRule('maximumquestions', get_string('formelementnumeric', 'catadaptivequiz'), 'numeric', null, 'client');
         $mform->setType('maximumquestions', PARAM_INT);
         $mform->setDefault('maximumquestions', $pluginconfig->maximumquestions);
 
 		// Adding the standard "standard error to stop" field.
-        $mform->addElement('text', 'standarderror', get_string('standarderror', 'adaptivequiz'),
+        $mform->addElement('text', 'standarderror', get_string('standarderror', 'catadaptivequiz'),
             ['size' => '10', 'maxlength' => '10']);
-        $mform->addHelpButton('standarderror', 'standarderror', 'adaptivequiz');
-        $mform->addRule('standarderror', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addRule('standarderror', get_string('formelementdecimal', 'adaptivequiz'), 'numeric', null, 'client');
+        $mform->addHelpButton('standarderror', 'standarderror', 'catadaptivequiz');
+        $mform->addRule('standarderror', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addRule('standarderror', get_string('formelementdecimal', 'catadaptivequiz'), 'numeric', null, 'client');
         $mform->setType('standarderror', PARAM_FLOAT);
         $mform->setDefault('standarderror', $pluginconfig->standarderror);
 		
         // Adding the "Test settings" fieldset, where all the common settings are showed.
-		$mform->addElement('header', 'testsettingsheader', get_string('testsettingsheader', 'adaptivequiz'));
+		$mform->addElement('header', 'testsettingsheader', get_string('testsettingsheader', 'catadaptivequiz'));
 
 		// Adding the standard "test length" field.
-		$mform->addElement('text','testlength',get_string('testlength','adaptivequiz')); // should be only intergers
+		$mform->addElement('text','testlength',get_string('testlength','catadaptivequiz')); // should be only intergers
 		$mform->setType('testlength', PARAM_INT);
-        $mform->addRule('testlength', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addHelpButton('testlength', 'testlengthDescription', 'adaptivequiz');
+        $mform->addRule('testlength', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('testlength', 'testlengthDescription', 'catadaptivequiz');
 		
 		// Adding the standard "test duration in minutes" field.
-		$mform->addElement('text','testduration',get_string('testduration','adaptivequiz'),'min'); // should be only intergers
+		$mform->addElement('text','testduration',get_string('testduration','catadaptivequiz'),'min'); // should be only intergers
 		$mform->setType('testduration', PARAM_INT);
-        $mform->addRule('testduration', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addHelpButton('testduration', 'testdurationDescription', 'adaptivequiz');
+        $mform->addRule('testduration', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('testduration', 'testdurationDescription', 'catadaptivequiz');
 
 		// Adding the standard "select task type" field.
-		$mform->addElement('select', 'selecttasktypes', get_string('selecttasktypes', 'adaptivequiz'),  [get_string('sequential','adaptivequiz'),get_string('random','adaptivequiz')],[get_string('sequential','adaptivequiz'),get_string('random','adaptivequiz')]);
-        $mform->addHelpButton('selecttasktypes', 'selecttasktypesDescription', 'adaptivequiz');
+		$mform->addElement('select', 'selecttasktypes', get_string('selecttasktypes', 'catadaptivequiz'),  [get_string('sequential','catadaptivequiz'),get_string('random','catadaptivequiz')],[get_string('sequential','catadaptivequiz'),get_string('random','catadaptivequiz')]);
+        $mform->addHelpButton('selecttasktypes', 'selecttasktypesDescription', 'catadaptivequiz');
 
 		// Adding the standard "Number of calibration clusters" field.
-		$mform->addElement('text','numbercalibrationclusters',get_string('numbercalibrationclusters','adaptivequiz')); // should be only intergers
+		$mform->addElement('text','numbercalibrationclusters',get_string('numbercalibrationclusters','catadaptivequiz')); // should be only intergers
 		$mform->setType('numbercalibrationclusters', PARAM_INT);
-        $mform->addRule('numbercalibrationclusters', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addHelpButton('numbercalibrationclusters', 'numbercalibrationclustersDescription', 'adaptivequiz');
+        $mform->addRule('numbercalibrationclusters', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('numbercalibrationclusters', 'numbercalibrationclustersDescription', 'catadaptivequiz');
 
 		// Adding the standard "Number of linking clusters" field.
-		$mform->addElement('text','numberlinkingclusters',get_string('numberlinkingclusters','adaptivequiz')); // should be only intergers
+		$mform->addElement('text','numberlinkingclusters',get_string('numberlinkingclusters','catadaptivequiz')); // should be only intergers
 		$mform->setType('numberlinkingclusters', PARAM_INT);
-        $mform->addRule('numberlinkingclusters', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addHelpButton('numberlinkingclusters', 'numberlinkingclustersDescription', 'adaptivequiz');
+        $mform->addRule('numberlinkingclusters', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('numberlinkingclusters', 'numberlinkingclustersDescription', 'catadaptivequiz');
 
 		// Adding the standard "Number of adaptive clusters" field.
-		$mform->addElement('text','numberadaptiveclusters',get_string('numberadaptiveclusters','adaptivequiz')); // should be only intergers
+		$mform->addElement('text','numberadaptiveclusters',get_string('numberadaptiveclusters','catadaptivequiz')); // should be only intergers
 		$mform->setType('numberadaptiveclusters', PARAM_INT);
-        $mform->addRule('numberadaptiveclusters', get_string('formelementempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addHelpButton('numberadaptiveclusters', 'numberadaptiveclustersDescription', 'adaptivequiz');
+        $mform->addRule('numberadaptiveclusters', get_string('formelementempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('numberadaptiveclusters', 'numberadaptiveclustersDescription', 'catadaptivequiz');
 		
 		// Adding the standard "Personal parameter estimation" field.
-		$mform->addElement('select', 'personalparameterestimation', get_string('personalparameterestimation', 'adaptivequiz'),  ["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"],["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"]);
-        $mform->addHelpButton('personalparameterestimation', 'personalparameterestimationDescription', 'adaptivequiz');
+		$mform->addElement('select', 'personalparameterestimation', get_string('personalparameterestimation', 'catadaptivequiz'),  ["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"],["Maximum-A-Posteriori (MAP)","Expected-A-Posteriori (EAP)","Weighted Likelihood Estimation (WLE)","Maximum Likelihood Estimation (MLE)"]);
+        $mform->addHelpButton('personalparameterestimation', 'personalparameterestimationDescription', 'catadaptivequiz');
 
 		// Adding the standard "Task selection adaptive part" field
-		$mform->addElement('select', 'adaptivepart', get_string('adaptivepart', 'adaptivequiz'),  ["Maximum Information","Minimum Expected Posterior Variance","Maximum Expected Information","Integration-based Kullback-Leibler"],["Maximum Information","Minimum Expected Posterior Variance","Maximum Expected Information","Integration-based Kullback-Leibler"]);
-        $mform->addHelpButton('adaptivepart', 'adaptivepartDescription', 'adaptivequiz');
+		$mform->addElement('select', 'adaptivepart', get_string('adaptivepart', 'catadaptivequiz'),  ["Maximum Information","Minimum Expected Posterior Variance","Maximum Expected Information","Integration-based Kullback-Leibler"],["Maximum Information","Minimum Expected Posterior Variance","Maximum Expected Information","Integration-based Kullback-Leibler"]);
+        $mform->addHelpButton('adaptivepart', 'adaptivepartDescription', 'catadaptivequiz');
 
 		// Adding the standard "Randomesque Exposure Control" checkbox
 		$mform->addElement('advcheckbox', 'randomesque_exposure_control', '', 'Randomesque Exposure Control', array('group' => 1), array(0, 1));
 		
 		// Adding the standard "Number of best matching tasks from which to choose at random" field
-		$mform->addElement('text','suitabletasks',get_string('suitabletasks','adaptivequiz')); // should be only intergers
+		$mform->addElement('text','suitabletasks',get_string('suitabletasks','catadaptivequiz')); // should be only intergers
 		$mform->setType('suitabletasks', PARAM_INT);
 		$mform->setDefault('suitabletasks', 0);
 		$mform->hideIf('suitabletasks', 'randomesque_exposure_control', 'notchecked');
-        $mform->addHelpButton('suitabletasks', 'suitabletasksdescription', 'adaptivequiz');
+        $mform->addHelpButton('suitabletasks', 'suitabletasksdescription', 'catadaptivequiz');
 		
 		// adding standard "message before test" field 
-		$mform->addElement('textarea','messagebeforetest',get_string('messagebeforetest','adaptivequiz'));
+		$mform->addElement('textarea','messagebeforetest',get_string('messagebeforetest','catadaptivequiz'));
 		$mform->setType('messagebeforetest', PARAM_NOTAGS);
-        $mform->addRule('messagebeforetest', get_string('formtextareaempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addHelpButton('messagebeforetest', 'messagebeforetestDescription', 'adaptivequiz');
+        $mform->addRule('messagebeforetest', get_string('formtextareaempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('messagebeforetest', 'messagebeforetestDescription', 'catadaptivequiz');
 
 		// adding standard "message on last page of the test" field 
-		$mform->addElement('textarea','messageatlastpage',get_string('messageatlastpage','adaptivequiz'));
+		$mform->addElement('textarea','messageatlastpage',get_string('messageatlastpage','catadaptivequiz'));
 		$mform->setType('messageatlastpage', PARAM_NOTAGS);
-        $mform->addRule('messageatlastpage', get_string('formtextareaempty', 'adaptivequiz'), 'required', null, 'client');
-        $mform->addHelpButton('messageatlastpage', 'messageatlastpageDescription', 'adaptivequiz');
+        $mform->addRule('messageatlastpage', get_string('formtextareaempty', 'catadaptivequiz'), 'required', null, 'client');
+        $mform->addHelpButton('messageatlastpage', 'messageatlastpageDescription', 'catadaptivequiz');
 
 		// adding checkbox for "User-defined specification of proportions of individual content areas in the overall test?"
-		$mform->addElement('advcheckbox', 'contentareas', '', get_string('contentareas','adaptivequiz'), array('group' => 1), array(0, 1));
+		$mform->addElement('advcheckbox', 'contentareas', '', get_string('contentareas','catadaptivequiz'), array('group' => 1), array(0, 1));
 		
 		// adding content area fields
 		$mform->addElement('text','contentarea1','Inhaltsbereich1'); // TODO Dynamic naming from an excel table
@@ -263,9 +263,9 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
         $mform->removeElement('grade');
 
         // Grading method.
-        $mform->addElement('select', 'grademethod', get_string('grademethod', 'adaptivequiz'),
+        $mform->addElement('select', 'grademethod', get_string('grademethod', 'catadaptivequiz'),
                 adaptivequiz_get_grading_options());
-        $mform->addHelpButton('grademethod', 'grademethod', 'adaptivequiz');
+        $mform->addHelpButton('grademethod', 'grademethod', 'catadaptivequiz');
         $mform->setDefault('grademethod', ADAPTIVEQUIZ_GRADEHIGHEST);
         $mform->disabledIf('grademethod', 'attempts', 'eq', 1);
 
@@ -279,7 +279,7 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
     public function add_completion_rules(): array {
         $form = $this->_form;
         $form->addElement('checkbox', 'completionattemptcompleted', ' ',
-            get_string('completionattemptcompletedform', 'adaptivequiz'));
+            get_string('completionattemptcompletedform', 'catadaptivequiz'));
 
         return ['completionattemptcompleted'];
     }
@@ -305,45 +305,45 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
         $errors = parent::validation($data, $files);
 
         if (empty($data['questionpool'])) {
-            $errors['questionpool'] = get_string('formquestionpool', 'adaptivequiz');
+            $errors['questionpool'] = get_string('formquestionpool', 'catadaptivequiz');
         }
 
         // Validate for positivity.
         if (0 >= $data['minimumquestions']) {
-            $errors['minimumquestions'] = get_string('formelementnegative', 'adaptivequiz');
+            $errors['minimumquestions'] = get_string('formelementnegative', 'catadaptivequiz');
         }
 
         if (0 >= $data['maximumquestions']) {
-            $errors['maximumquestions'] = get_string('formelementnegative', 'adaptivequiz');
+            $errors['maximumquestions'] = get_string('formelementnegative', 'catadaptivequiz');
         }
 
         if (0 >= $data['startinglevel']) {
-            $errors['startinglevel'] = get_string('formelementnegative', 'adaptivequiz');
+            $errors['startinglevel'] = get_string('formelementnegative', 'catadaptivequiz');
         }
 
         if (0 >= $data['lowestlevel']) {
-            $errors['lowestlevel'] = get_string('formelementnegative', 'adaptivequiz');
+            $errors['lowestlevel'] = get_string('formelementnegative', 'catadaptivequiz');
         }
 
         if (0 >= $data['highestlevel']) {
-            $errors['highestlevel'] = get_string('formelementnegative', 'adaptivequiz');
+            $errors['highestlevel'] = get_string('formelementnegative', 'catadaptivequiz');
         }
 
         if ((float) 0 > (float) $data['standarderror'] || (float) 50 <= (float) $data['standarderror']) {
-            $errors['standarderror'] = get_string('formstderror', 'adaptivequiz');
+            $errors['standarderror'] = get_string('formstderror', 'catadaptivequiz');
         }
 
         // Validate higher and lower values.
         if ($data['minimumquestions'] >= $data['maximumquestions']) {
-            $errors['minimumquestions'] = get_string('formminquestgreaterthan', 'adaptivequiz');
+            $errors['minimumquestions'] = get_string('formminquestgreaterthan', 'catadaptivequiz');
         }
 
         if ($data['lowestlevel'] >= $data['highestlevel']) {
-            $errors['lowestlevel'] = get_string('formlowlevelgreaterthan', 'adaptivequiz');
+            $errors['lowestlevel'] = get_string('formlowlevelgreaterthan', 'catadaptivequiz');
         }
 
         if (!($data['startinglevel'] >= $data['lowestlevel'] && $data['startinglevel'] <= $data['highestlevel'])) {
-            $errors['startinglevel'] = get_string('formstartleveloutofbounds', 'adaptivequiz');
+            $errors['startinglevel'] = get_string('formstartleveloutofbounds', 'catadaptivequiz');
         }
 
         if ($questionspoolerrormsg = $this->validate_questions_pool($data['questionpool'], $data['startinglevel'])) {
@@ -351,23 +351,23 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
         }
 
 		if (0 >= $data['testlength']) {
-            $errors['testlength'] = get_string('formelementnegative', 'adaptivequiz');
+            $errors['testlength'] = get_string('formelementnegative', 'catadaptivequiz');
         }
 		if (0 >= $data['testduration']) {
-            $errors['testduration'] = get_string('formelementnegative', 'adaptivequiz');
+            $errors['testduration'] = get_string('formelementnegative', 'catadaptivequiz');
         }
 		if (0 >= $data['numbercalibrationclusters']) {
-            $errors['numbercalibrationclusters'] = get_string('formelementnegative', 'adaptivequiz');
+            $errors['numbercalibrationclusters'] = get_string('formelementnegative', 'catadaptivequiz');
         }
 		if (0 >= $data['numberlinkingclusters']) {
-            $errors['numberlinkingclusters'] = get_string('formelementnegative', 'adaptivequiz');
+            $errors['numberlinkingclusters'] = get_string('formelementnegative', 'catadaptivequiz');
         }
 		if (0 >= $data['numberadaptiveclusters']) {
-            $errors['numberadaptiveclusters'] = get_string('formelementnegative', 'adaptivequiz');
+            $errors['numberadaptiveclusters'] = get_string('formelementnegative', 'catadaptivequiz');
         }
 		if($data['randomesque_exposure_control']){
 			if (0 >= $data['suitabletasks']) {
-				$errors['suitabletasks'] = get_string('formelementnegative', 'adaptivequiz');
+				$errors['suitabletasks'] = get_string('formelementnegative', 'catadaptivequiz');
 			}
 		}
         return $errors;
@@ -381,6 +381,6 @@ class mod_adaptivequiz_mod_form extends moodleform_mod {
     private function validate_questions_pool(array $qcategoryidlist, int $startinglevel): string {
         return questions_repository::count_adaptive_questions_in_pool_with_level($qcategoryidlist, $startinglevel) > 0
             ? ''
-            : get_string('questionspoolerrornovalidstartingquestions', 'adaptivequiz');
+            : get_string('questionspoolerrornovalidstartingquestions', 'catadaptivequiz');
     }
 }

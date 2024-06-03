@@ -18,7 +18,7 @@
  * Adaptive testing capabilities definition
  *
  * @package    mod
- * @subpackage adaptivequiz
+ * @subpackage catadaptivequiz
  * @category   access
  * @copyright  2013 onwards Remote-Learner {@link http://www.remote-learner.ca/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
     // Ability to add a new adaptivequiz to the course.
-    'mod/adaptivequiz:addinstance' => array(
+    'mod/catadaptivequiz:addinstance' => array(
         'riskbitmask' => RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -39,7 +39,7 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/course:manageactivities'
     ),
     // Ability to view adaptivequiz report.
-    'mod/adaptivequiz:viewreport' => array(
+    'mod/catadaptivequiz:viewreport' => array(
         'riskbitmask' => RISK_PERSONAL,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -49,7 +49,7 @@ $capabilities = array(
         ),
     ),
     // Ability to view review pervious attempts.
-    'mod/adaptivequiz:reviewattempts' => array(
+    'mod/catadaptivequiz:reviewattempts' => array(
         'riskbitmask' => RISK_PERSONAL,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -59,7 +59,7 @@ $capabilities = array(
         ),
     ),
     // Ability to attempt the activity.
-    'mod/adaptivequiz:attempt' => array(
+    'mod/catadaptivequiz:attempt' => array(
         'riskbitmask' => RISK_SPAM,
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,

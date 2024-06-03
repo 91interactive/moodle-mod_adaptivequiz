@@ -22,9 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\questionanalysis\statistics;
+namespace mod_catadaptivequiz\local\questionanalysis\statistics;
 
-use mod_adaptivequiz\local\questionanalysis\question_analyser;
+use mod_catadaptivequiz\local\questionanalysis\question_analyser;
 
 class times_used_statistic implements question_statistic {
     /**
@@ -33,7 +33,7 @@ class times_used_statistic implements question_statistic {
      * @return string
      */
     public function get_display_name () {
-        return get_string('times_used_display_name', 'adaptivequiz');
+        return get_string('times_used_display_name', 'catadaptivequiz');
     }
 
     /**

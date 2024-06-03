@@ -17,7 +17,7 @@
 /**
  * Contains definition of the renderer class for the plugin.
  *
- * @package   mod_adaptivequiz
+ * @package   mod_catadaptivequiz
  * @copyright 2013 Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright 2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,21 +26,21 @@
 defined('MOODLE_INTERNAL') || die();
 
 use core\output\notification;
-use mod_adaptivequiz\form\requiredpassword;
-use mod_adaptivequiz\local\attempt\attempt_state;
-use mod_adaptivequiz\local\catalgorithm\catalgo;
-use mod_adaptivequiz\output\ability_measure;
-use mod_adaptivequiz\output\attempt_progress;
-use mod_adaptivequiz\output\report\individual_user_attempts\individual_user_attempt_action;
-use mod_adaptivequiz\output\report\individual_user_attempts\individual_user_attempt_actions;
-use mod_adaptivequiz\output\user_attempt_summary;
+use mod_catadaptivequiz\form\requiredpassword;
+use mod_catadaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz\local\catalgorithm\catalgo;
+use mod_catadaptivequiz\output\ability_measure;
+use mod_catadaptivequiz\output\attempt_progress;
+use mod_catadaptivequiz\output\report\individual_user_attempts\individual_user_attempt_action;
+use mod_catadaptivequiz\output\report\individual_user_attempts\individual_user_attempt_actions;
+use mod_catadaptivequiz\output\user_attempt_summary;
 
 /**
  * The renderer class for the plugin.
  *
- * @package mod_adaptivequiz
+ * @package mod_catadaptivequiz
  */
-class mod_adaptivequiz_renderer extends plugin_renderer_base {
+class mod_catadaptivequiz_renderer extends plugin_renderer_base {
     /** @var string $sortdir the sorting direction being used */
     protected $sortdir = '';
     /** @var moodle_url $sorturl the current base url used for keeping the table sorted */
@@ -76,7 +76,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
         }
 
         if (!$attemptallowed) {
-            return html_writer::div(get_string('noattemptsallowed', 'adaptivequiz'), 'alert alert-info text-center');
+            return html_writer::div(get_string('noattemptsallowed', 'catadaptivequiz'), 'alert alert-info text-center');
         }
 
         if ($browsersecurityenabled) {
@@ -84,8 +84,8 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
         }
 
         return $this->render(new single_button(
-            new moodle_url('/mod/adaptivequiz/attempt.php', ['cmid' => $cmid, 'sesskey' => sesskey()]),
-            get_string('startattemptbtn', 'adaptivequiz'),
+            new moodle_url('/mod/catadaptivequiz/attempt.php', ['cmid' => $cmid, 'sesskey' => sesskey()]),
+            get_string('startattemptbtn', 'catadaptivequiz'),
             'post',
             true
         ));
@@ -97,12 +97,12 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
      */
     public function adaptivequiz_get_js_module() {
         return array(
-            'name' => 'mod_adaptivequiz',
-            'fullpath' => '/mod/adaptivequiz/module.js',
+            'name' => 'mod_catadaptivequiz',
+            'fullpath' => '/mod/catadaptivequiz/module.js',
             'requires' => array('base', 'dom', 'event-delegate', 'event-key', 'core_question_engine',
                 'moodle-core-formchangechecker'),
             'strings' => array(array('cancel', 'moodle'), array('changesmadereallygoaway', 'moodle'),
-                array('functiondisabledbysecuremode', 'adaptivequiz'))
+                array('functiondisabledbysecuremode', 'catadaptivequiz'))
         );
     }
 
@@ -118,7 +118,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
     public function question_submit_form($cmid, $quba, $slot, $level, int $questionnumber): string {
         $output = '';
 
-        $processurl = new moodle_url('/mod/adaptivequiz/attempt.php');
+        $processurl = new moodle_url('/mod/catadaptivequiz/attempt.php');
 
         // Start the form.
         $attr = array('action' => $processurl, 'method' => 'post', 'enctype' => 'multipart/form-data', 'accept-charset' => 'utf-8',
@@ -136,7 +136,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $output .= html_writer::start_tag('div', ['class' => 'submitbtns adaptivequizbtn mdl-align']);
         $output .= html_writer::empty_tag('input', ['type' => 'submit', 'name' => 'submitanswer',
-            'value' => get_string('submitanswer', 'mod_adaptivequiz'), 'class' => 'btn btn-primary']);
+            'value' => get_string('submitanswer', 'mod_catadaptivequiz'), 'class' => 'btn btn-primary']);
         $output .= html_writer::end_tag('div');
 
         // Some hidden fields to track what is going on.
@@ -187,12 +187,12 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $output = html_writer::start_div('text-center');
 
-        $url = new moodle_url('/mod/adaptivequiz/view.php');
+        $url = new moodle_url('/mod/catadaptivequiz/view.php');
         $attr = ['action' => $url, 'method' => 'post', 'id' => 'attemptfeedback'];
         $output .= html_writer::start_tag('form', $attr);
 
         if (empty(trim($attemptfeedback))) {
-            $attemptfeedback = get_string('attemptfeedbackdefaulttext', 'adaptivequiz');
+            $attemptfeedback = get_string('attemptfeedbackdefaulttext', 'catadaptivequiz');
         }
         $output .= html_writer::tag('p', s($attemptfeedback), ['class' => 'submitbtns adaptivequizfeedback']);
 
@@ -206,7 +206,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
             $output .= html_writer::empty_tag('input', $attr);
         } else {
             // In a 'secure' popup window.
-            $this->page->requires->js_init_call('M.mod_adaptivequiz.secure_window.init_close_button', [$url],
+            $this->page->requires->js_init_call('M.mod_catadaptivequiz.secure_window.init_close_button', [$url],
                 $this->adaptivequiz_get_js_module());
             $output .= html_writer::empty_tag('input', ['type' => 'button', 'value' => get_string('continue'),
                 'id' => 'secureclosebutton', 'class' => 'btn btn-primary']);
@@ -299,19 +299,19 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         /* Create header links */
         $param = array('cmid' => $cm->id, 'sort' => 'firstname', 'sortdir' => 'ASC', 'group' => $this->groupid);
-        $firstnameurl = new moodle_url('/mod/adaptivequiz/viewreport.php', $param);
+        $firstnameurl = new moodle_url('/mod/catadaptivequiz/viewreport.php', $param);
         $param['sort'] = 'lastname';
-        $lastnameurl = new moodle_url('/mod/adaptivequiz/viewreport.php', $param);
+        $lastnameurl = new moodle_url('/mod/catadaptivequiz/viewreport.php', $param);
         $param['sort'] = 'email';
-        $emailurl = new moodle_url('/mod/adaptivequiz/viewreport.php', $param);
+        $emailurl = new moodle_url('/mod/catadaptivequiz/viewreport.php', $param);
         $param['sort'] = 'attempts';
-        $numofattemptsurl = new moodle_url('/mod/adaptivequiz/viewreport.php', $param);
+        $numofattemptsurl = new moodle_url('/mod/catadaptivequiz/viewreport.php', $param);
         $param['sort'] = 'measure';
-        $measureurl = new moodle_url('/mod/adaptivequiz/viewreport.php', $param);
+        $measureurl = new moodle_url('/mod/catadaptivequiz/viewreport.php', $param);
         $param['sort'] = 'stderror';
-        $standarderrorurl = new moodle_url('/mod/adaptivequiz/viewreport.php', $param);
+        $standarderrorurl = new moodle_url('/mod/catadaptivequiz/viewreport.php', $param);
         $param['sort'] = 'timemodified';
-        $timemodifiedurl = new moodle_url('/mod/adaptivequiz/viewreport.php', $param);
+        $timemodifiedurl = new moodle_url('/mod/catadaptivequiz/viewreport.php', $param);
 
         /* Update column header links with a sorting directional icon */
         switch ($sort) {
@@ -356,10 +356,10 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
         $firstname = html_writer::link($firstnameurl, get_string('firstname')).$firstname;
         $lastname = html_writer::link($lastnameurl, get_string('lastname')).$lastname;
         $email = html_writer::link($emailurl, get_string('email')).$email;
-        $numofattempts = html_writer::link($numofattemptsurl, get_string('numofattemptshdr', 'adaptivequiz')).$numofattempts;
-        $measure = html_writer::link($measureurl, get_string('bestscore', 'adaptivequiz')).$measure;
-        $standarderror = html_writer::link($standarderrorurl, get_string('bestscorestderror', 'adaptivequiz')).$standarderror;
-        $timemodified = html_writer::link($timemodifiedurl, get_string('attemptfinishedtimestamp', 'adaptivequiz')).$timemodified;
+        $numofattempts = html_writer::link($numofattemptsurl, get_string('numofattemptshdr', 'catadaptivequiz')).$numofattempts;
+        $measure = html_writer::link($measureurl, get_string('bestscore', 'catadaptivequiz')).$measure;
+        $standarderror = html_writer::link($standarderrorurl, get_string('bestscorestderror', 'catadaptivequiz')).$standarderror;
+        $timemodified = html_writer::link($timemodifiedurl, get_string('attemptfinishedtimestamp', 'catadaptivequiz')).$timemodified;
 
         return array($firstname.' / '.$lastname, $email, $numofattempts, $measure, $standarderror, $timemodified);
     }
@@ -372,12 +372,12 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
      */
     protected function get_report_table_rows($records, $cm, $table) {
         foreach ($records as $record) {
-            $attemptlink = new moodle_url('/mod/adaptivequiz/viewattemptreport.php',
+            $attemptlink = new moodle_url('/mod/catadaptivequiz/viewattemptreport.php',
                 array('userid' => $record->id, 'cmid' => $cm->id));
             $link = html_writer::link($attemptlink, $record->attempts);
             $measure = $this->format_measure($record);
             if ($record->uniqueid) {
-                $attemptlink = new moodle_url('/mod/adaptivequiz/reviewattempt.php',
+                $attemptlink = new moodle_url('/mod/catadaptivequiz/reviewattempt.php',
                     array('userid' => $record->id, 'uniqueid' => $record->uniqueid, 'cmid' => $cm->id));
                 $measure = html_writer::link($attemptlink, $measure);
             }
@@ -385,7 +385,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
             if (intval($record->timemodified)) {
                 $timemodified = userdate(intval($record->timemodified));
             } else {
-                $timemodified = get_string('na', 'adaptivequiz');
+                $timemodified = get_string('na', 'catadaptivequiz');
             }
             $profileurl = new moodle_url('/user/profile.php', array('id' => $record->id));
             $name = $record->firstname.' '.$record->lastname;
@@ -427,7 +427,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
         $groupmode = groups_get_activity_groupmode($cm, $course);
 
         if (0 != $groupmode) {
-            $baseurl = new moodle_url('/mod/adaptivequiz/viewreport.php', array('cmid' => $cm->id));
+            $baseurl = new moodle_url('/mod/catadaptivequiz/viewreport.php', array('cmid' => $cm->id));
             $output = groups_print_activity_menu($cm, $baseurl, true);
         }
 
@@ -444,7 +444,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         if ($disablejsfeatures) {
             $this->page->add_body_class('quiz-secure-window');
-            $this->page->requires->js_init_call('M.mod_adaptivequiz.secure_window.init',
+            $this->page->requires->js_init_call('M.mod_catadaptivequiz.secure_window.init',
                 null, false, $this->adaptivequiz_get_js_module());
         }
     }
@@ -455,7 +455,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
      * @return requiredpassword instance of a formslib object
      */
     public function display_password_form($cmid): requiredpassword {
-        $url = new moodle_url('/mod/adaptivequiz/attempt.php');
+        $url = new moodle_url('/mod/catadaptivequiz/attempt.php');
         return new requiredpassword($url->out_omit_querystring(),
             array('hidden' => array('cmid' => $cmid, 'uniqueid' => 0)));
     }
@@ -537,8 +537,8 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
     /**
      * Answer the summery information about an attempt
      *
-     * @param stdClass $adaptivequiz See {@link mod_adaptivequiz_renderer::attempt_report_page_by_tab()}.
-     * @param stdClass $attempt See {@link mod_adaptivequiz_renderer::attempt_report_page_by_tab()}.
+     * @param stdClass $adaptivequiz See {@link mod_catadaptivequiz_renderer::attempt_report_page_by_tab()}.
+     * @param stdClass $attempt See {@link mod_catadaptivequiz_renderer::attempt_report_page_by_tab()}.
      * @param stdClass $user The user who took the quiz that created the attempt.
      * @return string
      * @throws coding_exception
@@ -549,7 +549,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $row = new html_table_row();
 
-        $headercell = new html_table_cell(get_string('attempt_user', 'adaptivequiz'));
+        $headercell = new html_table_cell(get_string('attempt_user', 'catadaptivequiz'));
         $headercell->header = true;
 
         $datacell = new html_table_cell(fullname($user) . ' (' . $user->email . ')');
@@ -559,7 +559,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $row = new html_table_row();
 
-        $headercell = new html_table_cell(get_string('attempt_state', 'adaptivequiz'));
+        $headercell = new html_table_cell(get_string('attempt_state', 'catadaptivequiz'));
         $headercell->header = true;
 
         $datacell = new html_table_cell($attempt->attemptstate);
@@ -569,7 +569,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $row = new html_table_row();
 
-        $headercell = new html_table_cell(get_string('score', 'adaptivequiz'));
+        $headercell = new html_table_cell(get_string('score', 'catadaptivequiz'));
         $headercell->header = true;
 
         $abilityfraction = 1 / ( 1 + exp( (-1 * $attempt->measure) ) );
@@ -585,7 +585,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $row = new html_table_row();
 
-        $headercell = new html_table_cell(get_string('attemptstarttime', 'adaptivequiz'));
+        $headercell = new html_table_cell(get_string('attemptstarttime', 'catadaptivequiz'));
         $headercell->header = true;
 
         $datacell = new html_table_cell(userdate($attempt->timecreated));
@@ -595,7 +595,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $row = new html_table_row();
 
-        $headercell = new html_table_cell(get_string('attemptfinishedtimestamp', 'adaptivequiz'));
+        $headercell = new html_table_cell(get_string('attemptfinishedtimestamp', 'catadaptivequiz'));
         $headercell->header = true;
 
         $datacell = new html_table_cell(userdate($attempt->timemodified));
@@ -605,7 +605,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $row = new html_table_row();
 
-        $headercell = new html_table_cell(get_string('attempttotaltime', 'adaptivequiz'));
+        $headercell = new html_table_cell(get_string('attempttotaltime', 'catadaptivequiz'));
         $headercell->header = true;
 
         $totaltime = $attempt->timemodified - $attempt->timecreated;
@@ -621,7 +621,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $row = new html_table_row();
 
-        $headercell = new html_table_cell(get_string('attemptstopcriteria', 'adaptivequiz'));
+        $headercell = new html_table_cell(get_string('attemptstopcriteria', 'catadaptivequiz'));
         $headercell->header = true;
 
         $datacell = new html_table_cell($attempt->attemptstopcriteria);
@@ -638,30 +638,30 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
         $attemptsummarytaburl = clone($pageurl);
         $attemptsummarytaburl->param('tab', 'attemptsummary');
         $tabs[] = new tabobject('attemptsummary', $attemptsummarytaburl,
-            get_string('reportattemptsummarytab', 'adaptivequiz'));
+            get_string('reportattemptsummarytab', 'catadaptivequiz'));
 
         $attemptgraphtaburl = clone($pageurl);
         $attemptgraphtaburl->param('tab', 'attemptgraph');
         $tabs[] = new tabobject('attemptgraph', $attemptgraphtaburl,
-            get_string('reportattemptgraphtab', 'adaptivequiz'));
+            get_string('reportattemptgraphtab', 'catadaptivequiz'));
 
         $answerdistributiontaburl = clone($pageurl);
         $answerdistributiontaburl->param('tab', 'answerdistribution');
         $tabs[] = new tabobject('answerdistribution', $answerdistributiontaburl,
-            get_string('reportattemptanswerdistributiontab', 'adaptivequiz'));
+            get_string('reportattemptanswerdistributiontab', 'catadaptivequiz'));
 
         $questionsdetailstaburl = clone($pageurl);
         $questionsdetailstaburl->param('tab', 'questionsdetails');
         $tabs[] = new tabobject('questionsdetails', $questionsdetailstaburl,
-            get_string('reportattemptquestionsdetailstab', 'adaptivequiz'));
+            get_string('reportattemptquestionsdetailstab', 'catadaptivequiz'));
 
         return $this->tabtree($tabs, $selected);
     }
 
     /**
      * @param string $tabid
-     * @param stdClass $adaptivequiz A record from {adaptivequiz}. The expected fields are 'lowestlevel' and 'highestlevel'.
-     * @param stdClass $attempt A record from {adaptivequiz_attempt}. The expected fields are: 'attemptstate', 'measure',
+     * @param stdClass $adaptivequiz A record from {catadaptivequiz}. The expected fields are 'lowestlevel' and 'highestlevel'.
+     * @param stdClass $attempt A record from {catadaptivequiz_attempt}. The expected fields are: 'attemptstate', 'measure',
      *        'highestlevel', 'lowestlevel', 'standarderror', 'timecreated', 'timemodified', 'attemptstopcriteria' and 'uniqueid'.
      * @param stdClass $user A record from {user}. The expected fields are: 'id', 'email' and those required for {@link fullname()}
      *        call.
@@ -705,7 +705,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
     }
 
     public function reset_users_attempts_filter_action(moodle_url $url): string {
-        return html_writer::link($url, get_string('reportattemptsresetfilter', 'adaptivequiz'));
+        return html_writer::link($url, get_string('reportattemptsresetfilter', 'catadaptivequiz'));
     }
 
     /**
@@ -719,42 +719,42 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
      * Renders an attempt progress object, to be overridden by a theme if required.
      */
     protected function render_attempt_progress(attempt_progress $progress): string {
-        $progress = $progress->with_help_icon_content($this->help_icon('attemptquestionsprogress', 'adaptivequiz'));
+        $progress = $progress->with_help_icon_content($this->help_icon('attemptquestionsprogress', 'catadaptivequiz'));
 
-        return $this->render_from_template('mod_adaptivequiz/attempt_progress', $progress->export_for_template($this));
+        return $this->render_from_template('mod_catadaptivequiz/attempt_progress', $progress->export_for_template($this));
     }
 
     /**
      * Outputs available action links for an attempt in the user's attempts report.
      *
-     * @param stdClass $attempt A record from {adaptivequiz_attempt}.
+     * @param stdClass $attempt A record from {catadaptivequiz_attempt}.
      */
     public function individual_user_attempt_actions(stdClass $attempt): string {
         $actions = new individual_user_attempt_actions();
 
         $actions->add(
             new individual_user_attempt_action(
-                new moodle_url('/mod/adaptivequiz/reviewattempt.php', ['attempt' => $attempt->id]),
+                new moodle_url('/mod/catadaptivequiz/reviewattempt.php', ['attempt' => $attempt->id]),
                 new pix_icon('i/search', ''),
-                get_string('reviewattempt', 'adaptivequiz')
+                get_string('reviewattempt', 'catadaptivequiz')
             )
         );
 
         if ($attempt->attemptstate !== attempt_state::COMPLETED) {
             $actions->add(
                 new individual_user_attempt_action(
-                    new moodle_url('/mod/adaptivequiz/closeattempt.php', ['attempt' => $attempt->id]),
+                    new moodle_url('/mod/catadaptivequiz/closeattempt.php', ['attempt' => $attempt->id]),
                     new pix_icon('t/stop', ''),
-                    get_string('closeattempt', 'adaptivequiz')
+                    get_string('closeattempt', 'catadaptivequiz')
                 )
             );
         }
 
         $actions->add(
             new individual_user_attempt_action(
-                new moodle_url('/mod/adaptivequiz/delattempt.php', ['attempt' => $attempt->id]),
+                new moodle_url('/mod/catadaptivequiz/delattempt.php', ['attempt' => $attempt->id]),
                 new pix_icon('t/delete', ''),
-                get_string('deleteattemp', 'adaptivequiz')
+                get_string('deleteattemp', 'catadaptivequiz')
             )
         );
 
@@ -768,23 +768,23 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
      */
     protected function render_individual_user_attempt_actions(individual_user_attempt_actions $actions): string {
         return $this->render_from_template(
-            'mod_adaptivequiz/report/individual_user_attempt_actions',
+            'mod_catadaptivequiz/report/individual_user_attempt_actions',
             $actions->export_for_template($this)
         );
     }
 
     /**
      *
-     * @param int $uniqueid See {@link mod_adaptivequiz_renderer::attempt_report_page_by_tab()}.
+     * @param int $uniqueid See {@link mod_catadaptivequiz_renderer::attempt_report_page_by_tab()}.
      * @param int $cmid
      * @param int $userid
      * @return string
      * @throws moodle_exception
      */
     protected function attempt_graph(int $uniqueid, int $cmid, int $userid): string {
-        $graphurl = new moodle_url('/mod/adaptivequiz/attemptgraph.php',
+        $graphurl = new moodle_url('/mod/catadaptivequiz/attemptgraph.php',
             ['uniqueid' => $uniqueid, 'cmid' => $cmid, 'userid' => $userid]);
-        $params = ['src' => $graphurl, 'class' => 'adaptivequiz-attemptgraph'];
+        $params = ['src' => $graphurl, 'class' => 'catadaptivequiz-attemptgraph'];
 
         $output = html_writer::start_div('mdl-align');
         $output .= html_writer::empty_tag('img', $params);
@@ -796,7 +796,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
     /**
      * Produces a table of the question difficulties and the intermediate scores throughout the attempt.
      *
-     * @param stdClass $adaptivequiz See {@link mod_adaptivequiz_renderer::attempt_report_page_by_tab()}.
+     * @param stdClass $adaptivequiz See {@link mod_catadaptivequiz_renderer::attempt_report_page_by_tab()}.
      * @param question_usage_by_activity $quba The questions used in this attempt.
      * @return string
      * @throws coding_exception
@@ -804,11 +804,11 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
     protected function attempt_scoring_table(stdClass $adaptivequiz, question_usage_by_activity $quba): string {
         $table = new html_table();
 
-        $num = get_string('attemptquestion_num', 'adaptivequiz');
-        $level = get_string('attemptquestion_level', 'adaptivequiz');
-        $rightwrong = get_string('attemptquestion_rightwrong', 'adaptivequiz');
-        $ability = get_string('attemptquestion_ability', 'adaptivequiz');
-        $error = get_string('attemptquestion_error', 'adaptivequiz');
+        $num = get_string('attemptquestion_num', 'catadaptivequiz');
+        $level = get_string('attemptquestion_level', 'catadaptivequiz');
+        $rightwrong = get_string('attemptquestion_rightwrong', 'catadaptivequiz');
+        $ability = get_string('attemptquestion_ability', 'catadaptivequiz');
+        $error = get_string('attemptquestion_error', 'catadaptivequiz');
 
         $table->head = [$num, $level, $rightwrong, $ability, $error];
         $table->align = ['center', 'center', 'center', 'center', 'center'];
@@ -847,7 +847,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
                 round($stderror * 100, 1)."%"];
         }
 
-        $return = $this->heading(get_string('reportattemptgraphtabletitle', 'adaptivequiz'), '4', 'mdl-align');
+        $return = $this->heading(get_string('reportattemptgraphtabletitle', 'catadaptivequiz'), '4', 'mdl-align');
         $return .= html_writer::table($table);
 
         return $return;
@@ -861,9 +861,9 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
      * @throws moodle_exception
      */
     protected function attempt_answer_distribution_graph(int $uniqueid, int $cmid, int $userid): string {
-        $graphurl = new moodle_url('/mod/adaptivequiz/answerdistributiongraph.php',
+        $graphurl = new moodle_url('/mod/catadaptivequiz/answerdistributiongraph.php',
             ['uniqueid' => $uniqueid, 'cmid' => $cmid, 'userid' => $userid]);
-        $params = ['src' => $graphurl, 'class' => 'adaptivequiz-answerdistributiongraph'];
+        $params = ['src' => $graphurl, 'class' => 'catadaptivequiz-answerdistributiongraph'];
 
         $output = html_writer::start_div('mdl-align');
         $output .= html_writer::empty_tag('img', $params);
@@ -876,7 +876,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
      * Produces a table of the question difficulties and the number of questions answered right and wrong for each
      * difficulty.
      *
-     * @param stdClass $adaptivequiz See {@link mod_adaptivequiz_renderer::attempt_report_page_by_tab()}.
+     * @param stdClass $adaptivequiz See {@link mod_catadaptivequiz_renderer::attempt_report_page_by_tab()}.
      * @param question_usage_by_activity $quba The questions used in this attempt.
      * @return string
      * @throws coding_exception
@@ -887,9 +887,9 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
     ): string {
         $table = new html_table();
 
-        $level = get_string('attemptquestion_level', 'adaptivequiz');
-        $numright = get_string('numright', 'adaptivequiz');
-        $numwrong = get_string('numwrong', 'adaptivequiz');
+        $level = get_string('attemptquestion_level', 'catadaptivequiz');
+        $numright = get_string('numright', 'catadaptivequiz');
+        $numwrong = get_string('numwrong', 'catadaptivequiz');
 
         $table->head = [$level, $numright, $numwrong];
         $table->align = ['center', 'center', 'center'];
@@ -929,7 +929,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
             ];
         }
 
-        $return = $this->heading(get_string('reportattemptanswerdistributiontabletitle', 'adaptivequiz'), '4',
+        $return = $this->heading(get_string('reportattemptanswerdistributiontabletitle', 'catadaptivequiz'), '4',
             'mdl-align');
         $return .= html_writer::table($table);
 
@@ -938,7 +938,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
     /**
      * This function returns HTML markup of questions and student's responses.
-     * See {@link mod_adaptivequiz_renderer::attempt_report_page_by_tab} for partial parameters description.
+     * See {@link mod_catadaptivequiz_renderer::attempt_report_page_by_tab} for partial parameters description.
      *
      * @param moodle_url $pageurl
      * @param question_usage_by_activity $quba
@@ -976,7 +976,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
         $output .= $this->init_metadata($quba, $pageqslots);
 
         foreach ($pageqslots as $slot) {
-            $label = html_writer::tag('label', get_string('questionnumber', 'adaptivequiz'));
+            $label = html_writer::tag('label', get_string('questionnumber', 'catadaptivequiz'));
             $output .= html_writer::tag('div', $label.': '.format_string($slot));
 
             // Retrieve question attempt object.
@@ -986,8 +986,8 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
             // Retrieve the tags associated with this question.
             $qtags = core_tag_tag::get_item_tags_array('core_question', 'question', $questdef->id);
 
-            $label = html_writer::tag('label', get_string('attemptquestion_level', 'adaptivequiz'));
-            $output .= html_writer::tag('div', $label.': '.format_string(adaptivequiz_get_difficulty_from_tags($qtags)));
+            $label = html_writer::tag('label', get_string('attemptquestion_level', 'catadaptivequiz'));
+            $output .= html_writer::tag('div', $label.': '.format_string(catadaptivequiz_get_difficulty_from_tags($qtags)));
 
             $label = html_writer::tag('label', get_string('tags'));
             $output .= html_writer::tag('div', $label.': '.format_string(implode(' ', $qtags)), $attr);
@@ -1004,7 +1004,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
     /**
      * This function prints a paging link for the attempt review page.
-     * See {@link mod_adaptivequiz_renderer::attempt_questions_review()} for parameters description.
+     * See {@link mod_catadaptivequiz_renderer::attempt_questions_review()} for parameters description.
      *
      * @throws moodle_exception
      */
@@ -1043,10 +1043,10 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
     protected function render_ability_measure(ability_measure $measure): string {
         $output = html_writer::start_div('box py-3');
 
-        $abilitymeasurecontents = get_string('abilityestimated', 'adaptivequiz') . ': ' .
+        $abilitymeasurecontents = get_string('abilityestimated', 'catadaptivequiz') . ': ' .
             html_writer::tag('strong', $this->format_measure($measure->as_object_to_format())) . ' / ' .
             $measure->lowestquestiondifficulty . ' - ' . $measure->highestquestiondifficulty .
-            $this->help_icon('abilityestimated', 'adaptivequiz');
+            $this->help_icon('abilityestimated', 'catadaptivequiz');
         $output .= $this->heading($abilitymeasurecontents, 3);
 
         $output .= html_writer::end_div();
@@ -1060,10 +1060,10 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $row = new html_table_row();
 
-        $headercell = new html_table_cell(get_string('attempt_state', 'adaptivequiz'));
+        $headercell = new html_table_cell(get_string('attempt_state', 'catadaptivequiz'));
         $headercell->header = true;
 
-        $datacell = new html_table_cell(get_string('recent' . $summary->attemptstate, 'adaptivequiz'));
+        $datacell = new html_table_cell(get_string('recent' . $summary->attemptstate, 'catadaptivequiz'));
         $datacell->id = 'attemptstatecell';
 
         $row->cells = [$headercell, $datacell];
@@ -1071,7 +1071,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 
         $row = new html_table_row();
 
-        $headercell = new html_table_cell(get_string('attemptfinishedtimestamp', 'adaptivequiz'));
+        $headercell = new html_table_cell(get_string('attemptfinishedtimestamp', 'catadaptivequiz'));
         $headercell->header = true;
 
         $datacell = ($summary->attemptstate == attempt_state::COMPLETED)
@@ -1084,8 +1084,8 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
         if (!empty($summary->abilitymeasure)) {
             $row = new html_table_row();
 
-            $headercell = new html_table_cell(get_string('attemptquestion_ability', 'adaptivequiz') .
-                $this->help_icon('abilityestimated', 'adaptivequiz'));
+            $headercell = new html_table_cell(get_string('attemptquestion_ability', 'catadaptivequiz') .
+                $this->help_icon('abilityestimated', 'catadaptivequiz'));
             $headercell->header = true;
 
             $formatmeasure = new stdClass();
@@ -1108,18 +1108,18 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
      * This functions prints the start attempt button to start a secured browser attempt.
      */
     private function display_start_attempt_form_secured(int $cmid): string {
-        $url = new moodle_url('/mod/adaptivequiz/attempt.php', ['cmid' => $cmid]);
+        $url = new moodle_url('/mod/catadaptivequiz/attempt.php', ['cmid' => $cmid]);
 
-        $button = new single_button($url, get_string('startattemptbtn', 'adaptivequiz'), 'post', true);
+        $button = new single_button($url, get_string('startattemptbtn', 'catadaptivequiz'), 'post', true);
 
         $this->page->requires->js_module($this->adaptivequiz_get_js_module());
-        $this->page->requires->js('/mod/adaptivequiz/module.js');
+        $this->page->requires->js('/mod/catadaptivequiz/module.js');
 
-        $popupaction = new popup_action('click', $url, 'adaptivequizpopup', self::$popupoptions);
+        $popupaction = new popup_action('click', $url, 'catadaptivequizpopup', self::$popupoptions);
         $button->add_action(new component_action('click',
-            'M.mod_adaptivequiz.secure_window.start_attempt_action', [
+            'M.mod_catadaptivequiz.secure_window.start_attempt_action', [
                 'url' => $url->out(false),
-                'windowname' => 'adaptivequizpopup',
+                'windowname' => 'catadaptivequizpopup',
                 'options' => $popupaction->get_js_options(),
                 'fullscreen' => true,
                 'startattemptwarning' => '',
@@ -1134,7 +1134,7 @@ class mod_adaptivequiz_renderer extends plugin_renderer_base {
 /**
  * A substitute renderer class that outputs CSV results instead of HTML.
  */
-class mod_adaptivequiz_csv_renderer extends mod_adaptivequiz_renderer {
+class mod_catadaptivequiz_csv_renderer extends mod_catadaptivequiz_renderer {
     /**
      * This function returns page header information to be printed to the page
      * @return string HTML markup for header inforation
@@ -1183,10 +1183,10 @@ class mod_adaptivequiz_csv_renderer extends mod_adaptivequiz_renderer {
             get_string('firstname'),
             get_string('lastname'),
             get_string('email'),
-            get_string('numofattemptshdr', 'adaptivequiz'),
-            get_string('bestscore', 'adaptivequiz'),
-            get_string('bestscorestderror', 'adaptivequiz'),
-            get_string('attemptfinishedtimestamp', 'adaptivequiz'),
+            get_string('numofattemptshdr', 'catadaptivequiz'),
+            get_string('bestscore', 'catadaptivequiz'),
+            get_string('bestscorestderror', 'catadaptivequiz'),
+            get_string('attemptfinishedtimestamp', 'catadaptivequiz'),
         );
         fputcsv($output, $headers);
 
@@ -1194,7 +1194,7 @@ class mod_adaptivequiz_csv_renderer extends mod_adaptivequiz_renderer {
             if (intval($record->timemodified)) {
                 $timemodified = date('c', intval($record->timemodified));
             } else {
-                $timemodified = get_string('na', 'adaptivequiz');
+                $timemodified = get_string('na', 'catadaptivequiz');
             }
 
             $row = array(

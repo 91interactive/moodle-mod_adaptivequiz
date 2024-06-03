@@ -23,7 +23,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $observers = [
     [
-        'eventname' => '\mod_adaptivequiz\event\attempt_completed',
-        'callback' => '\mod_adaptivequiz\attempt_state_change_observers::attempt_completed'
+        'eventname' => '\mod_catadaptivequiz\event\attempt_completed',
+        'callback' => '\mod_catadaptivequiz\attempt_state_change_observers::attempt_completed'
     ]
 ];

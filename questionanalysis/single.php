@@ -24,11 +24,11 @@ require_once(dirname(__FILE__).'/../../../config.php');
 require_once($CFG->dirroot.'/lib/grouplib.php');
 require_once(dirname(__FILE__).'/../locallib.php');
 
-use mod_adaptivequiz\local\questionanalysis\quiz_analyser;
-use mod_adaptivequiz\local\questionanalysis\statistics\answers_statistic;
-use mod_adaptivequiz\local\questionanalysis\statistics\discrimination_statistic;
-use mod_adaptivequiz\local\questionanalysis\statistics\percent_correct_statistic;
-use mod_adaptivequiz\local\questionanalysis\statistics\times_used_statistic;
+use mod_catadaptivequiz\local\questionanalysis\quiz_analyser;
+use mod_catadaptivequiz\local\questionanalysis\statistics\answers_statistic;
+use mod_catadaptivequiz\local\questionanalysis\statistics\discrimination_statistic;
+use mod_catadaptivequiz\local\questionanalysis\statistics\percent_correct_statistic;
+use mod_catadaptivequiz\local\questionanalysis\statistics\times_used_statistic;
 
 $id = required_param('cmid', PARAM_INT);
 $qid = required_param('qid', PARAM_INT);
@@ -36,7 +36,7 @@ $sortdir = optional_param('sortdir', 'DESC', PARAM_ALPHA);
 $sort = optional_param('sort', 'times_used', PARAM_ALPHANUMEXT);
 $page = optional_param('page', 0, PARAM_INT);
 
-if (!$cm = get_coursemodule_from_id('adaptivequiz', $id)) {
+if (!$cm = get_coursemodule_from_id('catadaptivequiz', $id)) {
     throw new moodle_exception('invalidcoursemodule');
 }
 if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
@@ -46,20 +46,20 @@ if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 
-require_capability('mod/adaptivequiz:viewreport', $context);
+require_capability('mod/catadaptivequiz:viewreport', $context);
 
-$adaptivequiz  = $DB->get_record('adaptivequiz', array('id' => $cm->instance), '*');
+$adaptivequiz  = $DB->get_record('catadaptivequiz', array('id' => $cm->instance), '*');
 
 $quizanalyzer = new quiz_analyser();
 $quizanalyzer->load_attempts($cm->instance);
 $questionanalyzer = $quizanalyzer->get_question_analyzer($qid);
 $definition = $questionanalyzer->get_question_definition();
 
-$PAGE->set_url('/mod/adaptivequiz/questionanalysis/single.php', array('cmid' => $cm->id, 'qid' => $qid));
+$PAGE->set_url('/mod/catadaptivequiz/questionanalysis/single.php', array('cmid' => $cm->id, 'qid' => $qid));
 $PAGE->set_title(format_string($definition->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
-$output = $PAGE->get_renderer('mod_adaptivequiz', 'questionanalysis');
+$output = $PAGE->get_renderer('mod_catadaptivequiz', 'questionanalysis');
 
 $quizanalyzer->add_statistic('times_used', new times_used_statistic());
 $quizanalyzer->add_statistic('percent_correct', new percent_correct_statistic());
@@ -76,15 +76,15 @@ array_shift($record);
 
 /* print header information */
 $header = $output->print_header();
-$title = $output->heading(get_string('question_report', 'adaptivequiz'));
+$title = $output->heading(get_string('question_report', 'catadaptivequiz'));
 /* return link */
-$url = new moodle_url('/mod/adaptivequiz/questionanalysis/overview.php',
+$url = new moodle_url('/mod/catadaptivequiz/questionanalysis/overview.php',
     array('cmid' => $cm->id, 'sort' => $sort, 'sortdir' => $sortdir, 'page' => $page));
-$returnlink = html_writer::link($url, get_string('back_to_all_questions', 'adaptivequiz'));
+$returnlink = html_writer::link($url, get_string('back_to_all_questions', 'catadaptivequiz'));
 
 /* Output attempts table */
 $details = $output->get_question_details($questionanalyzer, $context);
-$reporttable = $output->get_single_question_report($headers, $record, $cm, '/mod/adaptivequiz/questionanalysis/overview.php',
+$reporttable = $output->get_single_question_report($headers, $record, $cm, '/mod/catadaptivequiz/questionanalysis/overview.php',
     $sort, $sortdir);
 /* Output footer information */
 $footer = $output->print_footer();

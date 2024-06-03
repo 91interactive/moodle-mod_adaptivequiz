@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot.'/mod/adaptivequiz/backup/moodle2/backup_adaptivequiz_stepslib.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/backup/moodle2/backup_adaptivequiz_stepslib.php');
 
 class backup_adaptivequiz_activity_task extends backup_activity_task {
     /**
@@ -39,7 +39,7 @@ class backup_adaptivequiz_activity_task extends backup_activity_task {
     protected function define_my_steps() {
         // Generate the adaptivequiz.xml file containing all the quiz information
         // and annotating used questions.
-        $this->add_step(new backup_adaptivequiz_activity_structure_step('adaptivequiz_structure', 'adaptivequiz.xml'));
+        $this->add_step(new backup_adaptivequiz_activity_structure_step('adaptivequiz_structure', 'catadaptivequiz.xml'));
 
         // Note: Following  steps must be present
         // in all the activities using question banks.
@@ -66,15 +66,15 @@ class backup_adaptivequiz_activity_task extends backup_activity_task {
         $base = preg_quote($CFG->wwwroot, '/');
 
         // Link to the list of adatpivequizzes.
-        $search = "/(".$base."\/mod\/adaptivequiz\/index.php\?id\=)([0-9]+)/";
+        $search = "/(".$base."\/mod\/catadaptivequiz\/index.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@ADAPTIVEQUIZINDEX*$2@$', $content);
 
         // Link to adaptivequiz view by moduleid.
-        $search = "/(".$base."\/mod\/adaptivequiz\/view.php\?id\=)([0-9]+)/";
+        $search = "/(".$base."\/mod\/catadaptivequiz\/view.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@ADAPTIVEQUIZVIEWBYID*$2@$', $content);
 
         // Link to adaptivequiz view by adaptivequizid.
-        $search = "/(".$base."\/mod\/adaptivequiz\/view.php\?q\=)([0-9]+)/";
+        $search = "/(".$base."\/mod\/catadaptivequiz\/view.php\?q\=)([0-9]+)/";
         $content = preg_replace($search, '$@ADAPTIVEQUIZVIEWBYQ*$2@$', $content);
 
         return $content;

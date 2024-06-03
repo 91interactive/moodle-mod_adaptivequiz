@@ -17,7 +17,7 @@
 /**
  * Adaptive generator file
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @category   phpunit
  * @copyright  2013 onwards Remote-Learner {@link http://www.remote-learner.ca/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -31,7 +31,7 @@ class mod_adaptivequiz_generator extends testing_module_generator {
      */
     public function create_instance($record = null, array $options = null) {
         global $CFG;
-        require_once("$CFG->dirroot/mod/adaptivequiz/locallib.php");
+        require_once("$CFG->dirroot/mod/catadaptivequiz/locallib.php");
 
         $this->instancecount++;
         $i = $this->instancecount;

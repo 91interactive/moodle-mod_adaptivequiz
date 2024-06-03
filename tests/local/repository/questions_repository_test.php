@@ -19,7 +19,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\repository;
+namespace mod_catadaptivequiz\local\repository;
 
 use advanced_testcase;
 use coding_exception;
@@ -33,7 +33,7 @@ use question_bank;
 use stdClass;
 
 /**
- * @covers \mod_adaptivequiz\local\repository\questions_repository
+ * @covers \mod_catadaptivequiz\local\repository\questions_repository
  */
 class questions_repository_test extends advanced_testcase {
 

@@ -25,9 +25,9 @@
 
 declare(strict_types=1);
 
-namespace mod_adaptivequiz\local\attempt;
+namespace mod_catadaptivequiz\local\attempt;
 
-use mod_adaptivequiz\local\catalgorithm\difficulty_logit;
+use mod_catadaptivequiz\local\catalgorithm\difficulty_logit;
 
 final class cat_calculation_steps_result {
 

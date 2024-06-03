@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local;
+namespace mod_catadaptivequiz\local;
 
-use mod_adaptivequiz\local\attempt\attempt;
+use mod_catadaptivequiz\local\attempt\attempt;
 use moodle_exception;
 use question_bank;
 use question_engine;
@@ -24,7 +24,7 @@ use question_engine;
 /**
  * The class contains checks for availability of an adaptive quiz activity which are based on the global site configs.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -40,7 +40,7 @@ final class adaptive_quiz_requires {
         if (!array_key_exists(attempt::ATTEMPTBEHAVIOUR, $behaviours)) {
             throw new moodle_exception(
                 'activityavailabilitymissingquestionbehaviour',
-                'adaptivequiz',
+                'catadaptivequiz',
                 '',
                 attempt::ATTEMPTBEHAVIOUR
             );
@@ -50,7 +50,7 @@ final class adaptive_quiz_requires {
         if (in_array(attempt::ATTEMPTBEHAVIOUR, explode(',', $questionbankconfig->disabledbehaviours))) {
             throw new moodle_exception(
                 'activityavailabilityquestionbehaviourdisabled',
-                'adaptivequiz',
+                'catadaptivequiz',
                 '',
                 attempt::ATTEMPTBEHAVIOUR
             );

@@ -19,7 +19,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\users_attempts\user_preferences;
+namespace mod_catadaptivequiz\local\report\users_attempts\user_preferences;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -37,26 +37,26 @@ class user_preferences_form extends moodleform {
      */
     public function add_action_buttons($cancel = true, $submitlabel=null) {
         $form =& $this->_form;
-        $form->addElement('submit', 'prefssubmit', get_string('reportattemptsprefsformsubmit', 'adaptivequiz'));
+        $form->addElement('submit', 'prefssubmit', get_string('reportattemptsprefsformsubmit', 'catadaptivequiz'));
     }
 
     protected function definition() {
         $form = $this->_form;
 
-        $form->addElement('header', 'prefsheader', get_string('reportattemptsprefsformheader', 'adaptivequiz'));
+        $form->addElement('header', 'prefsheader', get_string('reportattemptsprefsformheader', 'catadaptivequiz'));
 
-        $form->addElement('select', 'perpage', get_string('reportattemptsusersperpage', 'adaptivequiz'),
+        $form->addElement('select', 'perpage', get_string('reportattemptsusersperpage', 'catadaptivequiz'),
             array_combine(user_preferences::PER_PAGE_OPTIONS, user_preferences::PER_PAGE_OPTIONS));
         $form->setDefault('perpage', user_preferences::PER_PAGE_DEFAULT);
 
         $form->addElement('advcheckbox', 'showinitialsbar',
-            get_string('reportattemptsshowinitialbars', 'adaptivequiz'), '&nbsp;', null, [0, 1]);
+            get_string('reportattemptsshowinitialbars', 'catadaptivequiz'), '&nbsp;', null, [0, 1]);
         $form->setDefault('showinitialsbar', user_preferences::SHOW_INITIALS_BAR_DEFAULT);
 
         $form->addElement('advcheckbox', 'persistentfilter',
-            get_string('reportattemptspersistentfilter', 'adaptivequiz'), '&nbsp;', null, [0, 1]);
+            get_string('reportattemptspersistentfilter', 'catadaptivequiz'), '&nbsp;', null, [0, 1]);
         $form->setDefault('persistentfilter', user_preferences::PERSISTENT_FILTER_DEFAULT);
-        $form->addHelpButton('persistentfilter', 'reportattemptspersistentfilter', 'adaptivequiz');
+        $form->addHelpButton('persistentfilter', 'reportattemptspersistentfilter', 'catadaptivequiz');
 
         $this->add_action_buttons();
     }

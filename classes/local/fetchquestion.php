@@ -14,23 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local;
+namespace mod_catadaptivequiz\local;
 
 use coding_exception;
 use dml_exception;
 use dml_read_exception;
 use invalid_parameter_exception;
-use mod_adaptivequiz\local\question\difficulty_questions_mapping;
-use mod_adaptivequiz\local\repository\questions_number_per_difficulty;
-use mod_adaptivequiz\local\repository\questions_repository;
-use mod_adaptivequiz\local\repository\tags_repository;
+use mod_catadaptivequiz\local\question\difficulty_questions_mapping;
+use mod_catadaptivequiz\local\repository\questions_number_per_difficulty;
+use mod_catadaptivequiz\local\repository\questions_repository;
+use mod_catadaptivequiz\local\repository\tags_repository;
 use moodle_exception;
 use stdClass;
 
 /**
  * This class does the work of fetching a questions associated with a level of difficulty and within a question category.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 onwards Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -80,7 +80,7 @@ class fetchquestion {
     /**
      * Constructor initializes data required to retrieve questions associated with tag and within question categories.
      *
-     * @param stdClass $adaptivequiz A record object from the {adaptivequiz} table.
+     * @param stdClass $adaptivequiz A record object from the {catadaptivequiz} table.
      * @param int $level Level of difficulty to look for when fetching a question.
      * @param int $minimumlevel The minimum level the student can achieve.
      * @param int $maximumlevel The maximum level the student can achieve.
@@ -422,7 +422,7 @@ class fetchquestion {
         }
 
         $param = array('instance' => $this->adaptivequiz->id);
-        $records = $DB->get_records_menu('adaptivequiz_question', $param, 'questioncategory ASC', 'id,questioncategory');
+        $records = $DB->get_records_menu('catadaptivequiz_question', $param, 'questioncategory ASC', 'id,questioncategory');
 
         // Cache the results.
         $this->questcatids = $records;

@@ -23,38 +23,38 @@
  */
 
 require_once(__DIR__ . '/../../config.php');
-require_once($CFG->dirroot . '/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot . '/mod/catadaptivequiz/locallib.php');
 
-use mod_adaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz\local\attempt\attempt_state;
 
 $attemptid = required_param('attempt', PARAM_INT);
 $confirm = optional_param('confirm', 0, PARAM_INT);
 
-$attempt = $DB->get_record('adaptivequiz_attempt', ['id' => $attemptid], '*', MUST_EXIST);
-$adaptivequiz = $DB->get_record('adaptivequiz', ['id' => $attempt->instance], '*', MUST_EXIST);
-$cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id, $adaptivequiz->course, false, MUST_EXIST);
+$attempt = $DB->get_record('catadaptivequiz_attempt', ['id' => $attemptid], '*', MUST_EXIST);
+$adaptivequiz = $DB->get_record('catadaptivequiz', ['id' => $attempt->instance], '*', MUST_EXIST);
+$cm = get_coursemodule_from_instance('catadaptivequiz', $adaptivequiz->id, $adaptivequiz->course, false, MUST_EXIST);
 $course = $DB->get_record('course', ['id' => $adaptivequiz->course], '*', MUST_EXIST);
 
 require_login($course, true, $cm);
 
 $context = context_module::instance($cm->id);
 
-require_capability('mod/adaptivequiz:viewreport', $context);
+require_capability('mod/catadaptivequiz:viewreport', $context);
 
-$returnurl = new moodle_url('/mod/adaptivequiz/viewattemptreport.php', ['cmid' => $cm->id, 'userid' => $attempt->userid]);
+$returnurl = new moodle_url('/mod/catadaptivequiz/viewattemptreport.php', ['cmid' => $cm->id, 'userid' => $attempt->userid]);
 
 if ($attempt->attemptstate == attempt_state::COMPLETED) {
-    throw new moodle_exception('errorclosingattempt_alreadycomplete', 'adaptivequiz', $returnurl);
+    throw new moodle_exception('errorclosingattempt_alreadycomplete', 'catadaptivequiz', $returnurl);
 }
 
 $user = $DB->get_record('user', ['id' => $attempt->userid], '*', MUST_EXIST);
 
-$PAGE->set_url('/mod/adaptivequiz/closeattempt.php', ['attempt' => $attempt->id]);
+$PAGE->set_url('/mod/catadaptivequiz/closeattempt.php', ['attempt' => $attempt->id]);
 $PAGE->set_title(format_string($adaptivequiz->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
-$renderer = $PAGE->get_renderer('mod_adaptivequiz');
+$renderer = $PAGE->get_renderer('mod_catadaptivequiz');
 
 $performancecalculation = new stdClass();
 $performancecalculation->measure = $attempt->measure;
@@ -74,19 +74,19 @@ $a->current_user_id = format_string($USER->id);
 $a->now = userdate(time());
 
 if ($confirm) {
-    $statusmessage = get_string('attemptclosedstatus', 'adaptivequiz', $a);
-    $closemessage = get_string('attemptclosed', 'adaptivequiz', $a);
+    $statusmessage = get_string('attemptclosedstatus', 'catadaptivequiz', $a);
+    $closemessage = get_string('attemptclosed', 'catadaptivequiz', $a);
 
     adaptivequiz_complete_attempt($attempt->uniqueid, $adaptivequiz, $context, $attempt->userid, $attempt->standarderror,
         $statusmessage);
     redirect($returnurl, $closemessage, 4);
 }
 
-$message = html_writer::tag('p', get_string('confirmcloseattempt', 'adaptivequiz', $a)) .
-    html_writer::tag('p', get_string('confirmcloseattemptstats', 'adaptivequiz', $a)) .
-    html_writer::tag('p', get_string('confirmcloseattemptscore', 'adaptivequiz', $a));
+$message = html_writer::tag('p', get_string('confirmcloseattempt', 'catadaptivequiz', $a)) .
+    html_writer::tag('p', get_string('confirmcloseattemptstats', 'catadaptivequiz', $a)) .
+    html_writer::tag('p', get_string('confirmcloseattemptscore', 'catadaptivequiz', $a));
 
-$confirm = new moodle_url('/mod/adaptivequiz/closeattempt.php', ['attempt' => $attempt->id, 'confirm' => 1]);
+$confirm = new moodle_url('/mod/catadaptivequiz/closeattempt.php', ['attempt' => $attempt->id, 'confirm' => 1]);
 
 echo $renderer->header();
 echo $renderer->confirm($message, $confirm, $returnurl);

@@ -1,4 +1,4 @@
-@mod @mod_adaptivequiz
+@mod @mod_catadaptivequiz
 Feature: Adaptive quiz content
   In order to take a quiz with the CAT (Computer Adaptive Testing) algorithm
   As a student

@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\event;
+namespace mod_catadaptivequiz\event;
 
 use core\event\base;
 use moodle_exception;
@@ -33,7 +33,7 @@ class attempt_completed extends base {
      * @inheritDoc
      */
     public static function get_name() {
-        return get_string('eventattemptcompleted', 'adaptivequiz');
+        return get_string('eventattemptcompleted', 'catadaptivequiz');
     }
 
     /**
@@ -51,21 +51,21 @@ class attempt_completed extends base {
      * @return moodle_url
      */
     public function get_url() {
-        return new moodle_url('/mod/adaptivequiz/reviewattempt.php', ['attempt' => $this->objectid]);
+        return new moodle_url('/mod/catadaptivequiz/reviewattempt.php', ['attempt' => $this->objectid]);
     }
 
     /**
      * @inheritDoc
      */
     public static function get_objectid_mapping() {
-        return ['db' => 'adaptivequiz_attempt', 'restore' => 'adaptiveattempts'];
+        return ['db' => 'catadaptivequiz_attempt', 'restore' => 'adaptiveattempts'];
     }
 
     /**
      * @inheritDoc
      */
     protected function init() {
-        $this->data['objecttable'] = 'adaptivequiz_attempt';
+        $this->data['objecttable'] = 'catadaptivequiz_attempt';
         $this->data['crud'] = 'u';
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
     }

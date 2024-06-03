@@ -21,10 +21,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\completion;
+namespace mod_catadaptivequiz\completion;
 
 use core_completion\activity_custom_completion;
-use mod_adaptivequiz\local\attempt\attempt;
+use mod_catadaptivequiz\local\attempt\attempt;
 
 class custom_completion extends activity_custom_completion {
 
@@ -50,7 +50,7 @@ class custom_completion extends activity_custom_completion {
      * @inheritDoc
      */
     public function get_custom_rule_descriptions(): array {
-        return ['completionattemptcompleted' => get_string('completionattemptcompletedcminfo', 'adaptivequiz')];
+        return ['completionattemptcompleted' => get_string('completionattemptcompletedcminfo', 'catadaptivequiz')];
     }
 
     /**

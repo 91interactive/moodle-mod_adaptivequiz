@@ -16,7 +16,7 @@
 
 declare(strict_types=1);
 
-namespace mod_adaptivequiz\local\catalgorithm;
+namespace mod_catadaptivequiz\local\catalgorithm;
 
 use coding_exception;
 
@@ -25,7 +25,7 @@ use coding_exception;
  *
  * May contain an error message when applicable, or the next difficulty level when no error.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2023 Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

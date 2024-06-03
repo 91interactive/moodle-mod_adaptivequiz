@@ -1,4 +1,4 @@
-@mod @mod_adaptivequiz
+@mod @mod_catadaptivequiz
 Feature: Add an adaptive quiz
   In order to evaluate students using an adaptive questions strategy
   As a teacher

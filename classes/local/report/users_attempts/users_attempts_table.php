@@ -21,16 +21,16 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\report\users_attempts;
+namespace mod_catadaptivequiz\local\report\users_attempts;
 
 use coding_exception;
 use context;
 use dml_exception;
 use html_writer;
-use mod_adaptivequiz\local\report\questions_difficulty_range;
-use mod_adaptivequiz\local\report\users_attempts\filter\filter;
-use mod_adaptivequiz\local\report\users_attempts\sql\sql_resolver;
-use mod_adaptivequiz_renderer;
+use mod_catadaptivequiz\local\report\questions_difficulty_range;
+use mod_catadaptivequiz\local\report\users_attempts\filter\filter;
+use mod_catadaptivequiz\local\report\users_attempts\sql\sql_resolver;
+use mod_catadaptivequiz_renderer;
 use moodle_exception;
 use moodle_url;
 use stdClass;
@@ -41,7 +41,7 @@ final class users_attempts_table extends table_sql {
     private const UNIQUE_ID = 'usersattemptstable';
 
     /**
-     * @var mod_adaptivequiz_renderer $renderer
+     * @var mod_catadaptivequiz_renderer $renderer
      */
     private $renderer;
 
@@ -59,7 +59,7 @@ final class users_attempts_table extends table_sql {
      * @throws coding_exception
      */
     public function __construct(
-        mod_adaptivequiz_renderer $renderer,
+        mod_catadaptivequiz_renderer $renderer,
         int $cmid,
         questions_difficulty_range $questionsdifficultyrange,
         moodle_url $baseurl,
@@ -136,7 +136,7 @@ final class users_attempts_table extends table_sql {
         if (!$this->is_downloading()) {
             return html_writer::link(
                 new moodle_url(
-                    '/mod/adaptivequiz/viewattemptreport.php',
+                    '/mod/catadaptivequiz/viewattemptreport.php',
                     ['userid' => $row->id, 'cmid' => $this->cmid]
                 ),
                 $row->attemptsnum
@@ -162,7 +162,7 @@ final class users_attempts_table extends table_sql {
 
         if (!$this->is_downloading()) {
             return html_writer::link(
-                new moodle_url('/mod/adaptivequiz/reviewattempt.php', ['attempt' => $row->attemptid]),
+                new moodle_url('/mod/catadaptivequiz/reviewattempt.php', ['attempt' => $row->attemptid]),
                 $measure
             );
         }
@@ -185,7 +185,7 @@ final class users_attempts_table extends table_sql {
     protected function col_attempttimefinished(stdClass $row): string {
         return intval($row->attempttimefinished)
             ? userdate($row->attempttimefinished)
-            : get_string('na', 'adaptivequiz');
+            : get_string('na', 'catadaptivequiz');
     }
 	
 	/**
@@ -194,7 +194,7 @@ final class users_attempts_table extends table_sql {
     protected function col_detaildtestresults(stdClass $row): string {
 		return $row->detaildtestresults != null 
 			? $row->detaildtestresults 
-			: get_string('na', 'adaptivequiz');
+			: get_string('na', 'catadaptivequiz');
       
     }
 
@@ -211,11 +211,11 @@ final class users_attempts_table extends table_sql {
         $this->define_headers([
             get_string('fullname'),
             get_string('email'),
-            get_string('numofattemptshdr', 'adaptivequiz'),
-            get_string('bestscore', 'adaptivequiz'),
-            get_string('bestscorestderror', 'adaptivequiz'),
-            get_string('attemptfinishedtimestamp', 'adaptivequiz'),
-            get_string('detaildtestresults','adaptivequiz')
+            get_string('numofattemptshdr', 'catadaptivequiz'),
+            get_string('bestscore', 'catadaptivequiz'),
+            get_string('bestscorestderror', 'catadaptivequiz'),
+            get_string('attemptfinishedtimestamp', 'catadaptivequiz'),
+            get_string('detaildtestresults','catadaptivequiz')
         ]);
         $this->define_baseurl($baseurl);
         $this->set_attribute('class', $this->attributes['class'] . ' usersattemptstable');

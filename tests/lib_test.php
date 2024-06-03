@@ -22,29 +22,29 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz;
+namespace mod_catadaptivequiz;
 
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-require_once($CFG->dirroot.'/mod/adaptivequiz/lib.php');
+require_once($CFG->dirroot.'/mod/catadaptivequiz/lib.php');
 
 use advanced_testcase;
-use mod_adaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz\local\attempt\attempt_state;
 use stdClass;
 
 /**
- * @group mod_adaptivequiz
+ * @group mod_catadaptivequiz
  */
 class lib_test extends advanced_testcase {
     /**
-     * This functions loads data via the tests/fixtures/mod_adaptivequiz.xml file
+     * This functions loads data via the tests/fixtures/mod_catadaptivequiz.xml file
      * @return void
      */
     protected function setup_test_data_xml() {
         $this->dataset_from_files(
-            [__DIR__.'/fixtures/mod_adaptivequiz.xml']
+            [__DIR__.'/fixtures/mod_catadaptivequiz.xml']
         )->to_database();
     }
 
@@ -184,15 +184,15 @@ class lib_test extends advanced_testcase {
         $dummy->content->attemptstate = attempt_state::IN_PROGRESS;
         $dummy->content->questionsattempted = '12';
         $dummy->timestamp = 1234;
-        $dummy->type = 'mod_adaptivequiz';
+        $dummy->type = 'mod_catadaptivequiz';
         $dummy->name = 'my-phpunit-test';
         $dummy->cmid = 99;
 
-        $output = adaptivequiz_print_recent_mod_activity($dummy, 1, true, array('mod_adaptivequiz' => 'adaptivequiz'), true, true);
+        $output = adaptivequiz_print_recent_mod_activity($dummy, 1, true, array('mod_catadaptivequiz' => 'adaptivequiz'), true, true);
         $this->assertStringContainsString('<table', $output);
         $this->assertStringContainsString('<tr>', $output);
         $this->assertStringContainsString('<td', $output);
-        $this->assertStringContainsString('mod/adaptivequiz/view.php?id=99', $output);
+        $this->assertStringContainsString('mod/catadaptivequiz/view.php?id=99', $output);
         $this->assertStringContainsString('/user/view.php?id=2', $output);
         $this->assertStringContainsString('user phpunit', $output);
         $this->assertStringContainsString('my-phpunit-test', $output);
@@ -223,11 +223,11 @@ class lib_test extends advanced_testcase {
         $dummy->content->attemptstate = attempt_state::IN_PROGRESS;
         $dummy->content->questionsattempted = '12';
         $dummy->timestamp = 1234;
-        $dummy->type = 'mod_adaptivequiz';
+        $dummy->type = 'mod_catadaptivequiz';
         $dummy->name = 'my-phpunit-test';
         $dummy->cmid = 99;
 
-        $output = adaptivequiz_print_recent_mod_activity($dummy, 1, false, array('mod_adaptivequiz' => 'adaptivequiz'), true, true);
+        $output = adaptivequiz_print_recent_mod_activity($dummy, 1, false, array('mod_catadaptivequiz' => 'adaptivequiz'), true, true);
 
         $this->assertStringContainsString('<table', $output);
         $this->assertStringContainsString('<tr>', $output);

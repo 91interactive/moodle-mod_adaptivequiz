@@ -17,7 +17,7 @@
 /**
  * Plugin basic info.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2023021500;
-$plugin->release = '3.0.0dev';
+$plugin->version = 2024051700;
+$plugin->release = '1.0.0dev';
 $plugin->maturity = MATURITY_ALPHA;
 $plugin->requires = 2022041900;
 $plugin->cron = 0;
-$plugin->component = 'mod_adaptivequiz';
+$plugin->component = 'mod_catadaptivequiz';

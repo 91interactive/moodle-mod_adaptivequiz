@@ -14,29 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local\catalgorithm;
+namespace mod_catadaptivequiz\local\catalgorithm;
 
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once($CFG->dirroot . '/mod/adaptivequiz/locallib.php');
+require_once($CFG->dirroot . '/mod/catadaptivequiz/locallib.php');
 
 use advanced_testcase;
 use coding_exception;
-use mod_adaptivequiz\local\question\question_answer_evaluation_result;
-use mod_adaptivequiz\local\question\questions_answered_summary;
-use mod_adaptivequiz\local\report\questions_difficulty_range;
+use mod_catadaptivequiz\local\question\question_answer_evaluation_result;
+use mod_catadaptivequiz\local\question\questions_answered_summary;
+use mod_catadaptivequiz\local\report\questions_difficulty_range;
 use stdClass;
 
 /**
  * Unit tests for the catalgo class.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * @covers \mod_adaptivequiz\local\catalgorithm\catalgo
+ * @covers \mod_catadaptivequiz\local\catalgorithm\catalgo
  */
 class catalgo_test extends advanced_testcase {
 
@@ -141,7 +141,7 @@ class catalgo_test extends advanced_testcase {
 
         $course = $this->getDataGenerator()->create_course();
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -171,7 +171,7 @@ class catalgo_test extends advanced_testcase {
 
         $course = $this->getDataGenerator()->create_course();
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -201,7 +201,7 @@ class catalgo_test extends advanced_testcase {
 
         $course = $this->getDataGenerator()->create_course();
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,
@@ -247,7 +247,7 @@ class catalgo_test extends advanced_testcase {
 
         $course = $this->getDataGenerator()->create_course();
         $adaptivequiz = $this->getDataGenerator()
-            ->get_plugin_generator('mod_adaptivequiz')
+            ->get_plugin_generator('mod_catadaptivequiz')
             ->create_instance([
                 'highestlevel' => 10,
                 'lowestlevel' => 1,

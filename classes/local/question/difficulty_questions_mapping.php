@@ -14,15 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_adaptivequiz\local\question;
+namespace mod_catadaptivequiz\local\question;
 
 use coding_exception;
-use mod_adaptivequiz\local\repository\questions_number_per_difficulty;
+use mod_catadaptivequiz\local\repository\questions_number_per_difficulty;
 
 /**
  * Defines mapping of difficulty levels and the number of questions associated with each level.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2023 Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

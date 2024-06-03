@@ -24,7 +24,7 @@
 
 declare(strict_types=1);
 
-namespace mod_adaptivequiz\local\catalgorithm;
+namespace mod_catadaptivequiz\local\catalgorithm;
 
 use InvalidArgumentException;
 

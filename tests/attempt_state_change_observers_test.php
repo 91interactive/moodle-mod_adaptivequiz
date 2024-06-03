@@ -19,17 +19,17 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz;
+namespace mod_catadaptivequiz;
 
 use cm_info;
 use context_module;
-use mod_adaptivequiz\completion\custom_completion;
-use mod_adaptivequiz\event\attempt_completed;
-use mod_adaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz\completion\custom_completion;
+use mod_catadaptivequiz\event\attempt_completed;
+use mod_catadaptivequiz\local\attempt\attempt_state;
 use stdClass;
 
 /**
- * @covers \mod_adaptivequiz\attempt_state_change_observers::attempt_completed
+ * @covers \mod_catadaptivequiz\attempt_state_change_observers::attempt_completed
  */
 class attempt_state_change_observers_test extends \advanced_testcase {
 

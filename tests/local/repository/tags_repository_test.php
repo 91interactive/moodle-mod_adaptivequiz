@@ -19,7 +19,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\local\repository;
+namespace mod_catadaptivequiz\local\repository;
 
 use advanced_testcase;
 use coding_exception;
@@ -28,7 +28,7 @@ use core_question_generator;
 use core_tag_tag;
 
 /**
- * @covers \mod_adaptivequiz\local\repository\tags_repository
+ * @covers \mod_catadaptivequiz\local\repository\tags_repository
  */
 class tags_repository_test extends advanced_testcase {
 

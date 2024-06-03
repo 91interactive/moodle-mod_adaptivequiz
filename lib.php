@@ -17,7 +17,7 @@
 /**
  * System and utility functions used by the module.
  *
- * @package    mod_adaptivequiz
+ * @package    mod_catadaptivequiz
  * @copyright  2013 Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright  2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,13 +27,13 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/question/engine/lib.php');
 
-use mod_adaptivequiz\local\attempt\attempt_state;
+use mod_catadaptivequiz\local\attempt\attempt_state;
 
 /**
  * Option controlling what options are offered on the quiz settings form.
  */
 define('ADAPTIVEQUIZMAXATTEMPT', 10);
-define('ADAPTIVEQUIZNAME', 'adaptivequiz');
+define('ADAPTIVEQUIZNAME', 'catadaptivequiz');
 
 /**
  * Options determining how the grades from individual attempts are combined to give
@@ -50,7 +50,7 @@ define('ADAPTIVEQUIZ_ATTEMPTLAST',  '4');
  * @param string $feature: FEATURE_xx constant for requested feature
  * @return mixed true if the feature is supported, null if unknown
  */
-function adaptivequiz_supports($feature) {
+function catadaptivequiz_supports($feature) {
     switch($feature) {
         case FEATURE_GROUPS: {
             return true;
@@ -97,10 +97,10 @@ function adaptivequiz_supports($feature) {
  * of the new instance.
  *
  * @param object $adaptivequiz: An object from the form in mod_form.php
- * @param mod_adaptivequiz_mod_form $mform: A formslib object
+ * @param mod_catadaptivequiz_mod_form $mform: A formslib object
  * @return int The id of the newly inserted adaptivequiz record
  */
-function adaptivequiz_add_instance(stdClass $adaptivequiz, mod_adaptivequiz_mod_form $mform = null) {
+function catadaptivequiz_add_instance(stdClass $adaptivequiz, mod_catadaptivequiz_mod_form $mform = null) {
     global $DB;
 
     $time = time();
@@ -108,7 +108,7 @@ function adaptivequiz_add_instance(stdClass $adaptivequiz, mod_adaptivequiz_mod_
     $adaptivequiz->timemodified = $time;
     $adaptivequiz->attemptfeedbackformat = 0;
 
-    $instance = $DB->insert_record('adaptivequiz', $adaptivequiz);
+    $instance = $DB->insert_record('catadaptivequiz', $adaptivequiz);
 
     if (empty($instance) && is_int($instance)) {
         return $instance;
@@ -139,7 +139,7 @@ function adaptivequiz_add_questcat_association(int $instance, stdClass $adaptive
 
         foreach ($adaptivequiz->questionpool as $questioncatid) {
             $qtag->questioncategory = $questioncatid;
-            $DB->insert_record('adaptivequiz_question', $qtag);
+            $DB->insert_record('catadaptivequiz_question', $qtag);
         }
     }
 }
@@ -155,7 +155,7 @@ function adaptivequiz_update_questcat_association(int $instance, stdClass $adapt
 
     // Remove old references.
     if (!empty($instance)) {
-        $DB->delete_records('adaptivequiz_question', ['instance' => $instance]);
+        $DB->delete_records('catadaptivequiz_question', ['instance' => $instance]);
     }
 
     // Insert new references.
@@ -170,19 +170,19 @@ function adaptivequiz_update_questcat_association(int $instance, stdClass $adapt
  * will update an existing instance with new data.
  *
  * @param object $adaptivequiz: An object from the form in mod_form.php
- * @param mod_adaptivequiz_mod_form $mform: A formslib object
+ * @param mod_catadaptivequiz_mod_form $mform: A formslib object
  * @return boolean Success/Fail
  */
-function adaptivequiz_update_instance(stdClass $adaptivequiz, mod_adaptivequiz_mod_form $mform = null) {
+function catadaptivequiz_update_instance(stdClass $adaptivequiz, mod_catadaptivequiz_mod_form $mform = null) {
     global $DB;
 
     $adaptivequiz->timemodified = time();
     $adaptivequiz->id = $adaptivequiz->instance;
 
     // Get the current value, so we can see what changed.
-    $oldquiz = $DB->get_record('adaptivequiz', array('id' => $adaptivequiz->instance));
+    $oldquiz = $DB->get_record('catadaptivequiz', array('id' => $adaptivequiz->instance));
 
-    $instanceid = $DB->update_record('adaptivequiz', $adaptivequiz);
+    $instanceid = $DB->update_record('catadaptivequiz', $adaptivequiz);
 
     // Save question tag association data.
     adaptivequiz_update_questcat_association($adaptivequiz->id, $adaptivequiz);
@@ -207,16 +207,16 @@ function adaptivequiz_update_instance(stdClass $adaptivequiz, mod_adaptivequiz_m
  * @param int $id: Id of the module instance
  * @return boolean Success/Failure
  */
-function adaptivequiz_delete_instance($id) {
+function catadaptivequiz_delete_instance($id) {
     global $DB;
 
-    $adaptivequiz = $DB->get_record('adaptivequiz', array('id' => $id));
+    $adaptivequiz = $DB->get_record('catadaptivequiz', array('id' => $id));
     if (!$adaptivequiz) {
         return false;
     }
 
     // Remove question_usage_by_activity records.
-    $attempts = $DB->get_records('adaptivequiz_attempt', array('instance' => $id));
+    $attempts = $DB->get_records('catadaptivequiz_attempt', array('instance' => $id));
 
     if (!empty($attempts)) {
         foreach ($attempts as $attempt) {
@@ -224,16 +224,16 @@ function adaptivequiz_delete_instance($id) {
         }
 
         // Remove attempts data.
-        $DB->delete_records('adaptivequiz_attempt', array('instance' => $id));
+        $DB->delete_records('catadaptivequiz_attempt', array('instance' => $id));
     }
 
     // Remove association table data.
-    if ($DB->record_exists('adaptivequiz_question', array ('instance' => $id))) {
-        $DB->delete_records('adaptivequiz_question', array('instance' => $id));
+    if ($DB->record_exists('catadaptivequiz_question', array ('instance' => $id))) {
+        $DB->delete_records('catadaptivequiz_question', array('instance' => $id));
     }
 
     // Delete the quiz record itself.
-    $DB->delete_records('adaptivequiz', array('id' => $id));
+    $DB->delete_records('catadaptivequiz', array('id' => $id));
 
     // Delete the grade item.
     adaptivequiz_grade_item_delete($adaptivequiz);
@@ -250,7 +250,7 @@ function adaptivequiz_delete_instance($id) {
  *
  * @return stdClass|null
  */
-function adaptivequiz_user_outline($course, $user, $mod, $adaptivequiz) {
+function catadaptivequiz_user_outline($course, $user, $mod, $adaptivequiz) {
     $return = new stdClass();
     $return->time = 0;
     $return->info = '';
@@ -267,7 +267,7 @@ function adaptivequiz_user_outline($course, $user, $mod, $adaptivequiz) {
  * @param stdClass $adaptivequiz: the module instance record
  * @return void, is supposed to echp directly
  */
-function adaptivequiz_user_complete($course, $user, $mod, $adaptivequiz) {
+function catadaptivequiz_user_complete($course, $user, $mod, $adaptivequiz) {
 }
 
 /**
@@ -277,7 +277,7 @@ function adaptivequiz_user_complete($course, $user, $mod, $adaptivequiz) {
  *
  * @return boolean
  */
-function adaptivequiz_print_recent_activity($course, $viewfullnames, $timestart) {
+function catadaptivequiz_print_recent_activity($course, $viewfullnames, $timestart) {
     return false;  // True if anything was printed, otherwise false.
 }
 
@@ -297,7 +297,7 @@ function adaptivequiz_print_recent_activity($course, $viewfullnames, $timestart)
  * @param int $groupid: check for a particular group's activity only, defaults to 0 (all groups)
  * @return void adds items into $activities and increases $index
  */
-function adaptivequiz_get_recent_mod_activity(&$activities, &$index, $timestart, $courseid, $cmid, $userid = 0, $groupid = 0) {
+function catadaptivequiz_get_recent_mod_activity(&$activities, &$index, $timestart, $courseid, $cmid, $userid = 0, $groupid = 0) {
     global $COURSE, $DB, $USER;
 
     if ($COURSE->id == $courseid) {
@@ -309,7 +309,7 @@ function adaptivequiz_get_recent_mod_activity(&$activities, &$index, $timestart,
     $modinfo = get_fast_modinfo($course);
 
     $cm = $modinfo->cms[$cmid];
-    $adaptivequiz = $DB->get_record('adaptivequiz', array('id' => $cm->instance));
+    $adaptivequiz = $DB->get_record('catadaptivequiz', array('id' => $cm->instance));
 
     if ($userid) {
         $userselect = "AND u.id = :userid";
@@ -331,7 +331,7 @@ function adaptivequiz_get_recent_mod_activity(&$activities, &$index, $timestart,
     $params['instance'] = $adaptivequiz->id;
 
     $sql = "SELECT aa.*, u.firstname, u.lastname, u.email, u.picture, u.imagealt
-              FROM {adaptivequiz_attempt} aa
+              FROM {catadaptivequiz_attempt} aa
                    JOIN {user} u ON u.id = aa.userid
                    $groupjoin
              WHERE aa.timemodified > :timestart
@@ -349,7 +349,7 @@ function adaptivequiz_get_recent_mod_activity(&$activities, &$index, $timestart,
     $context         = context_module::instance($cm->id);
     $accessallgroups = has_capability('moodle/site:accessallgroups', $context);
     $viewfullnames   = has_capability('moodle/site:viewfullnames', $context);
-    $viewreport      = has_capability('mod/adaptivequiz:viewreport', $context);
+    $viewreport      = has_capability('mod/catadaptivequiz:viewreport', $context);
     $groupmode       = groups_get_activity_groupmode($cm, $course);
 
     if (is_null($modinfo->groups)) {
@@ -386,14 +386,14 @@ function adaptivequiz_get_recent_mod_activity(&$activities, &$index, $timestart,
         $tmpactivity->content = new stdClass();
         $tmpactivity->user = new stdClass();
 
-        $tmpactivity->type       = 'adaptivequiz';
+        $tmpactivity->type       = 'catadaptivequiz';
         $tmpactivity->cmid       = $cm->id;
         $tmpactivity->name       = $aname;
         $tmpactivity->sectionnum = $cm->sectionnum;
         $tmpactivity->timestamp  = $attempt->timemodified;
 
         $tmpactivity->content->attemptid = $attempt->id;
-        $tmpactivity->content->attemptstate = get_string('recent'.$attempt->attemptstate, 'adaptivequiz');
+        $tmpactivity->content->attemptstate = get_string('recent'.$attempt->attemptstate, 'catadaptivequiz');
         $tmpactivity->content->questionsattempted = $attempt->questionsattempted;
 
         $tmpactivity->user->id        = $attempt->userid;
@@ -429,7 +429,7 @@ function adaptivequiz_print_recent_mod_activity($activity, $courseid, $detail, $
     $contect = '';
 
     // Define table.
-    $attr = array('border' => '0', 'cellpadding' => '3', 'cellspacing' => '0', 'class' => 'adaptivequiz-recent');
+    $attr = array('border' => '0', 'cellpadding' => '3', 'cellspacing' => '0', 'class' => 'catadaptivequiz-recent');
     $output .= html_writer::start_tag('table', $attr);
 
     // Define table columns.
@@ -448,7 +448,7 @@ function adaptivequiz_print_recent_mod_activity($activity, $courseid, $detail, $
         $attr = array('src' => $OUTPUT->image_url('icon', $activity->type), 'class' => 'icon', 'alt' => $modname);
         $content .= html_writer::empty_tag('img', $attr);
         // Create anchor markup.
-        $attr = array('href' => "{$CFG->wwwroot}/mod/adaptivequiz/view.php?id={$activity->cmid}",
+        $attr = array('href' => "{$CFG->wwwroot}/mod/catadaptivequiz/view.php?id={$activity->cmid}",
             'class' => 'icon', 'alt' => $modname);
         $content .= html_writer::tag('a', $activity->name, $attr);
         // End div.
@@ -457,11 +457,11 @@ function adaptivequiz_print_recent_mod_activity($activity, $courseid, $detail, $
 
     // Create div with the state of the attempt.
     $attr = array('class' => 'attemptstate');
-    $string = get_string('recentattemptstate', 'adaptivequiz');
+    $string = get_string('recentattemptstate', 'catadaptivequiz');
     $content .= html_writer::tag('div', $string.'&nbsp;'.$activity->content->attemptstate, $attr);
     // Create div with the number of questions attempted.
     $attr = array('class' => 'questionsattempted');
-    $string = get_string('recentactquestionsattempted', 'adaptivequiz', $activity->content->questionsattempted);
+    $string = get_string('recentactquestionsattempted', 'catadaptivequiz', $activity->content->questionsattempted);
     $content .= html_writer::tag('div', $string, $attr);
 
     // Start div.
@@ -498,7 +498,7 @@ function adaptivequiz_print_recent_mod_activity($activity, $courseid, $detail, $
  *
  * @return boolean
  **/
-function adaptivequiz_cron() {
+function catadaptivequiz_cron() {
     return false;
 }
 
@@ -508,7 +508,7 @@ function adaptivequiz_cron() {
  * @example return array('moodle/site:accessallgroups');
  * @return array
  */
-function adaptivequiz_get_extra_capabilities() {
+function catadaptivequiz_get_extra_capabilities() {
     return array();
 }
 
@@ -521,24 +521,24 @@ function adaptivequiz_get_extra_capabilities() {
  * @param stdClass $module
  * @param cm_info $cm
  */
-function adaptivequiz_extend_navigation(navigation_node $navref, stdclass $course, stdclass $module, cm_info $cm) {
+function catadaptivequiz_extend_navigation(navigation_node $navref, stdclass $course, stdclass $module, cm_info $cm) {
 }
 
 /**
  * @throws coding_exception
  * @throws moodle_exception
  */
-function adaptivequiz_extend_settings_navigation(settings_navigation $settingsnav, navigation_node $adaptivequiznode) {
+function catadaptivequiz_extend_settings_navigation(settings_navigation $settingsnav, navigation_node $adaptivequiznode) {
     global $PAGE;
 
-    if (!has_capability('mod/adaptivequiz:viewreport', $PAGE->cm->context)) {
+    if (!has_capability('mod/catadaptivequiz:viewreport', $PAGE->cm->context)) {
         return;
     }
 
 
-    $node = navigation_node::create(get_string('questionanalysisbtn', 'adaptivequiz'),
-        new moodle_url('/mod/adaptivequiz/questionanalysis/overview.php', ['cmid' => $PAGE->cm->id]),
-        navigation_node::TYPE_SETTING, null, 'mod_adaptivequiz_question_analysis',
+    $node = navigation_node::create(get_string('questionanalysisbtn', 'catadaptivequiz'),
+        new moodle_url('/mod/catadaptivequiz/questionanalysis/overview.php', ['cmid' => $PAGE->cm->id]),
+        navigation_node::TYPE_SETTING, null, 'mod_catadaptivequiz_question_analysis',
         new pix_icon('i/report', ''));
     $adaptivequiznode->add_node($node);
 
@@ -557,7 +557,7 @@ function adaptivequiz_grade_item_delete(stdClass $adaptivequiz) {
     require_once($CFG->libdir . '/gradelib.php');
 
     $params = array('deleted' => 1);
-    return grade_update('mod/adaptivequiz', $adaptivequiz->course, 'mod', 'adaptivequiz', $adaptivequiz->id, 0, null, $params);
+    return grade_update('mod/catadaptivequiz', $adaptivequiz->course, 'mod', 'catadaptivequiz', $adaptivequiz->id, 0, null, $params);
 }
 
 /**
@@ -570,7 +570,7 @@ function adaptivequiz_grade_item_delete(stdClass $adaptivequiz) {
  */
 function adaptivequiz_grade_item_update(stdClass $adaptivequiz, $grades = null) {
     global $CFG;
-    require_once($CFG->dirroot . '/mod/adaptivequiz/locallib.php');
+    require_once($CFG->dirroot . '/mod/catadaptivequiz/locallib.php');
     require_once($CFG->libdir . '/gradelib.php');
 
     if (!empty($adaptivequiz->id)) { // May not be always present.
@@ -593,12 +593,12 @@ function adaptivequiz_grade_item_update(stdClass $adaptivequiz, $grades = null) 
         $grades = null;
     }
 
-    return grade_update('mod/adaptivequiz', $adaptivequiz->course, 'mod', 'adaptivequiz', $adaptivequiz->id, 0, $grades, $params);
+    return grade_update('mod/catadaptivequiz', $adaptivequiz->course, 'mod', 'catadaptivequiz', $adaptivequiz->id, 0, $grades, $params);
 }
 
 function adaptivequiz_update_grades(stdClass $adaptivequiz, $userid=0, $nullifnone = true) {
     global $CFG, $DB;
-    require_once($CFG->dirroot . '/mod/adaptivequiz/locallib.php');
+    require_once($CFG->dirroot . '/mod/catadaptivequiz/locallib.php');
     require_once($CFG->libdir.'/gradelib.php');
 
     if ($grades = adaptivequiz_get_user_grades($adaptivequiz, $userid)) {
@@ -619,15 +619,15 @@ function adaptivequiz_update_grades(stdClass $adaptivequiz, $userid=0, $nullifno
 /**
  * Called by course/reset.php
  */
-function adaptivequiz_reset_course_form_definition(&$mform) {
-    $mform->addElement('header', 'apaptivequizheader', get_string('modulenameplural', 'adaptivequiz'));
-    $mform->addElement('checkbox', 'reset_adaptivequiz_all', get_string('resetadaptivequizsall', 'adaptivequiz'));
+function catadaptivequiz_reset_course_form_definition(&$mform) {
+    $mform->addElement('header', 'apaptivequizheader', get_string('modulenameplural', 'catadaptivequiz'));
+    $mform->addElement('checkbox', 'reset_adaptivequiz_all', get_string('resetadaptivequizsall', 'catadaptivequiz'));
 }
 
 /**
  * Course reset form defaults.
  */
-function adaptivequiz_reset_course_form_defaults($course) {
+function catadaptivequiz_reset_course_form_defaults($course) {
     return array('reset_adaptivequiz_all' => 0);
 }
 
@@ -638,17 +638,17 @@ function adaptivequiz_reset_course_form_defaults($course) {
  * @param $data the data submitted from the reset course.
  * @return array status array
  */
-function adaptivequiz_reset_userdata($data) {
+function catadaptivequiz_reset_userdata($data) {
     global $CFG, $DB;
 
-    $componentstr = get_string('modulenameplural', 'adaptivequiz');
+    $componentstr = get_string('modulenameplural', 'catadaptivequiz');
     $status = array();
 
     // Delete our attempts.
     if (!empty($data->reset_adaptivequiz_all)) {
-        $adaptivequizes = $DB->get_records('adaptivequiz', array('course' => $data->courseid));
+        $adaptivequizes = $DB->get_records('catadaptivequiz', array('course' => $data->courseid));
         foreach ($adaptivequizes as $adaptivequiz) {
-            $attempts = $DB->get_records('adaptivequiz_attempt', array('instance' => $adaptivequiz->id));
+            $attempts = $DB->get_records('catadaptivequiz_attempt', array('instance' => $adaptivequiz->id));
             if (!empty($attempts)) {
                 // Remove question_usage_by_activity records.
                 foreach ($attempts as $attempt) {
@@ -656,13 +656,13 @@ function adaptivequiz_reset_userdata($data) {
                 }
 
                 // Remove attempts data.
-                $DB->delete_records('adaptivequiz_attempt', array('instance' => $adaptivequiz->id));
+                $DB->delete_records('catadaptivequiz_attempt', array('instance' => $adaptivequiz->id));
             }
         }
     }
     $status[] = array(
         'component' => $componentstr,
-        'item' => get_string('all_attempts_deleted', 'adaptivequiz'),
+        'item' => get_string('all_attempts_deleted', 'catadaptivequiz'),
         'error' => false,
     );
 
@@ -671,7 +671,7 @@ function adaptivequiz_reset_userdata($data) {
         adaptivequiz_reset_gradebook($data->courseid);
         $status[] = array(
             'component' => $componentstr,
-            'item' => get_string('all_grades_removed', 'adaptivequiz'),
+            'item' => get_string('all_grades_removed', 'catadaptivequiz'),
             'error' => false,
         );
     }
@@ -687,7 +687,7 @@ function adaptivequiz_reset_userdata($data) {
 function adaptivequiz_reset_gradebook($courseid) {
     global $CFG, $DB;
 
-    $adaptivequizes = $DB->get_records('adaptivequiz', array('course' => $courseid));
+    $adaptivequizes = $DB->get_records('catadaptivequiz', array('course' => $courseid));
     foreach ($adaptivequizes as $adaptivequiz) {
         adaptivequiz_grade_item_update($adaptivequiz, 'reset');
     }
@@ -708,43 +708,43 @@ function adaptivequiz_reset_gradebook($courseid) {
  * @param array $options Additional options affecting the file serving.
  * @return bool False if file not found, does not return if found - just send the file.
  */
-function mod_adaptivequiz_question_pluginfile($course, context $context, $component, $filearea, $qubaid, $slot, $args,
+function mod_catadaptivequiz_question_pluginfile($course, context $context, $component, $filearea, $qubaid, $slot, $args,
     $forcedownload, array $options=[]) {
     global $CFG, $DB, $USER;
 
-    $attemptrec = $DB->get_record('adaptivequiz_attempt', ['uniqueid' => $qubaid], '*', MUST_EXIST);
-    $adaptivequiz  = $DB->get_record('adaptivequiz', ['id' => $attemptrec->instance], '*', MUST_EXIST);
+    $attemptrec = $DB->get_record('catadaptivequiz_attempt', ['uniqueid' => $qubaid], '*', MUST_EXIST);
+    $adaptivequiz  = $DB->get_record('catadaptivequiz', ['id' => $attemptrec->instance], '*', MUST_EXIST);
     $course = $DB->get_record('course', ['id' => $adaptivequiz->course], '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('adaptivequiz', $adaptivequiz->id, $adaptivequiz->course, false, MUST_EXIST);
+    $cm = get_coursemodule_from_instance('catadaptivequiz', $adaptivequiz->id, $adaptivequiz->course, false, MUST_EXIST);
 
     require_login($course, true, $cm);
 
     $modcontext = context_module::instance($cm->id);
 
     // Check if the user has the attempt capability.
-    if (!has_capability('mod/adaptivequiz:attempt', $modcontext) && !has_capability('mod/adaptivequiz:viewreport', $modcontext)) {
-        throw new moodle_exception('nopermission', 'adaptivequiz');
+    if (!has_capability('mod/catadaptivequiz:attempt', $modcontext) && !has_capability('mod/catadaptivequiz:viewreport', $modcontext)) {
+        throw new moodle_exception('nopermission', 'catadaptivequiz');
     }
 
     // If we are reviewing an attempt, require the viewreport capability.
     if ($attemptrec->userid != $USER->id) {
-        require_capability('mod/adaptivequiz:viewreport', $modcontext);
+        require_capability('mod/catadaptivequiz:viewreport', $modcontext);
     } else {
         // Otherwise, check that the attempt is active.
-        require_once($CFG->dirroot.'/mod/adaptivequiz/locallib.php');
+        require_once($CFG->dirroot.'/mod/catadaptivequiz/locallib.php');
 
         // Check if the user has any previous attempts at this activity.
         $count = adaptivequiz_count_user_previous_attempts($adaptivequiz->id, $USER->id);
         if (!adaptivequiz_allowed_attempt($adaptivequiz->attempts, $count)) {
-            throw new moodle_exception('noattemptsallowed', 'adaptivequiz');
+            throw new moodle_exception('noattemptsallowed', 'catadaptivequiz');
         }
         // Check if the uniqueid belongs to the same attempt record the user is currently using.
         if (!adaptivequiz_uniqueid_part_of_attempt($qubaid, $cm->instance, $USER->id)) {
-            throw new moodle_exception('uniquenotpartofattempt', 'adaptivequiz');
+            throw new moodle_exception('uniquenotpartofattempt', 'catadaptivequiz');
         }
         // Verify that the attempt is still in progress.
         if ($attemptrec->attemptstate != attempt_state::IN_PROGRESS) {
-            throw new moodle_exception('notinprogress', 'adaptivequiz');
+            throw new moodle_exception('notinprogress', 'catadaptivequiz');
         }
     }
 
@@ -768,10 +768,10 @@ function mod_adaptivequiz_question_pluginfile($course, context $context, $compon
  *
  * @return false|cached_cm_info
  */
-function adaptivequiz_get_coursemodule_info(stdClass $coursemodule) {
+function catadaptivequiz_get_coursemodule_info(stdClass $coursemodule) {
     global $DB;
 
-    $adaptivequiz = $DB->get_record('adaptivequiz', ['id' => $coursemodule->instance], 'id, name, completionattemptcompleted');
+    $adaptivequiz = $DB->get_record('catadaptivequiz', ['id' => $coursemodule->instance], 'id, name, completionattemptcompleted');
     if (!$adaptivequiz) {
         return false;
     }

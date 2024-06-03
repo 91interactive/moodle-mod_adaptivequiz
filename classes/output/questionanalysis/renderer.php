@@ -20,11 +20,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_adaptivequiz\output\questionanalysis;
+namespace mod_catadaptivequiz\output\questionanalysis;
 
 use html_table;
 use html_writer;
-use mod_adaptivequiz\local\questionanalysis\question_analyser;
+use mod_catadaptivequiz\local\questionanalysis\question_analyser;
 use moodle_url;
 use plugin_renderer_base;
 use question_display_options;
@@ -147,7 +147,7 @@ class renderer extends plugin_renderer_base {
     public function get_single_question_report($headers, $record) {
         $table = new html_table();
         $table->attributes['class'] = 'generaltable quizsummaryofattempt boxaligncenter';
-        $table->head = array(get_string('statistic', 'adaptivequiz'), get_string('value', 'adaptivequiz'));
+        $table->head = array(get_string('statistic', 'catadaptivequiz'), get_string('value', 'catadaptivequiz'));
         $table->align = array('left', 'left');
         $table->size = array('200px', '');
         $table->width = '100%';
@@ -177,7 +177,7 @@ class renderer extends plugin_renderer_base {
         $options->numpartscorrect = question_display_options::VISIBLE;
 
         // Init question usage and set default behaviour of usage.
-        $quba = question_engine::make_questions_usage_by_activity('mod_adaptivequiz', $context);
+        $quba = question_engine::make_questions_usage_by_activity('mod_catadaptivequiz', $context);
         $quba->set_preferred_behaviour('deferredfeedback');
         $quba->add_question($analyzer->get_question_definition());
         $quba->start_question(1);

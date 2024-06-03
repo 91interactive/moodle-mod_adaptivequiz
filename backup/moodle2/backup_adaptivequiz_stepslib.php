@@ -17,7 +17,7 @@
 /**
  * Define all the backup steps that will be used by the backup_adaptivequiz_activity_task.
  *
- * @package   mod_adaptivequiz
+ * @package   mod_catadaptivequiz
  * @copyright 2013 onwards Remote-Learner {@link http://www.remote-learner.ca/}
  * @copyright 2022 onwards Vitaly Potenko <potenkov@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,7 +27,7 @@ class backup_adaptivequiz_activity_structure_step extends backup_questions_activ
     /**
      * Define the backup structure.
      *
-     * @return backup_nested_element The root element (adaptivequiz), wrapped into standard activity structure.
+     * @return backup_nested_element The root element (catadaptivequiz), wrapped into standard activity structure.
      */
     protected function define_structure() {
         // To know if we are including userinfo.
@@ -37,7 +37,7 @@ class backup_adaptivequiz_activity_structure_step extends backup_questions_activ
         $nodes = ['name', 'intro', 'introformat', 'attempts', 'password', 'browsersecurity', 'attemptfeedback',
             'attemptfeedbackformat', 'showabilitymeasure', 'showattemptprogress', 'highestlevel', 'lowestlevel', 'minimumquestions',
             'maximumquestions', 'standarderror', 'startinglevel', 'timecreated', 'timemodified', 'completionattemptcompleted'];
-        $adaptivequiz = new backup_nested_element('adaptivequiz', ['id'], $nodes);
+        $adaptivequiz = new backup_nested_element('catadaptivequiz', ['id'], $nodes);
 
         // Attempts.
         $adaptiveattempts = new backup_nested_element('adaptiveattempts');
@@ -61,13 +61,13 @@ class backup_adaptivequiz_activity_structure_step extends backup_questions_activ
         $adaptivequestioncats->add_child($adaptivequestioncat);
 
         // Define sources.
-        $adaptivequiz->set_source_table('adaptivequiz', ['id' => backup::VAR_ACTIVITYID]);
-        $adaptivequestioncat->set_source_table('adaptivequiz_question', ['instance' => backup::VAR_PARENTID]);
+        $adaptivequiz->set_source_table('catadaptivequiz', ['id' => backup::VAR_ACTIVITYID]);
+        $adaptivequestioncat->set_source_table('catadaptivequiz_question', ['instance' => backup::VAR_PARENTID]);
 
         // All the rest of elements only happen if we are including user info.
         if ($userinfo) {
             $sql = 'SELECT *
-                      FROM {adaptivequiz_attempt}
+                      FROM {catadaptivequiz_attempt}
                      WHERE instance = :instance';
             $param = array('instance' => backup::VAR_PARENTID);
             $adaptiveattempt->set_source_sql($sql, $param);
@@ -77,7 +77,7 @@ class backup_adaptivequiz_activity_structure_step extends backup_questions_activ
         $adaptivequestioncat->annotate_ids('question_categories', 'questioncategory');
         $adaptiveattempt->annotate_ids('user', 'userid');
 
-        $adaptivequiz->annotate_files('mod_adaptivequiz', 'intro', null); // This file area hasn't itemid.
+        $adaptivequiz->annotate_files('mod_catadaptivequiz', 'intro', null); // This file area hasn't itemid.
 
         return $this->prepare_activity_structure($adaptivequiz);
     }
