@@ -87,7 +87,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
             new moodle_url('/mod/catadaptivequiz/attempt.php', ['cmid' => $cmid, 'sesskey' => sesskey()]),
             get_string('startattemptbtn', 'catadaptivequiz'),
             'post',
-            true
+            single_button::BUTTON_PRIMARY
         ));
     }
 
@@ -1110,7 +1110,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
     private function display_start_attempt_form_secured(int $cmid): string {
         $url = new moodle_url('/mod/catadaptivequiz/attempt.php', ['cmid' => $cmid]);
 
-        $button = new single_button($url, get_string('startattemptbtn', 'catadaptivequiz'), 'post', true);
+        $button = new single_button($url, get_string('startattemptbtn', 'catadaptivequiz'), 'post', single_button::BUTTON_PRIMARY);
 
         $this->page->requires->js_module($this->adaptivequiz_get_js_module());
         $this->page->requires->js('/mod/catadaptivequiz/module.js');
