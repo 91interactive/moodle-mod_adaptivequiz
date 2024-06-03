@@ -39,7 +39,7 @@ class restore_adaptivequiz_activity_structure_step extends restore_questions_act
             '/activity/catadaptivequiz/adatpivequestioncats/adatpivequestioncat');
 
         if ($userinfo) {
-            $attempt = new restore_path_element('adaptivequiz_attempt', '/activity/catadaptivequiz/adaptiveattempts/adaptiveattempt');
+            $attempt = new restore_path_element('catadaptivequiz_attempt', '/activity/catadaptivequiz/adaptiveattempts/adaptiveattempt');
             $paths[] = $attempt;
 
             // Add states and sessions.
