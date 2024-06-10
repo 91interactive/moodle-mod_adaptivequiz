@@ -321,7 +321,7 @@ class attempt
 			'http' => array(
 				'header' => "Content-type: application/json",
 				'method' => 'POST',
-				'content' => http_build_query($data),
+				'content' => json_encode(array('data' => $data))
 			),
 		);
 
@@ -330,7 +330,13 @@ class attempt
 		// Führe den HTTP-Request aus
 		$response = file_get_contents($url, false, $context);
 		// write the $response to a local file with filename of the current timestamp
-		file_put_contents('doCat_response_' . time() . '.json', $response);
+		$debuggingstuff = array(
+			'url' => $url,
+			'data' => $data,
+			'response' => $response,
+		);
+		
+		file_put_contents('doCat_response_' . time() . '.json', json_encode($debuggingstuff));
 		// Überprüfe auf Fehler
 		if ($response === FALSE) {
 			echo 'Fehler beim Senden des POST-Requests.';

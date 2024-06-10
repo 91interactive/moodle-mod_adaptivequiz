@@ -299,9 +299,19 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			// $data_for_r_server->questionsDatas = $questions;	// Warning: Undefined variable $questions in /var/www/html/mod/catadaptivequiz/attempt.php on line 283	
 			
 			// CS in response we get the next question and the next difficulty level
+			// c server call here:
 			$r_server_response = $adaptiveattempt->call_r_server($data_for_r_server);
 	
-			
+			// add check if response is valide
+			if($r_server_response == null){
+				throw new moodle_exception('rserverresponseerrornull', 'catadaptivequiz');
+			}
+			// check if response has SE, personID, theta, nextItem and terminated
+			if(!property_exists($r_server_response, 'SE') || !property_exists($r_server_response, 'personID') || !property_exists($r_server_response, 'theta') || !property_exists($r_server_response, 'nextItem') || !property_exists($r_server_response, 'terminated')){
+				throw new moodle_exception('rserverresponseerrormissingvalue', 'catadaptivequiz');
+			}
+
+
 			$standarderror = $r_server_response->SE;
 
             try {
