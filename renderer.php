@@ -987,7 +987,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
             $qtags = core_tag_tag::get_item_tags_array('core_question', 'question', $questdef->id);
 
             $label = html_writer::tag('label', get_string('attemptquestion_level', 'catadaptivequiz'));
-            $output .= html_writer::tag('div', $label.': '.format_string(catadaptivequiz_get_difficulty_from_tags($qtags)));
+            $output .= html_writer::tag('div', $label.': '.format_string(adaptivequiz_get_difficulty_from_tags($qtags)));
 
             $label = html_writer::tag('label', get_string('tags'));
             $output .= html_writer::tag('div', $label.': '.format_string(implode(' ', $qtags)), $attr);

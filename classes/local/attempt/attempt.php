@@ -335,7 +335,7 @@ class attempt
 			'data' => $data,
 			'response' => $response,
 		);
-		
+
 		file_put_contents('doCat_response_' . time() . '.json', json_encode($debuggingstuff));
 		// Überprüfe auf Fehler
 		if ($response === FALSE) {
@@ -349,16 +349,43 @@ class attempt
 				$decoded_response = json_decode($decoded_response[0]);
 				// debugging('this is decoded_responsee:' . json_encode($decoded_response));
 			}
-			if (false) {
-				//CS richtig falsch fragen ab 1 - 20
-				// TODO - Hier muss die Antwort des R-Servers verarbeitet werden
-				$decoded_response = json_decode('{
-					"personID": 2376,
-					"theta": -0.866876539473478,
-					"SE":0.10676325431541,
-					"nextItem": ' . rand(1, 20) . '
-				}');
-			}
+			// result:
+			// {
+			// 	"personID": [
+			// 		"2"
+			// 	],
+			// 	"terminated": [
+			// 		false
+			// 	],
+			// 	"theta": [
+			// 		-0.2288
+			// 	],
+			// 	"SE": [
+			// 		0.952
+			// 	],
+			// 	"nextItem": [
+			// 		"sb2erz14"
+			// 	]
+			// }
+			// convert decoded_response to object without the inner arrays
+			$decoded_response = (object) array(
+				'personID' => $decoded_response->personID[0],
+				'terminated' => $decoded_response->terminated[0],
+				'theta' => $decoded_response->theta[0],
+				'SE' => $decoded_response->SE[0],
+				'nextItem' => $decoded_response->nextItem[0],
+			);
+
+			// if (false) {
+			// 	//CS richtig falsch fragen ab 1 - 20
+			// 	// TODO - Hier muss die Antwort des R-Servers verarbeitet werden
+			// 	$decoded_response = json_decode('{
+			// 		"personID": 2376,
+			// 		"theta": -0.866876539473478,
+			// 		"SE":0.10676325431541,
+			// 		"nextItem": ' . rand(1, 20) . '
+			// 	}');
+			// }
 		}
 		return $decoded_response;
 	}
@@ -404,14 +431,11 @@ class attempt
 				$temp1 = str_replace('diff_[', '', $value);
 				$temp = str_replace(']', '', $temp1);
 				if (strpos($temp, ';') !== false) {
-
 					$numbers = explode(';', $temp);
 					foreach ($numbers as $number) {
 						array_push($itemsArray->diff, $number);
 					}
 				} else {
-					// preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
-					// $number = $matches[1];
 					$number = $temp;
 					array_push($itemsArray->diff, $number);
 				}
@@ -429,14 +453,11 @@ class attempt
 				$temp1 = str_replace('enemy_[', '', $value);
 				$temp = str_replace(']', '', $temp1);
 				if (strpos($temp, ';') !== false) {
-
 					$numbers = explode(';', $temp);
 					foreach ($numbers as $number) {
 						array_push($itemsArray->enemys, $number);
 					}
 				} else {
-					// preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
-					// $number = $matches[1];
 					$number = $temp;
 					array_push($itemsArray->enemys, $number);
 				}
@@ -445,17 +466,38 @@ class attempt
 				$temp1 = str_replace('disc_[', '', $value);
 				$temp = str_replace(']', '', $temp1);
 				if (strpos($temp, ';') !== false) {
-
 					$numbers = explode(';', $temp);
 					foreach ($numbers as $number) {
 						array_push($itemsArray->disc, $number);
 					}
 				} else {
-					// preg_match('/\[(\d+(\.\d+)?)\]/', $value, $matches);
-					// $number = $matches[1];
 					$number = $temp;
 					array_push($itemsArray->disc, $number);
 				}
+			}
+			if (str_starts_with($value, "max_")) {
+				$temp1 = str_replace('max_', '', $value);
+				$number = $temp1;
+				$itemsArray->max = $number;
+			}
+			if (str_starts_with($value, "answer_")) {
+				$temp1 = str_replace('answer_[', '', $value);
+				$temp = str_replace(']', '', $temp1);
+				if (strpos($temp, ';') !== false) {
+					$numbers = explode(';', $temp);
+					foreach ($numbers as $number) {
+						array_push($itemsArray->answer, $number);
+					}
+				} else {
+					$number = $temp;
+					array_push($itemsArray->answer, $number);
+				}
+			}
+			if (str_starts_with($value, "cluster_")) {
+				$temp1 = str_replace('cluster_', '', $value);
+
+				$number = $temp1;
+				$itemsArray->cluster = $number;
 			}
 		}
 		return $itemsArray;
