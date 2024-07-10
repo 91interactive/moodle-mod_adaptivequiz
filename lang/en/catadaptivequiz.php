@@ -282,10 +282,6 @@ $string['suitabletasksdescription_help'] = "Number of best matching tasks from w
 $string['sequential'] = "sequential";
 $string['random'] = "random";
 
-$string['messagebeforetest']="Message before test";
-$string['messagebeforetestDescription']="Message before test";
-$string['messagebeforetestDescription_help']="Page after the test/exam  instructions; mainly used to mainly to ensure that everyone starts working on an exam at the same time. If you leave the field empty, the corresponding page will not appear in the test. Can also be also be omitted";
-
 $string['messageatlastpage']="Message on the last page of the test";
 $string['messageatlastpageDescription']="Message on the last page of the test";
 $string['messageatlastpageDescription_help']="Could be used for individual feedback could be used for individual feedback. In other words, either the same thing is there for everyone, or, if we allow individual feedback is then written on the last page.";
