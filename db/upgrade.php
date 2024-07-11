@@ -93,5 +93,10 @@ function xmldb_catadaptivequiz_upgrade($oldversion) {
 
         upgrade_mod_savepoint(true, 2023021500, 'catadaptivequiz');
     }
+
+	if($oldversion < 2024062406){
+		// delete fields 
+	}
+
     return true;
 }

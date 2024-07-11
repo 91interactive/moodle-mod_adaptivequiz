@@ -511,8 +511,9 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         if (is_null($record->stderror) || $record->stderror == 0.0) {
             return 'n/a';
         }
-        $percent = round(catalgo::convert_logit_to_percent($record->stderror), 2) * 100;
-        return '&plusmn; '.$percent.'%';
+		return $record->stderror;
+        // $percent = round(catalgo::convert_logit_to_percent($record->stderror), 2) * 100;
+        // return '&plusmn; '.$percent.'%';
     }
 
     /**
@@ -530,7 +531,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         }
         $measure = round(catalgo::map_logit_to_scale($record->measure, $record->highestlevel, $record->lowestlevel), 1);
         $percent = round(catalgo::convert_logit_to_percent($record->stderror), 2) * 100;
-        $format = $measure.' &plusmn; '.$percent.'%';
+        $format = $record->measure.' || SE: '.$record->stderror;
         return $format;
     }
 
@@ -574,9 +575,10 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
 
         $abilityfraction = 1 / ( 1 + exp( (-1 * $attempt->measure) ) );
         $ability = (($adaptivequiz->highestlevel - $adaptivequiz->lowestlevel) * $abilityfraction) + $adaptivequiz->lowestlevel;
-        $stderror = catalgo::convert_logit_to_percent($attempt->standarderror);
+		$ability = $attempt->measure;
+        $stderror = $attempt->standarderror;//catalgo::convert_logit_to_percent($attempt->standarderror);
         $score = ($stderror > 0)
-            ? round($ability, 2)." &nbsp; &plusmn; ".round($stderror * 100, 1)."%"
+            ? $ability." &nbsp; | SE: ".round($stderror, 3)
             : 'n/a';
         $datacell = new html_table_cell($score);
 
@@ -686,7 +688,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         if ($tabid == 'attemptgraph') {
             $return = $this->attempt_graph($attempt->uniqueid, $cmid, $user->id);
             $return .= html_writer::empty_tag('br');
-            $return .= $this->attempt_scoring_table($adaptivequiz, $quba);
+            $return .= $this->attempt_scoring_table($adaptivequiz, $quba, $attempt);
 
             return $return;
         }
@@ -801,7 +803,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
      * @return string
      * @throws coding_exception
      */
-    protected function attempt_scoring_table(stdClass $adaptivequiz, question_usage_by_activity $quba): string {
+    protected function attempt_scoring_table(stdClass $adaptivequiz, question_usage_by_activity $quba, stdClass $attempt): string {
         $table = new html_table();
 
         $num = get_string('attemptquestion_num', 'catadaptivequiz');
@@ -839,12 +841,11 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
             $abilitylogits = catalgo::estimate_measure($difficultysum, $numattempted, $sumcorrect, $sumincorrect);
             $abilityfraction = 1 / ( 1 + exp( (-1 * $abilitylogits) ) );
             $ability = (($adaptivequiz->highestlevel - $adaptivequiz->lowestlevel) * $abilityfraction) + $adaptivequiz->lowestlevel;
-
             $stderrorlogits = catalgo::estimate_standard_error($numattempted, $sumcorrect, $sumincorrect);
-            $stderror = catalgo::convert_logit_to_percent($stderrorlogits);
+            $stderror = $stderrorlogits;//catalgo::convert_logit_to_percent($stderrorlogits);
 
-            $table->data[] = [$slot, $qdifficulty, ($correct ? 'r' : 'w'), round($ability, 2),
-                round($stderror * 100, 1)."%"];
+            $table->data[] = [$question->name, $qdifficulty, $quba->get_question_mark($slot), round($attempt->measure, 4),
+                round($stderror , 3)];
         }
 
         $return = $this->heading(get_string('reportattemptgraphtabletitle', 'catadaptivequiz'), '4', 'mdl-align');
@@ -1239,7 +1240,8 @@ class mod_catadaptivequiz_csv_renderer extends mod_catadaptivequiz_renderer {
         if (is_null($record->stderror) || $record->stderror == 0.0) {
             return 'n/a';
         }
-        $percent = round(catalgo::convert_logit_to_percent($record->stderror), 2) * 100;
-        return $percent.'%';
+		return round($record->stderror,3);
+        // $percent = round(catalgo::convert_logit_to_percent($record->stderror), 2) * 100;
+        // return $percent.'%';
     }
 }

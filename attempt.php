@@ -372,7 +372,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 					}
 				}
 
-				$adaptiveattempt->update_after_question_answered_with_r_response(0.0, $r_server_response->SE ?? $standarderror, 0, time(), json_encode($mergedObj));
+				$adaptiveattempt->update_after_question_answered_with_r_response(0.0, $r_server_response->SE ?? $standarderror, $r_server_response->theta ?? 0, time(), json_encode($mergedObj));
 			} catch (Exception $exception) {
 				throw new moodle_exception(
 					'unableupdatediffsum',
