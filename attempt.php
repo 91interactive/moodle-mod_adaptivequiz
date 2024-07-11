@@ -209,7 +209,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			// CS: prepare settings for R-Server
 			$data_for_r_server->settings = new stdClass;
 			// Settings $adaptivequiz
-			$data_for_r_server->settings->maxItems = $adaptivequiz->testlength;
+			$data_for_r_server->settings->maxItems = $adaptivequiz->maximumquestions;
 			$data_for_r_server->settings->criteria_not_adaptive = $adaptivequiz->selecttasktypes == 0 ? 'random' : 'sequential';
 			$data_for_r_server->settings->ncl_calib = $adaptivequiz->numbercalibrationclusters;
 			$data_for_r_server->settings->ncl_link = $adaptivequiz->numberlinkingclusters;
@@ -327,6 +327,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 
 
 			$standarderror = $r_server_response->SE;
+			$determinenextdifficultylevelresult = $r_server_response->terminated ? "CAT terminated" : null;
 
 			try {
 

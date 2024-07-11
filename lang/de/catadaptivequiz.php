@@ -39,8 +39,8 @@ $string['testdurationDescription_help'] = 'Maximale Testzeit';
 
 $string['testsettingsheader'] = 'Test Einstellungen';
 
-$string['selecttasktypes'] = 'Aufgabentype wählen';
-$string['selecttasktypesDescription'] = 'Aufgabentype wählen';
+$string['selecttasktypes'] = 'Aufgabenauswahl nicht adaptiver Teil';
+$string['selecttasktypesDescription'] = 'Aufgabenauswahl nicht adaptiver Teil.';
 $string['selecttasktypesDescription_help'] = 'Hier wird spezifiziert, wie die Aufgabenauswahl für nicht adaptive Tests bzw.
 nicht adaptive Teile des Gesamttests erfolgt';
 $string['notadaptivepartheader'] = 'Nicht adavptiver Teil';
