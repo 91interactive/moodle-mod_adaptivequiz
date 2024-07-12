@@ -212,7 +212,7 @@ final class users_attempts_table extends table_sql {
             get_string('fullname'),
             get_string('email'),
             get_string('numofattemptshdr', 'catadaptivequiz'),
-            get_string('bestscore', 'catadaptivequiz'),
+            get_string('theta', 'catadaptivequiz'),
             get_string('bestscorestderror', 'catadaptivequiz'),
             get_string('attemptfinishedtimestamp', 'catadaptivequiz'),
             get_string('detaildtestresults','catadaptivequiz')

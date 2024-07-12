@@ -189,8 +189,8 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 				$itemsArray->diff = [];
 				$itemsArray->content_area = [];
 				$itemsArray->disc = [];
-				$itemsArray->max = null;
-				$itemsArray->answer = [];
+				// $itemsArray->max = null;
+				// $itemsArray->answer = [];
 				$itemsArray->cluster = null;
 
 				$itemsArray->enemys = [];
@@ -210,6 +210,8 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			$data_for_r_server->settings = new stdClass;
 			// Settings $adaptivequiz
 			$data_for_r_server->settings->maxItems = $adaptivequiz->maximumquestions;
+			$data_for_r_server->settings->minItems = $adaptivequiz->minimumquestions;
+			$data_for_r_server->settings->minStdError = $adaptivequiz->standarderror;
 			$data_for_r_server->settings->criteria_not_adaptive = $adaptivequiz->selecttasktypes == 0 ? 'random' : 'sequential';
 			$data_for_r_server->settings->ncl_calib = $adaptivequiz->numbercalibrationclusters;
 			$data_for_r_server->settings->ncl_link = $adaptivequiz->numberlinkingclusters;
@@ -285,7 +287,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 				// scoredResponse
 				$qa = $quba->get_attempt_iterator()->offsetGet($slot);
 				$fraction = $qa->get_fraction();
-				$scoredResponse = $fraction * $qa->get_question()->max;
+				$scoredResponse = $quba->get_question_mark($slot); //$fraction * $qa->get_question()->max;
 				array_push($data_for_r_server->test->scoredResponse, $scoredResponse);
 			}
 			$data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33); // todo rm: write correct times
@@ -339,7 +341,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 
 				$currentDBentry = $DB->get_record('catadaptivequiz_attempt', array('uniqueid' => $uniqueid), '*', MUST_EXIST);
 
-				$currentDBdetaildtestresults = json_decode($currentDBentry->detaildtestresults) ?? '';
+				$currentDBdetaildtestresults = $currentDBentry->detaildtestresults ? json_decode($currentDBentry->detaildtestresults) ?? '' : '';
 
 				// check if question is answered (graded)
 				if ($qa->get_state()->is_graded() && $currentDBdetaildtestresults != "null") {
@@ -349,10 +351,12 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 
 					$qu = new stdClass();
 					$qu->questionId = $quID;
-					// get question text
-					$qu->question = $qa->get_question()->questiontext;
-					// get fraction answer
-					$qu->fractionAnswer = $qa->get_fraction();
+					$qu->name = $qa->get_question()->name;
+					$qu->rawAnswer = $qa->get_response_summary();
+					$qu->ratedAnswer = $quba->get_question_mark($lastSlot);
+					$qu->theta = $r_server_response->theta;
+					// questionId, raw answers and rated answers
+
 					$qu->standarderror = $r_server_response->SE;
 
 					// question history in single attempt
@@ -412,7 +416,9 @@ $fetchquestion = new fetchquestion($adaptivequiz, 1, $adaptivequiz->lowestlevel,
 
 $nextIndex = null;
 // get the id of the element (from $data_for_r_server->itempool->items) with the idnumber that is stored in $r_server_response->nextItem
-if ($data_for_r_server != null && $data_for_r_server->itempool != null && $data_for_r_server->itempool->items != null && is_array($data_for_r_server->itempool->items)) {
+// check if $data_for_r_server hast property itempool
+
+if ($data_for_r_server != null && property_exists($data_for_r_server, 'itempool') && $data_for_r_server->itempool != null && $data_for_r_server->itempool->items != null && is_array($data_for_r_server->itempool->items)) {
 	$index = array_search($r_server_response->nextItem, array_column($data_for_r_server->itempool->items, 'ID'));
 	$nextIndex = $data_for_r_server->itempool->items[$index]->dbID;
 }

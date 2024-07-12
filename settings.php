@@ -31,29 +31,29 @@ if ($ADMIN->fulltree) {
         get_string('settingsdefaultsettingsheadinginfo', 'catadaptivequiz')
     ));
 
-    $settings->add(new admin_setting_configtext(
-        'catadaptivequiz/startinglevel',
-        get_string('startinglevel', 'catadaptivequiz'),
-        get_string('startinglevel_help', 'catadaptivequiz'),
-        1,
-        PARAM_INT
-    ));
+    // $settings->add(new admin_setting_configtext(
+    //     'catadaptivequiz/startinglevel',
+    //     get_string('startinglevel', 'catadaptivequiz'),
+    //     get_string('startinglevel_help', 'catadaptivequiz'),
+    //     1,
+    //     PARAM_INT
+    // ));
 
-    $settings->add(new admin_setting_configtext(
-        'catadaptivequiz/lowestlevel',
-        get_string('lowestlevel', 'catadaptivequiz'),
-        get_string('lowestlevel_help', 'catadaptivequiz'),
-        1,
-        PARAM_INT
-    ));
+    // $settings->add(new admin_setting_configtext(
+    //     'catadaptivequiz/lowestlevel',
+    //     get_string('lowestlevel', 'catadaptivequiz'),
+    //     get_string('lowestlevel_help', 'catadaptivequiz'),
+    //     1,
+    //     PARAM_INT
+    // ));
 
-    $settings->add(new admin_setting_configtext(
-        'catadaptivequiz/highestlevel',
-        get_string('highestlevel', 'catadaptivequiz'),
-        get_string('highestlevel_help', 'catadaptivequiz'),
-        100,
-        PARAM_INT
-    ));
+    // $settings->add(new admin_setting_configtext(
+    //     'catadaptivequiz/highestlevel',
+    //     get_string('highestlevel', 'catadaptivequiz'),
+    //     get_string('highestlevel_help', 'catadaptivequiz'),
+    //     100,
+    //     PARAM_INT
+    // ));
 
     $settings->add(new admin_setting_configtext(
         'catadaptivequiz/minimumquestions',
@@ -67,15 +67,16 @@ if ($ADMIN->fulltree) {
         'catadaptivequiz/maximumquestions',
         get_string('maximumquestions', 'catadaptivequiz'),
         get_string('maximumquestions_help', 'catadaptivequiz'),
-        1000,
+        100,
         PARAM_INT
     ));
 
+	// rm: has no effect?
     $settings->add(new admin_setting_configtext(
         'catadaptivequiz/standarderror',
         get_string('standarderror', 'catadaptivequiz'),
         get_string('standarderror_help', 'catadaptivequiz'),
-        5,
+        0.05,
         PARAM_FLOAT
     ));
 }

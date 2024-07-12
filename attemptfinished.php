@@ -41,7 +41,7 @@ if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
 $adaptivequiz = $DB->get_record('catadaptivequiz', ['id' => $cm->instance], '*', MUST_EXIST);
 
 $abilitymeasurerenderable = null;
-if ($adaptivequiz->showabilitymeasure) {
+if (true || $adaptivequiz->showabilitymeasure) {
     $abilitymeasurevalue = $DB->get_field('catadaptivequiz_attempt', 'measure', ['uniqueid' => $uniqueid], MUST_EXIST);
     $abilitymeasurerenderable = ability_measure::of_attempt_on_adaptive_quiz($adaptivequiz, $abilitymeasurevalue);
 }

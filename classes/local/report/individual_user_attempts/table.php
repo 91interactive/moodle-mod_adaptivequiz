@@ -101,8 +101,8 @@ final class table extends table_sql {
         $formatmeasureparams->highestlevel = $this->questionsdifficultyrange->highest_level();
         $formatmeasureparams->lowestlevel = $this->questionsdifficultyrange->lowest_level();
 
-        return $this->renderer->format_measure($formatmeasureparams) .
-            ' ' . $this->renderer->format_standard_error($row);
+        return 'Theta: '.$this->renderer->format_measure($formatmeasureparams) .
+            ' | | SE:' . $this->renderer->format_standard_error($row);
     }
 
     protected function col_timecreated(stdClass $row): string {

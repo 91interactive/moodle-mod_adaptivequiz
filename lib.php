@@ -579,14 +579,14 @@ function adaptivequiz_grade_item_update(stdClass $adaptivequiz, $grades = null) 
         $params = array('itemname' => $adaptivequiz->name);
     }
 
-    if ($adaptivequiz->highestlevel > 0) {
+    // if ($adaptivequiz->highestlevel > 0) {
         $params['gradetype'] = GRADE_TYPE_VALUE;
-        $params['grademax']  = $adaptivequiz->highestlevel;
-        $params['grademin']  = $adaptivequiz->lowestlevel;
+    //     $params['grademax']  = $adaptivequiz->highestlevel;
+    //     $params['grademin']  = $adaptivequiz->lowestlevel;
 
-    } else {
-        $params['gradetype'] = GRADE_TYPE_NONE;
-    }
+    // } else {
+    //     $params['gradetype'] = GRADE_TYPE_NONE;
+    // }
 
     if ($grades === 'reset') {
         $params['reset'] = true;

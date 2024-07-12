@@ -41,7 +41,7 @@ final class user_preferences_repository {
         global $SESSION;
 
         $storedprefsarr = empty($SESSION->flextableextra[self::PREFERENCE_NAME])
-            ? json_decode(get_user_preferences(self::PREFERENCE_NAME), true)
+            ? json_decode(get_user_preferences(self::PREFERENCE_NAME)??'{}', true)
             : $SESSION->flextableextra[self::PREFERENCE_NAME];
 
         return empty($storedprefsarr) ? user_preferences::defaults() : user_preferences::from_array($storedprefsarr);

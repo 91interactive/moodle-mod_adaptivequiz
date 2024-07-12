@@ -475,24 +475,24 @@ class attempt
 					array_push($itemsArray->disc, $number);
 				}
 			}
-			if (str_starts_with($value, "max_")) {
-				$temp1 = str_replace('max_', '', $value);
-				$number = $temp1;
-				$itemsArray->max = $number;
-			}
-			if (str_starts_with($value, "answer_")) {
-				$temp1 = str_replace('answer_[', '', $value);
-				$temp = str_replace(']', '', $temp1);
-				if (strpos($temp, ';') !== false) {
-					$numbers = explode(';', $temp);
-					foreach ($numbers as $number) {
-						array_push($itemsArray->answer, $number);
-					}
-				} else {
-					$number = $temp;
-					array_push($itemsArray->answer, $number);
-				}
-			}
+			// if (str_starts_with($value, "max_")) {
+			// 	$temp1 = str_replace('max_', '', $value);
+			// 	$number = $temp1;
+			// 	$itemsArray->max = $number;
+			// }
+			// if (str_starts_with($value, "answer_")) {
+			// 	$temp1 = str_replace('answer_[', '', $value);
+			// 	$temp = str_replace(']', '', $temp1);
+			// 	if (strpos($temp, ';') !== false) {
+			// 		$numbers = explode(';', $temp);
+			// 		foreach ($numbers as $number) {
+			// 			array_push($itemsArray->answer, $number);
+			// 		}
+			// 	} else {
+			// 		$number = $temp;
+			// 		array_push($itemsArray->answer, $number);
+			// 	}
+			// }
 			if (str_starts_with($value, "cluster_")) {
 				$temp1 = str_replace('cluster_', '', $value);
 

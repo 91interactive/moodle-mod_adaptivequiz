@@ -357,7 +357,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         $lastname = html_writer::link($lastnameurl, get_string('lastname')).$lastname;
         $email = html_writer::link($emailurl, get_string('email')).$email;
         $numofattempts = html_writer::link($numofattemptsurl, get_string('numofattemptshdr', 'catadaptivequiz')).$numofattempts;
-        $measure = html_writer::link($measureurl, get_string('bestscore', 'catadaptivequiz')).$measure;
+        $measure = html_writer::link($measureurl, get_string('theta', 'catadaptivequiz')).$measure;
         $standarderror = html_writer::link($standarderrorurl, get_string('bestscorestderror', 'catadaptivequiz')).$standarderror;
         $timemodified = html_writer::link($timemodifiedurl, get_string('attemptfinishedtimestamp', 'catadaptivequiz')).$timemodified;
 
@@ -496,7 +496,8 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         if (is_null($record->measure)) {
             return 'n/a';
         }
-        return round(catalgo::map_logit_to_scale($record->measure, $record->highestlevel, $record->lowestlevel), 1);
+		return round($record->measure, 4);
+        // return round(catalgo::map_logit_to_scale($record->measure, $record->highestlevel, $record->lowestlevel), 1);
     }
 
     /**
@@ -511,7 +512,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         if (is_null($record->stderror) || $record->stderror == 0.0) {
             return 'n/a';
         }
-		return $record->stderror;
+		return round($record->stderror,3);
         // $percent = round(catalgo::convert_logit_to_percent($record->stderror), 2) * 100;
         // return '&plusmn; '.$percent.'%';
     }
@@ -531,7 +532,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         }
         $measure = round(catalgo::map_logit_to_scale($record->measure, $record->highestlevel, $record->lowestlevel), 1);
         $percent = round(catalgo::convert_logit_to_percent($record->stderror), 2) * 100;
-        $format = $record->measure.' || SE: '.$record->stderror;
+        $format = 'Theta:'.round($record->measure,4).' || SE: '.$record->stderror;
         return $format;
     }
 
@@ -575,10 +576,10 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
 
         $abilityfraction = 1 / ( 1 + exp( (-1 * $attempt->measure) ) );
         $ability = (($adaptivequiz->highestlevel - $adaptivequiz->lowestlevel) * $abilityfraction) + $adaptivequiz->lowestlevel;
-		$ability = $attempt->measure;
+		$ability = round($attempt->measure, 4);
         $stderror = $attempt->standarderror;//catalgo::convert_logit_to_percent($attempt->standarderror);
         $score = ($stderror > 0)
-            ? $ability." &nbsp; | SE: ".round($stderror, 3)
+            ? "Theta: " . $ability . " &nbsp; | SE: ".round($stderror, 3)
             : 'n/a';
         $datacell = new html_table_cell($score);
 
@@ -647,10 +648,10 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         $tabs[] = new tabobject('attemptgraph', $attemptgraphtaburl,
             get_string('reportattemptgraphtab', 'catadaptivequiz'));
 
-        $answerdistributiontaburl = clone($pageurl);
-        $answerdistributiontaburl->param('tab', 'answerdistribution');
-        $tabs[] = new tabobject('answerdistribution', $answerdistributiontaburl,
-            get_string('reportattemptanswerdistributiontab', 'catadaptivequiz'));
+        // $answerdistributiontaburl = clone($pageurl);
+        // $answerdistributiontaburl->param('tab', 'answerdistribution');
+        // $tabs[] = new tabobject('answerdistribution', $answerdistributiontaburl,
+        //     get_string('reportattemptanswerdistributiontab', 'catadaptivequiz'));
 
         $questionsdetailstaburl = clone($pageurl);
         $questionsdetailstaburl->param('tab', 'questionsdetails');
@@ -977,13 +978,15 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         $output .= $this->init_metadata($quba, $pageqslots);
 
         foreach ($pageqslots as $slot) {
-            $label = html_writer::tag('label', get_string('questionnumber', 'catadaptivequiz'));
-            $output .= html_writer::tag('div', $label.': '.format_string($slot));
-
-            // Retrieve question attempt object.
+			// Retrieve question attempt object.
             $questattempt = $quba->get_question_attempt($slot);
             // Get question definition object.
             $questdef = $questattempt->get_question();
+
+            $label = html_writer::tag('label', get_string('questionnumber', 'catadaptivequiz'));
+            $output .= html_writer::tag('div', $label.': '.format_string($questdef->name));
+
+            
             // Retrieve the tags associated with this question.
             $qtags = core_tag_tag::get_item_tags_array('core_question', 'question', $questdef->id);
 
@@ -1185,7 +1188,7 @@ class mod_catadaptivequiz_csv_renderer extends mod_catadaptivequiz_renderer {
             get_string('lastname'),
             get_string('email'),
             get_string('numofattemptshdr', 'catadaptivequiz'),
-            get_string('bestscore', 'catadaptivequiz'),
+            get_string('theta', 'catadaptivequiz'),
             get_string('bestscorestderror', 'catadaptivequiz'),
             get_string('attemptfinishedtimestamp', 'catadaptivequiz'),
         );
@@ -1225,7 +1228,8 @@ class mod_catadaptivequiz_csv_renderer extends mod_catadaptivequiz_renderer {
         if (is_null($record->measure)) {
             return 'n/a';
         }
-        return round(catalgo::map_logit_to_scale($record->measure, $record->highestlevel, $record->lowestlevel), 2);
+		return round($record->measure, 4);
+        // return round(catalgo::map_logit_to_scale($record->measure, $record->highestlevel, $record->lowestlevel), 2);
     }
 
     /**

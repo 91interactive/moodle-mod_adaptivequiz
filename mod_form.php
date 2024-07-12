@@ -100,6 +100,7 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 		$mform->addRule('questionpool', null, 'required', null, 'client');
 		$mform->getElement('questionpool')->setSelected($selquestcat);
 
+		/* todo rm: check
 		// Adding the standard "starting level of difficulty" field.
 		$mform->addElement(
 			'text',
@@ -141,7 +142,7 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 		$mform->addRule('highestlevel', get_string('formelementnumeric', 'catadaptivequiz'), 'numeric', null, 'client');
 		$mform->setType('highestlevel', PARAM_INT);
 		$mform->setDefault('highestlevel', $pluginconfig->highestlevel);
-
+*/
 
 
 		// Adding the standard "attempt feedback" field.
@@ -385,19 +386,19 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 			$errors['maximumquestions'] = get_string('formelementnegative', 'catadaptivequiz');
 		}
 
-		if (0 >= $data['startinglevel']) {
-			$errors['startinglevel'] = get_string('formelementnegative', 'catadaptivequiz');
-		}
+		// if (0 >= $data['startinglevel']) {
+		// 	$errors['startinglevel'] = get_string('formelementnegative', 'catadaptivequiz');
+		// }
 
-		if (0 >= $data['lowestlevel']) {
-			$errors['lowestlevel'] = get_string('formelementnegative', 'catadaptivequiz');
-		}
+		// if (0 >= $data['lowestlevel']) {
+		// 	$errors['lowestlevel'] = get_string('formelementnegative', 'catadaptivequiz');
+		// }
 
-		if (0 >= $data['highestlevel']) {
-			$errors['highestlevel'] = get_string('formelementnegative', 'catadaptivequiz');
-		}
+		// if (0 >= $data['highestlevel']) {
+		// 	$errors['highestlevel'] = get_string('formelementnegative', 'catadaptivequiz');
+		// }
 
-		if ((float) 0 > (float) $data['standarderror'] || (float) 50 <= (float) $data['standarderror']) {
+		if ((float) 0 > (float) $data['standarderror'] || (float) 1 <= (float) $data['standarderror']) {
 			$errors['standarderror'] = get_string('formstderror', 'catadaptivequiz');
 		}
 
@@ -406,17 +407,17 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 			$errors['minimumquestions'] = get_string('formminquestgreaterthan', 'catadaptivequiz');
 		}
 
-		if ($data['lowestlevel'] >= $data['highestlevel']) {
-			$errors['lowestlevel'] = get_string('formlowlevelgreaterthan', 'catadaptivequiz');
-		}
+		// if ($data['lowestlevel'] >= $data['highestlevel']) {
+		// 	$errors['lowestlevel'] = get_string('formlowlevelgreaterthan', 'catadaptivequiz');
+		// }
 
-		if (!($data['startinglevel'] >= $data['lowestlevel'] && $data['startinglevel'] <= $data['highestlevel'])) {
-			$errors['startinglevel'] = get_string('formstartleveloutofbounds', 'catadaptivequiz');
-		}
+		// if (!($data['startinglevel'] >= $data['lowestlevel'] && $data['startinglevel'] <= $data['highestlevel'])) {
+		// 	$errors['startinglevel'] = get_string('formstartleveloutofbounds', 'catadaptivequiz');
+		// }
 
-		if ($questionspoolerrormsg = $this->validate_questions_pool($data['questionpool'], $data['startinglevel'])) {
-			$errors['questionpool'] = $questionspoolerrormsg;
-		}
+		// if ($questionspoolerrormsg = $this->validate_questions_pool($data['questionpool'], $data['startinglevel'])) {
+		// 	$errors['questionpool'] = $questionspoolerrormsg;
+		// }
 
 		// if (0 >= $data['testlength']) {
 		//     $errors['testlength'] = get_string('formelementnegative', 'catadaptivequiz');
