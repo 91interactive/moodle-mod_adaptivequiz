@@ -76,8 +76,8 @@ $string['reportuserattemptstitleshort'] = '{$a}\'s attempts';
 $string['reportquestionanalysispageheading'] = '{$a} - questions report';
 $string['settingsdefaultsettingsheading'] = 'Default settings of activity instances';
 $string['settingsdefaultsettingsheadinginfo'] = 'If your adaptive quizzes are supposed to be configured identically throughout the courses you may want to set some default settings for them here.';
-$string['modulenameplural'] = 'CAT Adaptive Quiz';
-$string['modulename'] = 'CAT Adaptive Quiz';
+$string['modulenameplural'] = 'KAT-HS Adaptive Quiz';
+$string['modulename'] = 'KAT-HS Adaptive Quiz';
 $string['modulename_help'] = 'The Adaptive Quiz activity enables a teacher to create quizes that efficiently measure the takers\' abilities. Adaptive quizes are comprised  of questions selected from the question bank that are tagged with a score of their difficulty. The questions are chosen to match the estimated ability level of the  current test-taker. If the test-taker succeeds on a question, a more challenging question is presented next. If the test-taker answers a question incorrectly, a less-challenging question is presented next. This technique will develop into a sequence of questions converging on the test-taker\'s effective ability level. The quiz stops when the test-taker\'s ability is determined to the required accuracy.
 
 This activity is best suited to determining an ability measure along a unidimensional scale. While the scale can be very broad, the questions must all provide a measure of ability or aptitude on the same scale. In a placement test for example, questions low on the scale that novices are able to answer correctly should also be answerable by experts, while questions higher on the scale should only be answerable by experts or a lucky guess. Questions that do not discriminate between takers of different abilities on will make the test ineffective and may provide inconclusive results.
@@ -95,8 +95,8 @@ The Adaptive Quiz can be configured to
  * require a maximum number of questions that can be answered
 
 This description and the testing process in this activity are based on <a href="http://www.rasch.org/memo69.pdf">Computer-Adaptive Testing: A Methodology Whose Time Has Come</a> by John Michael Linacre, Ph.D. MESA Psychometric Laboratory - University of Chicago. MESA Memorandum No. 69.';
-$string['pluginadministration'] = 'CAT Adaptive Quiz';
-$string['pluginname'] = 'CAT Adaptive Quiz';
+$string['pluginadministration'] = 'KAT-HS Adaptive Quiz Administration';
+$string['pluginname'] = 'KAT-HS Adaptive Quiz';
 $string['nonewmodules'] = 'No Adaptive Quiz instances found';
 $string['catadaptivequizname'] = 'Name';
 $string['catadaptivequizname_help'] = 'Enter the name of the Adaptive Quiz instance';

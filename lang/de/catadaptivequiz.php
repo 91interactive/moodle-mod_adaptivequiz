@@ -25,10 +25,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'CAT Adaptive Quiz';
-$string['modulenameplural'] = 'CAT Adaptive Quizs';
-$string['pluginadministration'] = 'CAT Adaptive Quiz administration';
-$string['pluginname'] = 'CAT Adaptive Quiz';
+$string['modulename'] = 'KAT-HS Adaptive Quiz';
+$string['modulenameplural'] = 'KAT-HS Adaptive Quizs';
+$string['pluginadministration'] = 'KAT-HS Adaptive Quiz administration';
+$string['pluginname'] = 'KAT-HS Adaptive Quiz';
 
 $string['testlength'] = 'Test Länge';
 $string['testlengthDescription'] = 'Anzahl an vorzugebenden Aufgaben';
