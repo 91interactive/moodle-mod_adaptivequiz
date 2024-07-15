@@ -79,6 +79,8 @@ $string['messageatlastpageDescription'] = 'Nachricht auf der letzten Seite des T
 $string['messageatlastpageDescription_help'] = 'Könnte für das individuelle Feedback genutzt werden. Heißt, entweder steht für alle das gleiche da, oder, wenn wir  individuelles Feedback erlauben, steht das dann jeweils auf der letzten Seite.';
 
 $string['contentareas'] = 'Benutzerdefinierte Angabe von Anteilen einzelner Inhaltsbereicheam Gesamttest?';
+$string['contentareaDistributionDescription'] = 'Verteilung Inhaltsbereiche';
+$string['contentareaDistributionDescription_help'] = 'Semikolon getrennte Liste von Prozentangaben (0..1), die die Verteilung der Inhaltsbereiche am Gesamttest angeben. z. B. catname1:0.2;catname2:0.3;catname3:0.5';
 
 $string['formtextareaempty'] = 'Textarea darf nicht leer sein';
 $string['detaildtestresults'] = 'Detailierte Test Ergebnisse';
@@ -245,11 +247,11 @@ $string['attempt_state'] = 'Versuchszustand';
 $string['attemptquestion_num'] = '#';
 $string['attemptquestion_level'] = 'Fragenlevel';
 $string['attemptquestion_rightwrong'] = 'Punkte';
-$string['attemptquestion_error'] = 'Standardfehler (&plusmn;&nbsp;x%)';
+$string['attemptquestion_error'] = 'Standardfehler';
 $string['attemptquestion_difficulty'] = 'Fragenschwierigkeit (logits)';
 $string['attemptquestion_diffsum'] = 'Schwierigkeitssumme';
 $string['attemptquestion_abilitylogits'] = 'Gemessene Fähigkeit (logits)';
-$string['attemptquestion_stderr'] = 'Standardfehler (&plusmn;&nbsp;logits)';
+$string['attemptquestion_stderr'] = 'Standardfehler';
 $string['graphlegend_target'] = 'Ziellevel';
 $string['graphlegend_error'] = 'Standardfehler';
 $string['answerdistgraph_title'] = 'Antwortverteilung für {$a->firstname} {$a->lastname}';

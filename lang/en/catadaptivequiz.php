@@ -191,11 +191,11 @@ $string['attempt_state'] = 'Attempt state';
 $string['attemptquestion_num'] = '#';
 $string['attemptquestion_level'] = 'Question Level';
 $string['attemptquestion_rightwrong'] = 'Points';
-$string['attemptquestion_error'] = 'Standard Error (&plusmn;&nbsp;x%)';
+$string['attemptquestion_error'] = 'Standard Error';
 $string['attemptquestion_difficulty'] = 'Question Difficulty (logits)';
 $string['attemptquestion_diffsum'] = 'Difficulty Sum';
 $string['attemptquestion_abilitylogits'] = 'Measured Ability (logits)';
-$string['attemptquestion_stderr'] = 'Standard Error (&plusmn;&nbsp;logits)';
+$string['attemptquestion_stderr'] = 'Standard Error';
 $string['graphlegend_target'] = 'Target Level';
 $string['graphlegend_error'] = 'Standard Error';
 $string['answerdistgraph_title'] = 'Answer distribution for {$a->firstname} {$a->lastname}';
@@ -289,3 +289,6 @@ $string['messageatlastpageDescription_help']="Could be used for individual feedb
 
 $string['contentareas'] = "User-defined specification of proportions of individual content areas in the overall test?";
 $string['detaildtestresults'] = 'Detailed test results';
+
+$string['contentareaDistributionDescription'] = 'Content area distribution';
+$string['contentareaDistributionDescription_help'] = 'Semicolon-separated list of percentage values (0..1) that indicate the distribution of content areas in the overall test. e.g., catname1:0.2;catname2:0.3;catname3:0.5';

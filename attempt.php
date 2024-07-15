@@ -255,10 +255,11 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 
 			$contentareas = new stdClass();
 			$contentareas->enabled = $adaptivequiz->contentareas; //Warning: Undefined property: stdClass::$contentareas in /var/www/html/mod/catadaptivequiz/attempt.php on line 247
-			$contentareas->area1 = $adaptivequiz->contentarea1;
-			$contentareas->area2 = $adaptivequiz->contentarea2;
-			$contentareas->area3 = $adaptivequiz->contentarea3;
-			$contentareas->area4 = $adaptivequiz->contentarea4;
+			$contentareas->distribution = $adaptivequiz->contentarea1;
+			// $contentareas->area1 = $adaptivequiz->contentarea1;
+			// $contentareas->area2 = $adaptivequiz->contentarea2;
+			// $contentareas->area3 = $adaptivequiz->contentarea3;
+			// $contentareas->area4 = $adaptivequiz->contentarea4;
 			$data_for_r_server->settings->content_areas = $contentareas;
 
 			//CS: user data for r-server

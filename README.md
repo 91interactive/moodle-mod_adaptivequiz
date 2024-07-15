@@ -275,7 +275,7 @@ The property "criteria_adaptive" has following short values:
 Following JSON should be the response of the R-Server. 
 Values are examples to get the code working
 
-```PHP
+``` PHP
 {
 	"personID": 2376, // user id
 	"theta": -0.866876539473478, 

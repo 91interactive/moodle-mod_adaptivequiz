@@ -687,9 +687,9 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         int $page
     ): string {
         if ($tabid == 'attemptgraph') {
-            $return = $this->attempt_graph($attempt->uniqueid, $cmid, $user->id);
-            $return .= html_writer::empty_tag('br');
-            $return .= $this->attempt_scoring_table($adaptivequiz, $quba, $attempt);
+            // $return = $this->attempt_graph($attempt->uniqueid, $cmid, $user->id);
+            // $return .= html_writer::empty_tag('br');
+            $return = $this->attempt_scoring_table($adaptivequiz, $quba, $attempt);
 
             return $return;
         }
@@ -818,34 +818,30 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         $table->size = ['', '', '', '', '', ''];
         $table->data = [];
 
-        $numattempted = 0;
-        $difficultysum = 0;
-        $sumcorrect = 0;
-        $sumincorrect = 0;
-        foreach ($quba->get_slots() as $slot) {
-            $question = $quba->get_question($slot);
-            $tags = core_tag_tag::get_item_tags_array('core_question', 'question', $question->id);
+		// get values from $attempt->detaildtestresults object/associative array
+		$answered_questions = [];
+		if ($attempt->detaildtestresults) $answered_questions = array_values(json_decode($attempt->detaildtestresults, true))[0];
+		else debugging('no detaildtestresults : ' . json_encode($attempt));
+        
+		foreach ($quba->get_slots() as $slot) {
+			$question = $quba->get_question($slot);
+			$tags = core_tag_tag::get_item_tags_array('core_question', 'question', $question->id);
+			// get element from $answered_questions array where object value questionId matches $question->id
+			$answer = array_filter($answered_questions, function ($obj) use ($question) {
+				return $obj["questionId"] == $question->id;
+			});
+
+			// Since array_filter returns an array, get the first element if you expect only one match
+			$answer = reset($answer); // This will get the first matching object, or false if none found
+			// Now, $answer contains the object where questionId matches $question->id, or false if no match was found.
+			if ($answer) {
+				$theta = $answer["theta"];
+				$stderror = $answer["standarderror"];
+			}
 
             $qdifficulty = adaptivequiz_get_difficulty_from_tags($tags);
-            $qdifficultylogits = catalgo::convert_linear_to_logit($qdifficulty, $adaptivequiz->lowestlevel,
-                $adaptivequiz->highestlevel);
-            $correct = ($quba->get_question_mark($slot) > 0);
-
-            $numattempted++;
-            $difficultysum = $difficultysum + $qdifficultylogits;
-            if ($correct) {
-                $sumcorrect++;
-            } else {
-                $sumincorrect++;
-            }
-
-            $abilitylogits = catalgo::estimate_measure($difficultysum, $numattempted, $sumcorrect, $sumincorrect);
-            $abilityfraction = 1 / ( 1 + exp( (-1 * $abilitylogits) ) );
-            $ability = (($adaptivequiz->highestlevel - $adaptivequiz->lowestlevel) * $abilityfraction) + $adaptivequiz->lowestlevel;
-            $stderrorlogits = catalgo::estimate_standard_error($numattempted, $sumcorrect, $sumincorrect);
-            $stderror = $stderrorlogits;//catalgo::convert_logit_to_percent($stderrorlogits);
-
-            $table->data[] = [$question->name, $qdifficulty, $quba->get_question_mark($slot), round($attempt->measure, 4),
+          
+            $table->data[] = [$question->name, $qdifficulty, $quba->get_question_mark($slot), round($theta, 4),
                 round($stderror , 3)];
         }
 

@@ -238,18 +238,20 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 		$mform->addElement('advcheckbox', 'contentareas', '', get_string('contentareas', 'catadaptivequiz'), array('group' => 1), array(0, 1));
 
 		// adding content area fields
-		$mform->addElement('text', 'contentarea1', 'Inhaltsbereich1'); // TODO Dynamic naming from an excel table
+		$mform->addElement('text', 'contentarea1', get_string('contentareaDistributionDescription', 'catadaptivequiz')); 
 		$mform->setType('contentarea1', PARAM_NOTAGS);
-		$mform->addElement('text', 'contentarea2', 'Inhaltsbereich2'); // TODO Dynamic naming from an excel table
-		$mform->setType('contentarea2', PARAM_NOTAGS);
-		$mform->addElement('text', 'contentarea3', 'Inhaltsbereich3'); // TODO Dynamic naming from an excel table
-		$mform->setType('contentarea3', PARAM_NOTAGS);
-		$mform->addElement('text', 'contentarea4', 'Inhaltsbereich4'); // TODO Dynamic naming from an excel table
-		$mform->setType('contentarea4', PARAM_NOTAGS);
+		$mform->addHelpButton('contentarea1', 'contentareaDistributionDescription', 'catadaptivequiz');
+
+		// $mform->addElement('text', 'contentarea2', 'Inhaltsbereich2'); 
+		// $mform->setType('contentarea2', PARAM_NOTAGS);
+		// $mform->addElement('text', 'contentarea3', 'Inhaltsbereich3'); 
+		// $mform->setType('contentarea3', PARAM_NOTAGS);
+		// $mform->addElement('text', 'contentarea4', 'Inhaltsbereich4'); 
+		// $mform->setType('contentarea4', PARAM_NOTAGS);
 		$mform->hideIf('contentarea1', 'contentareas', 'notchecked');
-		$mform->hideIf('contentarea2', 'contentareas', 'notchecked');
-		$mform->hideIf('contentarea3', 'contentareas', 'notchecked');
-		$mform->hideIf('contentarea4', 'contentareas', 'notchecked');
+		// $mform->hideIf('contentarea2', 'contentareas', 'notchecked');
+		// $mform->hideIf('contentarea3', 'contentareas', 'notchecked');
+		// $mform->hideIf('contentarea4', 'contentareas', 'notchecked');
 
 		// Adding the "Stopping conditions" fieldset, where all the common settings are showed.
 		$mform->addElement('header', 'stopingconditionshdr', get_string('stopingconditionshdr', 'catadaptivequiz'));
