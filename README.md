@@ -196,16 +196,16 @@ Remember that the ability measure does have error associated with it. Be sure to
 # 91interactive extensions
 ===================
 
-### Tag Definitions adding to questions
+### Tag Definitionen 
 
 --------------------------------------------------------------------
-| Tag      | Example | Description | 
+| Tag      | Beispiel | Beschreibung | 
 | ------------- |:-------------:| ------------- |
-| adpq_ + number |  adpq_1 |  Diffultylevel questions for Adaptive Quiz |
-| enemey_[array with number] | enemy_[23;31;11] | Enemy question Ids |
-| ca_[array with strings] | ca_[building;wooden] | Categoryname |
-| diff_[array with floats] | diff_[1.2;3.4;5.5] | Category difficulties. Can have multiple float values. <br/>One value on dichotomies questions or multiple values possible on polytomes values separated with ;<br/>Examples:  <br/>cat_diff_[1.2] for dichotomies questions<br/>cat_diff_[1.2;2.34;5.54]  |
-| disc_[array with numbers] | disc_[2;3] | Discrimination parameter |					
+| adpq_1 |  adpq_1 |  Marker, dass Frage für adaptiven Fragepool markiert ist |
+| enemey_[array with number] | enemy_[23;31;11] | Enemy question Ids. (*Tag weg lassen, wenn es keine Enemy Questions gibt.*) |
+| ca_[array with strings] | ca_[building;wooden] | Kategorienamen |
+| diff_[array with floats] | diff_[1.2;3.4;5.5] | Kategorieschwierigkeiten. Kann mehrere Gleitkommawerte haben. <br/>Ein Wert bei dichotomen Fragen oder mehrere Werte bei polytomen Fragen, getrennt durch ;<br/>Beispiele: <br/>cat_diff_[1.2] für dichotome Fragen<br/>cat_diff_[1.2;2.34;5.54]  |
+| disc_[array with numbers] | disc_[2;3] | Diskriminations-Parameter |					
 				
 
 ### Data for R-Server
