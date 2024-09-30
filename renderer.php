@@ -813,7 +813,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
         $ability = get_string('attemptquestion_ability', 'catadaptivequiz');
         $error = get_string('attemptquestion_error', 'catadaptivequiz');
 
-        $table->head = [$num, $level, $rightwrong, $ability, $error];
+        $table->head = [$num,/*$level,*/ $rightwrong, $ability, $error];
         $table->align = ['center', 'center', 'center', 'center', 'center'];
         $table->size = ['', '', '', '', '', ''];
         $table->data = [];
@@ -841,7 +841,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
 
             $qdifficulty = adaptivequiz_get_difficulty_from_tags($tags);
           
-            $table->data[] = [$question->name, $qdifficulty, $quba->get_question_mark($slot), round($theta, 4),
+            $table->data[] = [$question->name, /*$qdifficulty,*/ round($quba->get_question_mark($slot),0), round($theta, 4),
                 round($stderror , 3)];
         }
 
