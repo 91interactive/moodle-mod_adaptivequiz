@@ -249,7 +249,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			}
 
 			$exposure = new stdClass();
-			$exposure->enabled = $adaptivequiz->randomesque_exposure_control == "1" ? true : false;
+			$exposure->enabled = $adaptivequiz->randomesque_exposure_control == "1" ? 1 : 0;
 			$exposure->nitems_exposure = $adaptivequiz->suitabletasks;
 			$data_for_r_server->settings->exposure = $exposure;
 
