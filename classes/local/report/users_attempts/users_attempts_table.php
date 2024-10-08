@@ -123,8 +123,12 @@ final class users_attempts_table extends table_sql {
         if (!$this->is_downloading()) {
             $this->rawdata = $DB->get_records_sql($sql, $this->sql->params, $this->get_page_start(),
                 $this->get_page_size());
+				// debugging("rawdata1 ".json_encode($this->rawdata));
+
         } else {
             $this->rawdata = $DB->get_records_sql($sql, $this->sql->params);
+		// debugging("rawdata2 ".json_encode($this->rawdata));
+
         }
     }
 
@@ -192,10 +196,11 @@ final class users_attempts_table extends table_sql {
      * @throws coding_exception
      */
     protected function col_detaildtestresults(stdClass $row): string {
+		// debugging("col_detaildtestresults".json_encode($row->detaildtestresults));
+		// debugging("col_detaildtestresults ".$row->detaildtestresults);
 		return $row->detaildtestresults != null 
 			? $row->detaildtestresults 
 			: get_string('na', 'catadaptivequiz');
-      
     }
 
     /**

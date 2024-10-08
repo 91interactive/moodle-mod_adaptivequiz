@@ -213,7 +213,7 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 		$mform->addHelpButton('adaptivepart', 'adaptivepartDescription', 'catadaptivequiz');
 
 		// Adding the standard "Randomesque Exposure Control" checkbox
-		$mform->addElement('advcheckbox', 'randomesque_exposure_control', '', 'Randomesque Exposure Control', array('group' => 1), array(0, 1));
+		$mform->addElement('advcheckbox', 'randomesque_exposure_control', get_string('randomesqueexposurecontrol', 'catadaptivequiz'), 'Randomesque Exposure Control', array('group' => 1), array(0, 1));
 
 		// Adding the standard "Number of best matching tasks from which to choose at random" field
 		$mform->addElement('text', 'suitabletasks', get_string('suitabletasks', 'catadaptivequiz')); // should be only intergers
@@ -229,10 +229,10 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 		// $mform->addHelpButton('messagebeforetest', 'messagebeforetestDescription', 'catadaptivequiz');
 
 		// adding standard "message on last page of the test" field 
-		$mform->addElement('textarea', 'messageatlastpage', get_string('messageatlastpage', 'catadaptivequiz'));
-		$mform->setType('messageatlastpage', PARAM_NOTAGS);
-		$mform->addRule('messageatlastpage', get_string('formtextareaempty', 'catadaptivequiz'), 'required', null, 'client');
-		$mform->addHelpButton('messageatlastpage', 'messageatlastpageDescription', 'catadaptivequiz');
+		// $mform->addElement('textarea', 'messageatlastpage', get_string('messageatlastpage', 'catadaptivequiz'));
+		// $mform->setType('messageatlastpage', PARAM_NOTAGS);
+		// $mform->addRule('messageatlastpage', get_string('formtextareaempty', 'catadaptivequiz'), 'required', null, 'client');
+		// $mform->addHelpButton('messageatlastpage', 'messageatlastpageDescription', 'catadaptivequiz');
 
 		// adding checkbox for "User-defined specification of proportions of individual content areas in the overall test?"
 		$mform->addElement('advcheckbox', 'contentareas', '', get_string('contentareas', 'catadaptivequiz'), array('group' => 1), array(0, 1));

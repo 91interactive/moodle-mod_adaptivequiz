@@ -274,6 +274,9 @@ $string['personalparameterestimationDescription_help'] = "Specifies the estimato
 $string['adaptivepart'] = "Task selection adaptive part";
 $string['adaptivepartDescription'] = "Task selection adaptive part";
 $string['adaptivepartDescription_help'] = "Specifies criterion according to which tasks are selected during the adaptive test.";
+$string['randomesqueexposurecontrol'] = 'Randomesque Exposure Control';
+$string['randomesqueexposurecontrolDescription'] = 'Randomesque Exposure Control';
+$string['randomesqueexposurecontrolDescription_help'] = 'Indicates whether the Randomesque Exposure Control method (Kingsbury & Zara, 1989) should be used for the adaptive part of the test. If checked, the number of best matching tasks from which to choose at random must also be specified.';
 
 $string['REC'] = "Randomesque Exposure Control";
 $string['suitabletasks'] = "best matching tasks";

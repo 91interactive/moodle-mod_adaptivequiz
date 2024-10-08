@@ -206,6 +206,7 @@ Remember that the ability measure does have error associated with it. Be sure to
 | ca_[array with strings] | ca_[building;wooden] | Kategorienamen |
 | diff_[array with floats] | diff_[1.2;3.4;5.5] | Kategorieschwierigkeiten. Kann mehrere Gleitkommawerte haben. <br/>Ein Wert bei dichotomen Fragen oder mehrere Werte bei polytomen Fragen, getrennt durch ;<br/>Beispiele: <br/>cat_diff_[1.2] für dichotome Fragen<br/>cat_diff_[1.2;2.34;5.54]  |
 | disc_[array with numbers] | disc_[2;3] | Diskriminations-Parameter |					
+| cluster_CLUSTERNAME | cluster_a | Cluster |					
 				
 
 ### Data for R-Server

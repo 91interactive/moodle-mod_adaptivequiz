@@ -1042,11 +1042,13 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
 
     protected function render_ability_measure(ability_measure $measure): string {
         $output = html_writer::start_div('box py-3');
-
+		$se = round($measure->standarderror, 3);
         $abilitymeasurecontents = get_string('abilityestimated', 'catadaptivequiz') . ': ' .
-            html_writer::tag('strong', $this->format_measure($measure->as_object_to_format())) . ' / ' .
+            html_writer::tag('strong', $this->format_measure($measure->as_object_to_format())) /*. ' / ' .
             $measure->lowestquestiondifficulty . ' - ' . $measure->highestquestiondifficulty .
-            $this->help_icon('abilityestimated', 'catadaptivequiz');
+            $this->help_icon('abilityestimated', 'catadaptivequiz')*/
+			. '('. $se .')';
+			;
         $output .= $this->heading($abilitymeasurecontents, 3);
 
         $output .= html_writer::end_div();

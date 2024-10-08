@@ -41,35 +41,40 @@ $string['testsettingsheader'] = 'Test Einstellungen';
 
 $string['selecttasktypes'] = 'Aufgabenauswahl nicht adaptiver Teil';
 $string['selecttasktypesDescription'] = 'Aufgabenauswahl nicht adaptiver Teil.';
-$string['selecttasktypesDescription_help'] = 'Hier wird spezifiziert, wie die Aufgabenauswahl für nicht adaptive Tests bzw.
-nicht adaptive Teile des Gesamttests erfolgt';
+$string['selecttasktypesDescription_help'] = 'Diese Einstellung bezieht sich auf Aufgaben, die nicht adaptiv ausgewählt werden. Diese Aufgaben können entweder zufällig oder sequentiell gewählt werden, wobei die sequentielle Auswahl die Reihenfolge realisiert, in der die Aufgaben im Fragenkatalog spezifiziert sind.';
 $string['notadaptivepartheader'] = 'Nicht adavptiver Teil';
 // $string['adaptiveSettingsDescription'] = 'Hier wird spezifiziert, wie die Aufgabenauswahl für nicht adaptive Tests bzw.
 // nicht adaptive Teile des Gesamttests erfolgt';
 
 $string['numbercalibrationclusters'] = 'Anzahl Kalibrierungscluster';
 $string['numbercalibrationclustersDescription'] = 'Anzahl Kalibrierungscluster';
-$string['numbercalibrationclustersDescription_help'] = 'Anzahl an Aufgabenclustern (Cluster = Gruppe von Aufgaben), die Aufgaben enthalten, die noch keine Parameterschätzung haben und daher erst kalibriert werden müssen. Wenn der Test nur aus neuen (unkalibrierten) Aufgaben besteht, enthält der Test nur Kalibrierungscluster. Kalibrierungscluster werden jeder Testperson vorgegeben';
+$string['numbercalibrationclustersDescription_help'] = 'Anzahl an Aufgabenclustern mit neuen Aufgaben, die dazu dienen, den Aufgabepool zu vergrößern. Hinweis: Die Summe der drei Clusterarten bestimmt darüber hinaus die Anzahl der Testhefte, die automatisiert zusammengestellt werden. Basierend auf sogenannten Balanced Latin Square Designs (z. B. Williams, 1949; Frey, Hartig & Rupp, 2009) wird für Clusterpositionen und Carry-Over-Effekte erster Ordnung ausbalanciert. Summe der drei Clusterarten muss einem ganzzahligen Anteil der Testlänge entsprechen. Die Maximale Anzahl der Cluster ist gleich der Testlänge.';
 
 $string['numberlinkingclusters'] = 'Anzahl Linkingcluster';
 $string['numberlinkingclustersDescription'] = 'Anzahl Linkingcluster';
-$string['numberlinkingclustersDescription_help'] = 'Anzahl an Aufgabenclustern, die Linkaufgaben (Items zur Verlinkung der Berichtsmetrik über die Zeit) enthalten. Linkaufgaben haben bereits eine Parameterschätzung. Linkingcluster werden jeder Testperson vorgegeben.';
+$string['numberlinkingclustersDescription_help'] = 'Anzahl an Aufgabenclustern, mit Aufgaben, die bereits über eine Parameterschätzung verfügen und die dazu genutzt werden, aufeinanderfolgende Testzyklen miteinander zu verbinden. Hinweis: Die Summe der drei Clusterarten bestimmt darüber hinaus die Anzahl der Testhefte, die automatisiert zusammengestellt werden. Basierend auf sogenannten Balanced Latin Square Designs (z. B. Williams, 1949; Frey, Hartig & Rupp, 2009) wird für Clusterpositionen und Carry-Over-Effekte erster Ordnung ausbalanciert. Summe der drei Clusterarten muss einem ganzzahligen Anteil der Testlänge entsprechen. Die Maximale Anzahl der Cluster ist gleich der Testlänge.';
 
 $string['numberadaptiveclusters'] = 'Anzahl adaptiver Cluster';
 $string['numberadaptiveclustersDescription'] = 'Anzahl adaptiver Cluster';
-$string['numberadaptiveclustersDescription_help'] = 'Anzahl an Aufgabenclustern, in denen Aufgaben adaptiv gewählt werden. Aufgaben hier verfügen bereits über eine Parameterschätzung.';
+$string['numberadaptiveclustersDescription_help'] = 'Anzahl an Aufgabenclustern, deren Aufgaben adaptiv gewählt werden sollen. Hinweis: Die Summe der drei Clusterarten bestimmt darüber hinaus die Anzahl der Testhefte, die automatisiert zusammengestellt werden. Basierend auf sogenannten Balanced Latin Square Designs (z. B. Williams, 1949; Frey, Hartig & Rupp, 2009) wird für Clusterpositionen und Carry-Over-Effekte erster Ordnung ausbalanciert. Summe der drei Clusterarten muss einem ganzzahligen Anteil der Testlänge entsprechen. Die Maximale Anzahl der Cluster ist gleich der Testlänge.';
 
 $string['personalparameterestimation'] = 'Personenparameterschätzung';
 $string['personalparameterestimationDescription'] = 'Personenparameterschätzung';
-$string['personalparameterestimationDescription_help'] = 'Spezifiziert den Schätzer, der genutzt wird, um die vorläufige Personenfähigkeit während des Tests nach Beantwortung jeder einzelnen Aufgabe zu schätzen.';
+$string['personalparameterestimationDescription_help'] = 'Die Personenparameterschätzung während des Tests. Zur Auswahl stehen folgende Schätzer: Expected-A-Posteriori (EAP; Bock & Mislevy, 1982), Maximum-A-Posteriori (MAP; Mislevy, 1986), Weighted Likelihood Estimate (WLE; Warm, 1989), Maximum Likelihood Estimate (MLE; Lord, 1980).';
 
 $string['adaptivepart'] = 'Aufgabenauswahl adaptiver Teil';
 $string['adaptivepartDescription'] = 'Aufgabenauswahl adaptiver Teil';
-$string['adaptivepartDescription_help'] = 'Spezifiziert Kriterium nach dem Aufgaben während des adaptiven Tests ausgewählt werden.';
+$string['adaptivepartDescription_help'] = 'Das Kriterium für die adaptive Aufgabenauswahl in adaptiven Clustern. Zur Auswahl stehen: Maximum Information (Default), Maximum Expected Posterior Variance, Maximum Likelihood Weighted Information, Maximum Posterior Weighted Information, Maximum Expected Information, Integration based Kullback-Leibler';
+
+$string['randomesqueexposurecontrol'] = 'Randomesque Exposure Control';
+$string['randomesqueexposurecontrolDescription'] = 'Randomesque Exposure Control';
+$string['randomesqueexposurecontrolDescription_help'] = 'Gibt an, ob für den adaptiven Teil des Tests die 
+Randomesque Exposure Control Methode (Kingsbury & Zara, 1989) verwendet werden soll. Setzt man hier einen Haken, so ist zusätzlich die Anzahl der am besten passenden Aufgaben, aus 
+denen zufällig gewählt werden soll, anzugeben.';
 
 $string['suitabletasks'] = 'Anzahl der am besten passenden Aufgaben';
 $string['suitabletasksdescription'] = 'Anzahl der am besten passenden Aufgaben';
-$string['suitabletasksdescription_help'] = 'Anzahl der am besten passenden Aufgaben, aus denen zufällig gewählt werden soll';
+$string['suitabletasksdescription_help'] = 'Nur wenn Randomesque Exposure Control ausgewählt wurde: Spezifiziert die Anzahl an am besten passenden Aufgaben aus denen zufällig gewählt werden soll.';
 
 $string['sequential'] = 'Sequentiell';
 $string['random'] = 'Zufällig';
@@ -78,9 +83,9 @@ $string['messageatlastpage'] = 'Nachricht auf der letzten Seite des Tests';
 $string['messageatlastpageDescription'] = 'Nachricht auf der letzten Seite des Tests';
 $string['messageatlastpageDescription_help'] = 'Könnte für das individuelle Feedback genutzt werden. Heißt, entweder steht für alle das gleiche da, oder, wenn wir  individuelles Feedback erlauben, steht das dann jeweils auf der letzten Seite.';
 
-$string['contentareas'] = 'Benutzerdefinierte Angabe von Anteilen einzelner Inhaltsbereicheam Gesamttest?';
+$string['contentareas'] = 'Benutzerdefinierte Angabe von Anteilen einzelner Inhaltsbereicheam Gesamttest';
 $string['contentareaDistributionDescription'] = 'Verteilung Inhaltsbereiche';
-$string['contentareaDistributionDescription_help'] = 'Semikolon getrennte Liste von Prozentangaben (0..1), die die Verteilung der Inhaltsbereiche am Gesamttest angeben. z. B. catname1:0.2;catname2:0.3;catname3:0.5';
+$string['contentareaDistributionDescription_help'] = 'Semikolon getrennte Liste die jeweils den Inhaltsbereich sowie den Anteil (im Wertebereich von 0 bis1) des jeweiligen Inhaltsbereiches am Gesamttest spezifiziert. Z.B. catname1:0.2;catname2:0.3;catname3:0.5';
 
 $string['formtextareaempty'] = 'Textarea darf nicht leer sein';
 $string['detaildtestresults'] = 'Detailierte Test Ergebnisse';
@@ -144,24 +149,12 @@ $string['settingsdefaultsettingsheading'] = 'Standardkonfigurationen von Aktivit
 $string['settingsdefaultsettingsheadinginfo'] = 'Wenn Ihre adaptiven Quizze in den Kursen identisch konfiguriert sein sollen, möchten Sie hier vielleicht einige Standardkonfigurationen dafür festlegen.';
 
 
-$string['modulename_help'] = 'Die Adaptive Quiz-Aktivität ermöglicht es einem Lehrer, Quizze zu erstellen, die die Fähigkeiten der Teilnehmer effizient messen. Adaptive Quizze bestehen aus Fragen, die aus der Fragenbank ausgewählt und mit einer Schwierigkeitsbewertung versehen sind. Die Fragen werden so ausgewählt, dass sie zum geschätzten Fähigkeitsniveau des aktuellen Testteilnehmers passen. Wenn der Testteilnehmer eine Frage richtig beantwortet, wird als nächstes eine schwierigere Frage gestellt. Wenn der Testteilnehmer eine Frage falsch beantwortet, wird als nächstes eine weniger schwierige Frage gestellt. Diese Technik entwickelt sich zu einer Abfolge von Fragen, die auf das effektive Fähigkeitsniveau des Testteilnehmers zulaufen. Das Quiz endet, wenn die Fähigkeit des Testteilnehmers mit der erforderlichen Genauigkeit festgestellt wurde.
-
-Diese Aktivität eignet sich am besten zur Bestimmung eines Fähigkeitsmaßes entlang einer eindimensionalen Skala. Obwohl die Skala sehr breit sein kann, müssen alle Fragen ein Maß für die Fähigkeit oder Eignung auf derselben Skala bieten. In einem Einstufungstest zum Beispiel sollten Fragen, die am unteren Ende der Skala liegen und von Anfängern richtig beantwortet werden können, auch von Experten beantwortet werden können, während Fragen, die höher auf der Skala liegen, nur von Experten oder durch eine glückliche Vermutung beantwortet werden sollten. Fragen, die nicht zwischen Teilnehmern unterschiedlicher Fähigkeiten unterscheiden, machen den Test ineffektiv und können zu unklaren Ergebnissen führen.
-
-Fragen, die im Adaptiven Quiz verwendet werden, müssen
-
- * automatisch als richtig/falsch bewertet werden
- * mit ihrer Schwierigkeit gekennzeichnet sein, indem \'adpq_\' gefolgt von einer positiven Ganzzahl verwendet wird, die im Bereich für das Quiz liegt
-
-Das Adaptive Quiz kann konfiguriert werden, um
-
- * den Bereich der Frage-Schwierigkeiten/Nutzer-Fähigkeiten zu definieren, die gemessen werden sollen. 1-10, 1-16 und 1-100 sind Beispiele für gültige Bereiche.
- * die vor dem Stopp des Quiz erforderliche Präzision zu definieren. Oft ist ein Fehler von 5% im Fähigkeitsmaß eine angemessene Stoppregel
- * eine Mindestanzahl von Fragen zu verlangen, die beantwortet werden müssen
- * eine Höchstanzahl von Fragen zu verlangen, die beantwortet werden können
-
-Diese Beschreibung und der Testprozess in dieser Aktivität basieren auf <a href="http://www.rasch.org/memo69.pdf">Computer-Adaptive Testing: A Methodology Whose Time Has Come</a> von John Michael Linacre, Ph.D. MESA Psychometric Laboratory - University of Chicago. MESA Memorandum Nr. 69.';
+$string['modulename_help'] = 'Das KAT-HS Adaptive Quiz Plugin ermöglicht es adaptive Tests zu erstellen, die die Fähigkeiten der Teilnehmer effizient messen. Dabei werden die Fragen in Echtzeit aus einem Fragenpool ausgewählt, sodass sie zum geschätzten Fähigkeitsniveau der aktuellen Testperson passen. Das heißt, wenn eine Frage richtig beantwortet wird, wird als nächstes eine schwierigere Frage aus dem Fragenpool ausgewählt. Wenn eine Frage falsch beantwortet wird, wird als nächstes eine weniger schwierige Frage gestellt. So kann das Fähigkeitsniveau der Testpersonen effizient bestimmt werden.';
 $string['nonewmodules'] = 'Keine Adaptive Quiz-Instanzen gefunden';
+$string['catadaptivequizname'] = 'Name';
+$string['catadaptivequizname_help'] = 'Name des Tests';
+
+
 $string['attemptsallowed'] = 'Erlaubte Versuche';
 $string['attemptsallowed_help'] = 'Die Anzahl der Versuche, die ein Student für diese Aktivität unternehmen darf';
 $string['requirepassword'] = 'Passwort erforderlich';
@@ -186,7 +179,7 @@ $string['formminquestgreaterthan'] = 'Die Mindestanzahl von Fragen muss kleiner 
 $string['formlowlevelgreaterthan'] = 'Das niedrigste Niveau muss niedriger als das höchste Niveau sein';
 $string['formstartleveloutofbounds'] = 'Das Startniveau muss eine Zahl sein, die zwischen dem niedrigsten und dem höchsten Niveau liegt';
 $string['standarderror'] = 'Standardfehler zum Stoppen';
-$string['standarderror_help'] = 'Wenn die Fehlermenge in der Messung der Fähigkeit des Benutzers unter diesen Betrag fällt, wird das Quiz gestoppt. Passen Sie diesen Wert vom Standard von 5% an, um mehr oder weniger Präzision in der Fähigkeitsmessung zu erfordern';
+$string['standarderror_help'] = 'Wenn der Standardfehler der individuellen Fähigkeitsschätzung unter diesen Wert fällt, stoppt der Test automatisch. Wird nicht beachtet, wenn auf 0 gesetzt. Vorrang hat immer die Höchstanzahl von Aufgaben.';
 $string['formelementdecimal'] = 'Geben Sie eine Dezimalzahl ein. Maximal 10 Stellen lang und maximal 5 Stellen rechts vom Dezimalpunkt';
 $string['attemptfeedback'] = 'Feedback zum Versuch';
 $string['attemptfeedback_help'] = 'Das Feedback zum Versuch wird dem Benutzer angezeigt, sobald der Versuch beendet ist';

@@ -24,7 +24,7 @@
 
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/tablelib.php');
-require_once($CFG->dirroot.'/mod/catadaptivequiz/locallib.php');
+require_once($CFG->dirroot . '/mod/catadaptivequiz/locallib.php');
 
 use core\output\notification;
 use mod_catadaptivequiz\local\adaptive_quiz_requires;
@@ -46,15 +46,15 @@ $n  = optional_param('n', 0, PARAM_INT);
 $resetfilter = optional_param('resetfilter', 0, PARAM_INT);
 
 if ($id) {
-    $cm         = get_coursemodule_from_id('catadaptivequiz', $id, 0, false, MUST_EXIST);
-    $course     = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
-    $adaptivequiz  = $DB->get_record('catadaptivequiz', ['id' => $cm->instance], '*', MUST_EXIST);
+	$cm         = get_coursemodule_from_id('catadaptivequiz', $id, 0, false, MUST_EXIST);
+	$course     = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+	$adaptivequiz  = $DB->get_record('catadaptivequiz', ['id' => $cm->instance], '*', MUST_EXIST);
 } else if ($n) {
-    $adaptivequiz  = $DB->get_record('catadaptivequiz', ['id' => $n], '*', MUST_EXIST);
-    $course     = $DB->get_record('course', ['id' => $adaptivequiz->course], '*', MUST_EXIST);
-    $cm         = get_coursemodule_from_instance('catadaptivequiz', $adaptivequiz->id, $course->id, false, MUST_EXIST);
+	$adaptivequiz  = $DB->get_record('catadaptivequiz', ['id' => $n], '*', MUST_EXIST);
+	$course     = $DB->get_record('course', ['id' => $adaptivequiz->course], '*', MUST_EXIST);
+	$cm         = get_coursemodule_from_instance('catadaptivequiz', $adaptivequiz->id, $course->id, false, MUST_EXIST);
 } else {
-    throw new moodle_exception('invalidarguments');
+	throw new moodle_exception('invalidarguments');
 }
 
 require_login($course, true, $cm);
@@ -69,78 +69,92 @@ $renderer = $PAGE->get_renderer('mod_catadaptivequiz');
 
 $canviewattemptsreport = has_capability('mod/catadaptivequiz:viewreport', $context);
 if ($canviewattemptsreport) {
-    $reportuserprefs = user_preferences_repository::get();
+	$reportuserprefs = user_preferences_repository::get();
 
-    $reportuserprefsform = new user_preferences_form($PAGE->url->out());
-    if ($prefsformdata = $reportuserprefsform->get_data()) {
-        $reportuserprefs = user_preferences::from_plain_object($prefsformdata);
+	$reportuserprefsform = new user_preferences_form($PAGE->url->out());
+	if ($prefsformdata = $reportuserprefsform->get_data()) {
+		$reportuserprefs = user_preferences::from_plain_object($prefsformdata);
 
-        if (!$reportuserprefs->persistent_filter() && $reportuserprefs->has_filter_preference()) {
-            $reportuserprefs = $reportuserprefs->without_filter_preference();
-        }
+		if (!$reportuserprefs->persistent_filter() && $reportuserprefs->has_filter_preference()) {
+			$reportuserprefs = $reportuserprefs->without_filter_preference();
+		}
 
-        user_preferences_repository::save($reportuserprefs);
-    }
-    $reportuserprefsform->set_data($reportuserprefs->as_array());
+		user_preferences_repository::save($reportuserprefs);
+	}
+	$reportuserprefsform->set_data($reportuserprefs->as_array());
 
-    $filter = filter::from_vars($adaptivequiz->id, groups_get_activity_group($cm, true));
-    if ($resetfilter) {
-        $filter->fill_from_array(['users' => filter_options::users_option_default(),
-            'includeinactiveenrolments' => filter_options::INCLUDE_INACTIVE_ENROLMENTS_DEFAULT]);
-    }
+	$filter = filter::from_vars($adaptivequiz->id, groups_get_activity_group($cm, true));
+	if ($resetfilter) {
+		$filter->fill_from_array([
+			'users' => filter_options::users_option_default(),
+			'includeinactiveenrolments' => filter_options::INCLUDE_INACTIVE_ENROLMENTS_DEFAULT
+		]);
+	}
 
-    $reportfilterform = new filter_form($PAGE->url->out(), ['actionurl' => $PAGE->url]);
-    if ($reportuserprefs->persistent_filter() && $reportuserprefs->has_filter_preference()) {
-        $filter->fill_from_preference($reportuserprefs->filter());
-        $reportfilterform->set_data($reportuserprefs->filter()->as_array());
-    }
-    if ($resetfilter) {
-        $filterdefaultsarray = ['users' => filter_options::users_option_default(),
-            'includeinactiveenrolments' => filter_options::INCLUDE_INACTIVE_ENROLMENTS_DEFAULT];
+	$reportfilterform = new filter_form($PAGE->url->out(), ['actionurl' => $PAGE->url]);
+	if ($reportuserprefs->persistent_filter() && $reportuserprefs->has_filter_preference()) {
+		$filter->fill_from_preference($reportuserprefs->filter());
+		$reportfilterform->set_data($reportuserprefs->filter()->as_array());
+	}
+	if ($resetfilter) {
+		$filterdefaultsarray = [
+			'users' => filter_options::users_option_default(),
+			'includeinactiveenrolments' => filter_options::INCLUDE_INACTIVE_ENROLMENTS_DEFAULT
+		];
 
-        $filter->fill_from_array($filterdefaultsarray);
+		$filter->fill_from_array($filterdefaultsarray);
 
-        if ($reportuserprefs->persistent_filter()) {
-            user_preferences_repository::save(
-                $reportuserprefs->with_filter_preference(filter_user_preferences::from_array($filterdefaultsarray))
-            );
-        }
+		if ($reportuserprefs->persistent_filter()) {
+			user_preferences_repository::save(
+				$reportuserprefs->with_filter_preference(filter_user_preferences::from_array($filterdefaultsarray))
+			);
+		}
 
-        $reportfilterform->set_data($filterdefaultsarray);
-    }
-    if ($filterformdata = $reportfilterform->get_data()) {
-        $filter->fill_from_array((array) $filterformdata);
+		$reportfilterform->set_data($filterdefaultsarray);
+	}
+	if ($filterformdata = $reportfilterform->get_data()) {
+		$filter->fill_from_array((array) $filterformdata);
 
-        if ($reportuserprefs->persistent_filter()) {
-            user_preferences_repository::save(
-                $reportuserprefs->with_filter_preference(filter_user_preferences::from_array((array) $filterformdata))
-            );
-        }
-    }
+		if ($reportuserprefs->persistent_filter()) {
+			user_preferences_repository::save(
+				$reportuserprefs->with_filter_preference(filter_user_preferences::from_array((array) $filterformdata))
+			);
+		}
+	}
 
-    $attemptsreporttable = new users_attempts_table($renderer, $cm->id,
-        questions_difficulty_range::from_activity_instance($adaptivequiz), $PAGE->url, $context, $filter);
-    $attemptsreporttable->is_downloading($downloadusersattempts,
-        get_string('reportattemptsdownloadfilename', 'catadaptivequiz', format_string($adaptivequiz->name)));
-    if ($attemptsreporttable->is_downloading()) {
-        $attemptsreporttable->out(1, false);
-        exit;
-    }
+	$attemptsreporttable = new users_attempts_table(
+		$renderer,
+		$cm->id,
+		questions_difficulty_range::from_activity_instance($adaptivequiz),
+		$PAGE->url,
+		$context,
+		$filter
+	);
+	// debug $attemptsreporttable;
+	// debugging("attemptsreporttable: ".json_encode($attemptsreporttable));
+	$attemptsreporttable->is_downloading(
+		$downloadusersattempts,
+		get_string('reportattemptsdownloadfilename', 'catadaptivequiz', format_string($adaptivequiz->name))
+	);
+	if ($attemptsreporttable->is_downloading()) {
+		$attemptsreporttable->out(1, false);
+		exit;
+	}
 }
 
 $activityisnotavailablenotification = '';
 try {
-    (new adaptive_quiz_requires())
-        ->deferred_feedback_question_behaviour_is_enabled();
+	(new adaptive_quiz_requires())
+		->deferred_feedback_question_behaviour_is_enabled();
 } catch (moodle_exception $activityavailabilityexception) {
-    $activityisnotavailablenotification = $canviewattemptsreport
-        ? get_string('activityavailabilitymanagernotification', 'catadaptivequiz', $activityavailabilityexception->getMessage())
-        : get_string('activityavailabilitystudentnotification', 'catadaptivequiz');
+	$activityisnotavailablenotification = $canviewattemptsreport
+		? get_string('activityavailabilitymanagernotification', 'catadaptivequiz', $activityavailabilityexception->getMessage())
+		: get_string('activityavailabilitystudentnotification', 'catadaptivequiz');
 }
 
 $event = \mod_catadaptivequiz\event\course_module_viewed::create([
-    'objectid' => $PAGE->cm->instance,
-    'context' => $PAGE->context,
+	'objectid' => $PAGE->cm->instance,
+	'context' => $PAGE->context,
 ]);
 $event->add_record_snapshot('course', $PAGE->course);
 $event->add_record_snapshot($PAGE->cm->modname, $adaptivequiz);
@@ -152,69 +166,73 @@ $PAGE->set_heading(format_string($course->fullname));
 echo $OUTPUT->header();
 
 if ($canviewattemptsreport && $activityisnotavailablenotification) {
-    echo $OUTPUT->notification($activityisnotavailablenotification, notification::NOTIFY_WARNING, false);
+	echo $OUTPUT->notification($activityisnotavailablenotification, notification::NOTIFY_WARNING, false);
 }
 
-if ($adaptivequiz->intro) { // Conditions to show the intro can change to look for own settings or whatever.
-    echo $OUTPUT->box(format_module_intro('catadaptivequiz', $adaptivequiz, $cm->id), 'generalbox mod_introbox', 'newmoduleintro');
-}
+// if ($adaptivequiz->showintro) {
+// if ($adaptivequiz->intro) { // Conditions to show the intro can change to look for own settings or whatever.
+// 	echo $OUTPUT->box(format_module_intro('catadaptivequiz', $adaptivequiz, $cm->id), 'generalbox mod_introbox', 'newmoduleintro');
+// }
+// }
 
 if (has_capability('mod/catadaptivequiz:attempt', $context)) {
-    $completedattemptscount = adaptivequiz_count_user_previous_attempts($adaptivequiz->id, $USER->id);
+	$completedattemptscount = adaptivequiz_count_user_previous_attempts($adaptivequiz->id, $USER->id);
 
-    echo $renderer->container_start('attempt-controls-or-notification-container pb-3');
-    if (!($canviewattemptsreport && $activityisnotavailablenotification)) {
-        echo $renderer->attempt_controls_or_notification(
-            $cm->id,
-            adaptivequiz_allowed_attempt($adaptivequiz->attempts, $completedattemptscount),
-            $activityisnotavailablenotification,
-            $adaptivequiz->browsersecurity
-        );
-    }
-    echo $renderer->container_end();
+	echo $renderer->container_start('attempt-controls-or-notification-container pb-3');
+	if (!($canviewattemptsreport && $activityisnotavailablenotification)) {
+		echo $renderer->attempt_controls_or_notification(
+			$cm->id,
+			adaptivequiz_allowed_attempt($adaptivequiz->attempts, $completedattemptscount),
+			$activityisnotavailablenotification,
+			$adaptivequiz->browsersecurity
+		);
+	}
+	echo $renderer->container_end();
 
-    $allattemptscount = $DB->count_records('catadaptivequiz_attempt',
-        ['instance' => $adaptivequiz->id, 'userid' => $USER->id]);
-    if ($allattemptscount && $adaptivequiz->attempts == 1) {
-        $sql = 'SELECT id, attemptstate, measure, timemodified
+	$allattemptscount = $DB->count_records(
+		'catadaptivequiz_attempt',
+		['instance' => $adaptivequiz->id, 'userid' => $USER->id]
+	);
+	if ($allattemptscount && $adaptivequiz->attempts == 1) {
+		$sql = 'SELECT id, attemptstate, measure, timemodified
             FROM {catadaptivequiz_attempt}
             WHERE instance = ? AND userid = ?
             ORDER BY timemodified DESC';
-        if ($userattempts = $DB->get_records_sql($sql, [$adaptivequiz->id, $USER->id], 0, 1)) {
-            $userattempt = $userattempts[array_key_first($userattempts)];
+		if ($userattempts = $DB->get_records_sql($sql, [$adaptivequiz->id, $USER->id], 0, 1)) {
+			$userattempt = $userattempts[array_key_first($userattempts)];
 
-            echo $renderer->heading(get_string('attempt_summary', 'catadaptivequiz'), 3, 'text-center');
-            echo $renderer->render(user_attempt_summary::from_db_records($userattempt, $adaptivequiz));
-        }
-    }
-    if ($allattemptscount && $adaptivequiz->attempts != 1) {
-        echo $renderer->heading(get_string('attemptsuserprevious', 'catadaptivequiz'), 3);
+			echo $renderer->heading(get_string('attempt_summary', 'catadaptivequiz'), 3, 'text-center');
+			echo $renderer->render(user_attempt_summary::from_db_records($userattempt, $adaptivequiz));
+		}
+	}
+	if ($allattemptscount && $adaptivequiz->attempts != 1) {
+		echo $renderer->heading(get_string('attemptsuserprevious', 'catadaptivequiz'), 3);
 
-        $attemptstable = new user_attempts_table($renderer);
-        $attemptstable->init($PAGE->url, $adaptivequiz, $USER->id);
-        $attemptstable->out(10, false);
-    }
-    if (!$allattemptscount) {
-        echo html_writer::div(get_string('attemptsusernoprevious', 'catadaptivequiz'), 'alert alert-info text-center');
-    }
+		$attemptstable = new user_attempts_table($renderer);
+		$attemptstable->init($PAGE->url, $adaptivequiz, $USER->id);
+		$attemptstable->out(10, false);
+	}
+	if (!$allattemptscount) {
+		echo html_writer::div(get_string('attemptsusernoprevious', 'catadaptivequiz'), 'alert alert-info text-center');
+	}
 }
 
 if ($canviewattemptsreport) {
-    echo $renderer->heading(get_string('activityreports', 'catadaptivequiz'), '3', 'text-center');
+	echo $renderer->heading(get_string('activityreports', 'catadaptivequiz'), '3', 'text-center');
 
-    groups_print_activity_menu($cm, new moodle_url('/mod/catadaptivequiz/view.php', ['id' => $cm->id]));
+	groups_print_activity_menu($cm, new moodle_url('/mod/catadaptivequiz/view.php', ['id' => $cm->id]));
 
-    echo $renderer->container_start('usersattemptstable-wrapper');
-    $attemptsreporttable->out($reportuserprefs->rows_per_page(), $reportuserprefs->show_initials_bar());
-    echo $renderer->container_end();
+	echo $renderer->container_start('usersattemptstable-wrapper');
+	$attemptsreporttable->out($reportuserprefs->rows_per_page(), $reportuserprefs->show_initials_bar());
+	echo $renderer->container_end();
 
-    $reportuserprefsform->display();
+	$reportuserprefsform->display();
 
-    $reportfilterform->display();
+	$reportfilterform->display();
 
-    $resetfilterul = $PAGE->url;
-    $resetfilterul->param('resetfilter', 1);
-    echo $renderer->reset_users_attempts_filter_action($resetfilterul);
+	$resetfilterul = $PAGE->url;
+	$resetfilterul->param('resetfilter', 1);
+	echo $renderer->reset_users_attempts_filter_action($resetfilterul);
 }
 
 echo $OUTPUT->footer();

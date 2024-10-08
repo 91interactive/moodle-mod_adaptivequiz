@@ -26,47 +26,57 @@ namespace mod_catadaptivequiz\output;
 use renderable;
 use stdClass;
 
-final class ability_measure implements renderable {
+final class ability_measure implements renderable
+{
 
-    /**
-     * @var float $abilitymeasure
-     */
-    public $measurevalue;
-    /**
-     * @var int $lowestquestiondifficulty
-     */
-    public $lowestquestiondifficulty;
-    /**
-     * @var int $highestquestiondifficulty
-     */
-    public $highestquestiondifficulty;
+	/**
+	 * @var float $abilitymeasure
+	 */
+	public $measurevalue;
+	/**
+	 * @var float $standarderror
+	 */
+	public $standarderror;
+	/**
+	 * @var int $lowestquestiondifficulty
+	 */
+	public $lowestquestiondifficulty;
+	/**
+	 * @var int $highestquestiondifficulty
+	 */
+	public $highestquestiondifficulty;
 
-    /**
-     * A convenience method to convert the object to what {@link mod_catadaptivequiz_renderer::format_measure()} expects
-     * to produce a formatted ability measure.
-     */
-    public function as_object_to_format(): stdClass {
-        $return = new stdClass();
-        $return->measure = $this->measurevalue;
-        $return->lowestlevel = $this->lowestquestiondifficulty;
-        $return->highestlevel = $this->highestquestiondifficulty;
+	/**
+	 * A convenience method to convert the object to what {@link mod_catadaptivequiz_renderer::format_measure()} expects
+	 * to produce a formatted ability measure.
+	 */
+	public function as_object_to_format(): stdClass
+	{
+		$return = new stdClass();
+		$return->measure = $this->measurevalue;
+		$return->standarderror = $this->standarderror;
+		$return->lowestlevel = $this->lowestquestiondifficulty;
+		$return->highestlevel = $this->highestquestiondifficulty;
 
-        return $return;
-    }
+		return $return;
+	}
 
-    /**
-     * A named constructor to set up the object and increase code readability.
-     *
-     * @param stdClass $adaptivequiz A record from {catadaptivequiz}. lowestlevel and highestlevel are the expected fields.
-     * @param float $measurevalue
-     * @return self
-     */
-    public static function of_attempt_on_adaptive_quiz(stdClass $adaptivequiz, float $measurevalue): self {
-        $return = new self();
-        $return->lowestquestiondifficulty = !empty($adaptivequiz->lowestlevel) ? $adaptivequiz->lowestlevel : 0;
-        $return->highestquestiondifficulty = !empty($adaptivequiz->highestlevel) ? $adaptivequiz->highestlevel : 0;
-        $return->measurevalue = $measurevalue;
+	/**
+	 * A named constructor to set up the object and increase code readability.
+	 *
+	 * @param stdClass $adaptivequiz A record from {catadaptivequiz}. lowestlevel and highestlevel are the expected fields.
+	 * @param float $measurevalue
+	 * @param float $standarderror
+	 * @return self
+	 */
+	public static function of_attempt_on_adaptive_quiz(stdClass $adaptivequiz, float $measurevalue, float $standarderror): self
+	{
+		$return = new self();
+		$return->lowestquestiondifficulty = !empty($adaptivequiz->lowestlevel) ? $adaptivequiz->lowestlevel : 0;
+		$return->highestquestiondifficulty = !empty($adaptivequiz->highestlevel) ? $adaptivequiz->highestlevel : 0;
+		$return->measurevalue = $measurevalue;
+		$return->standarderror = $standarderror;
 
-        return $return;
-    }
+		return $return;
+	}
 }
