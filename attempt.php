@@ -212,7 +212,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 			$data_for_r_server->settings->maxItems = $adaptivequiz->maximumquestions;
 			$data_for_r_server->settings->minItems = $adaptivequiz->minimumquestions;
 			$data_for_r_server->settings->minStdError = $adaptivequiz->standarderror;
-			$data_for_r_server->settings->criteria_not_adaptive = $adaptivequiz->selecttasktypes == 0 ? 'random' : 'sequential';
+			$data_for_r_server->settings->criteria_not_adaptive = $adaptivequiz->selecttasktypes == 0 ? 'sequential' : 'random';
 			$data_for_r_server->settings->ncl_calib = $adaptivequiz->numbercalibrationclusters;
 			$data_for_r_server->settings->ncl_link = $adaptivequiz->numberlinkingclusters;
 			$data_for_r_server->settings->ncl_adaptive = $adaptivequiz->numberadaptiveclusters;

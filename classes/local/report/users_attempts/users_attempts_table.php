@@ -36,212 +36,233 @@ use moodle_url;
 use stdClass;
 use table_sql;
 
-final class users_attempts_table extends table_sql {
+final class users_attempts_table extends table_sql
+{
 
-    private const UNIQUE_ID = 'usersattemptstable';
+	private const UNIQUE_ID = 'usersattemptstable';
 
-    /**
-     * @var mod_catadaptivequiz_renderer $renderer
-     */
-    private $renderer;
-
-    /**
-     * @var int $cmid
-     */
-    private $cmid;
-
-    /**
-     * @var questions_difficulty_range $questionsdifficultyrange
-     */
-    private $questionsdifficultyrange;
-
-    /**
-     * @throws coding_exception
-     */
-    public function __construct(
-        mod_catadaptivequiz_renderer $renderer,
-        int $cmid,
-        questions_difficulty_range $questionsdifficultyrange,
-        moodle_url $baseurl,
-        context $context,
-        filter $filter
-    ) {
-        parent::__construct(self::UNIQUE_ID);
-
-        $this->renderer = $renderer;
-        $this->cmid = $cmid;
-        $this->questionsdifficultyrange = $questionsdifficultyrange;
-
-        $this->init($baseurl, $context, $filter);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @throws dml_exception
-     */
-    public function query_db($pagesize, $useinitialsbar = true): void {
-        global $DB;
-
-        if (!$this->is_downloading()) {
-            if ($this->countsql === null) {
-                $this->countsql = 'SELECT COUNT(1) FROM '.$this->sql->from.' WHERE '.$this->sql->where;
-                $this->countparams = $this->sql->params;
-            }
-            $grandtotal = $DB->count_records_sql($this->countsql, $this->countparams);
-            if ($useinitialsbar && !$this->is_downloading()) {
-                $this->initialbars(true);
-            }
-
-            list($wsql, $wparams) = $this->get_sql_where();
-            if ($wsql) {
-                $this->countsql .= ' AND ' . $wsql;
-                $this->countparams = array_merge($this->countparams, $wparams);
-
-                $this->sql->where .= ' AND ' . $wsql;
-                $this->sql->params = array_merge($this->sql->params, $wparams);
-
-                $total  = $DB->count_records_sql($this->countsql, $this->countparams);
-            } else {
-                $total = $grandtotal;
-            }
-
-            $this->pagesize($pagesize, $total);
-        }
-
-        $sort = $this->get_sql_sort();
-        if ($sort) {
-            $sort = "ORDER BY $sort";
-        }
-
-        $groupby = $this->sql->groupby ?? '';
-        if ($groupby) {
-            $groupby = "GROUP BY $groupby";
-        }
-
-        $sql = "SELECT {$this->sql->fields} FROM {$this->sql->from} WHERE {$this->sql->where} {$groupby} {$sort}";
-
-        if (!$this->is_downloading()) {
-            $this->rawdata = $DB->get_records_sql($sql, $this->sql->params, $this->get_page_start(),
-                $this->get_page_size());
-				// debugging("rawdata1 ".json_encode($this->rawdata));
-
-        } else {
-            $this->rawdata = $DB->get_records_sql($sql, $this->sql->params);
-		// debugging("rawdata2 ".json_encode($this->rawdata));
-
-        }
-    }
-
-    protected function col_attemptsnum(stdClass $row): string {
-        if (!$row->attemptsnum) {
-            return '-';
-        }
-
-        if (!$this->is_downloading()) {
-            return html_writer::link(
-                new moodle_url(
-                    '/mod/catadaptivequiz/viewattemptreport.php',
-                    ['userid' => $row->id, 'cmid' => $this->cmid]
-                ),
-                $row->attemptsnum
-            );
-        }
-
-        return $row->attemptsnum;
-    }
-
-    /**
-     * @throws moodle_exception
-     */
-    protected function col_measure(stdClass $row): string {
-        $formatmeasureparams = new stdClass();
-        $formatmeasureparams->measure = $row->measure;
-        $formatmeasureparams->highestlevel = $this->questionsdifficultyrange->highest_level();
-        $formatmeasureparams->lowestlevel = $this->questionsdifficultyrange->lowest_level();
-
-        $measure = $this->renderer->format_measure($formatmeasureparams);
-        if (!$row->attemptid) {
-            return $measure;
-        }
-
-        if (!$this->is_downloading()) {
-            return html_writer::link(
-                new moodle_url('/mod/catadaptivequiz/reviewattempt.php', ['attempt' => $row->attemptid]),
-                $measure
-            );
-        }
-
-        return $measure;
-    }
-
-    protected function col_stderror(stdClass $row): string {
-        $rendered = $this->renderer->format_standard_error($row);
-        if (!$this->is_downloading()) {
-            return $rendered;
-        }
-
-        return html_entity_decode($rendered, ENT_QUOTES, 'UTF-8');
-    }
-
-    /**
-     * @throws coding_exception
-     */
-    protected function col_attempttimefinished(stdClass $row): string {
-        return intval($row->attempttimefinished)
-            ? userdate($row->attempttimefinished)
-            : get_string('na', 'catadaptivequiz');
-    }
-	
 	/**
-     * @throws coding_exception
-     */
-    protected function col_detaildtestresults(stdClass $row): string {
+	 * @var mod_catadaptivequiz_renderer $renderer
+	 */
+	private $renderer;
+
+	/**
+	 * @var int $cmid
+	 */
+	private $cmid;
+
+	/**
+	 * @var questions_difficulty_range $questionsdifficultyrange
+	 */
+	private $questionsdifficultyrange;
+
+	/**
+	 * @throws coding_exception
+	 */
+	public function __construct(
+		mod_catadaptivequiz_renderer $renderer,
+		int $cmid,
+		questions_difficulty_range $questionsdifficultyrange,
+		moodle_url $baseurl,
+		context $context,
+		filter $filter
+	) {
+		parent::__construct(self::UNIQUE_ID);
+
+		$this->renderer = $renderer;
+		$this->cmid = $cmid;
+		$this->questionsdifficultyrange = $questionsdifficultyrange;
+
+		$this->init($baseurl, $context, $filter);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 * @throws dml_exception
+	 */
+	public function query_db($pagesize, $useinitialsbar = true): void
+	{
+		global $DB;
+
+		if (!$this->is_downloading()) {
+			if ($this->countsql === null) {
+				$this->countsql = 'SELECT COUNT(1) FROM ' . $this->sql->from . ' WHERE ' . $this->sql->where;
+				$this->countparams = $this->sql->params;
+			}
+			$grandtotal = $DB->count_records_sql($this->countsql, $this->countparams);
+			if ($useinitialsbar && !$this->is_downloading()) {
+				$this->initialbars(true);
+			}
+
+			list($wsql, $wparams) = $this->get_sql_where();
+			if ($wsql) {
+				$this->countsql .= ' AND ' . $wsql;
+				$this->countparams = array_merge($this->countparams, $wparams);
+
+				$this->sql->where .= ' AND ' . $wsql;
+				$this->sql->params = array_merge($this->sql->params, $wparams);
+
+				$total  = $DB->count_records_sql($this->countsql, $this->countparams);
+			} else {
+				$total = $grandtotal;
+			}
+
+			$this->pagesize($pagesize, $total);
+		}
+
+		$sort = $this->get_sql_sort();
+		if ($sort) {
+			$sort = "ORDER BY $sort";
+		}
+
+		$groupby = $this->sql->groupby ?? '';
+		if ($groupby) {
+			$groupby = "GROUP BY $groupby";
+		}
+
+		$sql = "SELECT {$this->sql->fields} FROM {$this->sql->from} WHERE {$this->sql->where} {$groupby} {$sort}";
+
+		if (!$this->is_downloading()) {
+			$this->rawdata = $DB->get_records_sql(
+				$sql,
+				$this->sql->params,
+				$this->get_page_start(),
+				$this->get_page_size()
+			);
+			// debugging("rawdata1 ".json_encode($this->rawdata));
+
+		} else {
+			$this->rawdata = $DB->get_records_sql($sql, $this->sql->params);
+			// debugging("rawdata2 ".json_encode($this->rawdata));
+
+		}
+	}
+
+	protected function col_attemptsnum(stdClass $row): string
+	{
+		if (!$row->attemptsnum) {
+			return '-';
+		}
+
+		if (!$this->is_downloading()) {
+			return html_writer::link(
+				new moodle_url(
+					'/mod/catadaptivequiz/viewattemptreport.php',
+					['userid' => $row->id, 'cmid' => $this->cmid]
+				),
+				$row->attemptsnum
+			);
+		}
+
+		return $row->attemptsnum;
+	}
+
+	/**
+	 * @throws moodle_exception
+	 */
+	protected function col_measure(stdClass $row): string
+	{
+		$formatmeasureparams = new stdClass();
+		$formatmeasureparams->measure = $row->measure;
+		$formatmeasureparams->highestlevel = $this->questionsdifficultyrange->highest_level();
+		$formatmeasureparams->lowestlevel = $this->questionsdifficultyrange->lowest_level();
+
+		$measure = $this->renderer->format_measure($formatmeasureparams);
+		if (!$row->attemptid) {
+			return $measure;
+		}
+
+		if (!$this->is_downloading()) {
+			return html_writer::link(
+				new moodle_url('/mod/catadaptivequiz/reviewattempt.php', ['attempt' => $row->attemptid]),
+				$measure
+			);
+		}
+
+		return $measure;
+	}
+
+	protected function col_stderror(stdClass $row): string
+	{
+		$rendered = $this->renderer->format_standard_error($row);
+		if (!$this->is_downloading()) {
+			return $rendered;
+		}
+
+		return html_entity_decode($rendered, ENT_QUOTES, 'UTF-8');
+	}
+
+	/**
+	 * @throws coding_exception
+	 */
+	protected function col_attempttimefinished(stdClass $row): string
+	{
+		return intval($row->attempttimefinished)
+			? userdate($row->attempttimefinished)
+			: get_string('na', 'catadaptivequiz');
+	}
+
+	/**
+	 * @throws coding_exception
+	 */
+	protected function col_detaildtestresults(stdClass $row): string
+	{
+
 		// debugging("col_detaildtestresults".json_encode($row->detaildtestresults));
 		// debugging("col_detaildtestresults ".$row->detaildtestresults);
-		return $row->detaildtestresults != null 
-			? $row->detaildtestresults 
+		return $row->detaildtestresults != null
+			? $row->detaildtestresults
 			: get_string('na', 'catadaptivequiz');
-    }
+	}
 
-    /**
-     * A convenience method to call a bunch of init methods.
-     *
-     * @param moodle_url $baseurl
-     * @throws coding_exception
-     */
-    private function init(moodle_url $baseurl, context $context, filter $filter): void {
-        $this->define_columns([
-            'fullname', 'email', 'attemptsnum', 'measure', 'stderror', 'attempttimefinished','detaildtestresults'
-        ]);
-        $this->define_headers([
-            get_string('fullname'),
-            get_string('email'),
-            get_string('numofattemptshdr', 'catadaptivequiz'),
-            get_string('theta', 'catadaptivequiz'),
-            get_string('bestscorestderror', 'catadaptivequiz'),
-            get_string('attemptfinishedtimestamp', 'catadaptivequiz'),
-            get_string('detaildtestresults','catadaptivequiz')
-        ]);
-        $this->define_baseurl($baseurl);
-        $this->set_attribute('class', $this->attributes['class'] . ' usersattemptstable');
-        $this->set_content_alignment_in_columns();
-        $this->collapsible(false);
-        $this->sortable(true, 'lastname');
-        $this->is_downloadable(true);
+	/**
+	 * A convenience method to call a bunch of init methods.
+	 *
+	 * @param moodle_url $baseurl
+	 * @throws coding_exception
+	 */
+	private function init(moodle_url $baseurl, context $context, filter $filter): void
+	{
+		$this->define_columns([
+			'fullname',
+			'email',
+			'attemptsnum',
+			'measure',
+			'stderror',
+			'attempttimefinished',
+			'detaildtestresults'
+		]);
+		$this->define_headers([
+			get_string('fullname'),
+			get_string('email'),
+			get_string('numofattemptshdr', 'catadaptivequiz'),
+			get_string('theta', 'catadaptivequiz'),
+			get_string('bestscorestderror', 'catadaptivequiz'),
+			get_string('attemptfinishedtimestamp', 'catadaptivequiz'),
+			get_string('detaildtestresults', 'catadaptivequiz')
+		]);
+		$this->define_baseurl($baseurl);
+		$this->set_attribute('class', $this->attributes['class'] . ' usersattemptstable');
+		$this->set_content_alignment_in_columns();
+		$this->collapsible(false);
+		$this->sortable(true, 'lastname');
+		$this->is_downloadable(true);
 
-        $sqlandparams = sql_resolver::sql_and_params($filter, $context);
-        $this->set_sql($sqlandparams->fields(), $sqlandparams->from(), $sqlandparams->where(), $sqlandparams->params());
-        $this->set_group_by_sql($sqlandparams->group_by());
-        $this->set_count_sql($sqlandparams->count_sql(), $sqlandparams->count_sql_params());
-    }
+		$sqlandparams = sql_resolver::sql_and_params($filter, $context);
+		$this->set_sql($sqlandparams->fields(), $sqlandparams->from(), $sqlandparams->where(), $sqlandparams->params());
+		$this->set_group_by_sql($sqlandparams->group_by());
+		$this->set_count_sql($sqlandparams->count_sql(), $sqlandparams->count_sql_params());
+	}
 
-    private function set_group_by_sql(?string $clause): void {
-        $this->sql->groupby = $clause;
-    }
+	private function set_group_by_sql(?string $clause): void
+	{
+		$this->sql->groupby = $clause;
+	}
 
-    private function set_content_alignment_in_columns(): void {
-        $this->column_class['attemptsnum'] .= ' text-center';
-        $this->column_class['measure'] .= ' text-center';
-        $this->column_class['stderror'] .= ' text-center';
-    }
+	private function set_content_alignment_in_columns(): void
+	{
+		$this->column_class['attemptsnum'] .= ' text-center';
+		$this->column_class['measure'] .= ' text-center';
+		$this->column_class['stderror'] .= ' text-center';
+	}
 }
