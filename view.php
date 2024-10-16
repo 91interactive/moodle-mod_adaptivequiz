@@ -198,6 +198,7 @@ if (has_capability('mod/catadaptivequiz:attempt', $context)) {
             FROM {catadaptivequiz_attempt}
             WHERE instance = ? AND userid = ?
             ORDER BY timemodified DESC';
+			// show first entry from user
 		if ($userattempts = $DB->get_records_sql($sql, [$adaptivequiz->id, $USER->id], 0, 1)) {
 			$userattempt = $userattempts[array_key_first($userattempts)];
 

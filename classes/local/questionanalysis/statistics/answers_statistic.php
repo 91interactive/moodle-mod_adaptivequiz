@@ -76,7 +76,8 @@ class answers_statistic implements question_statistic {
         ob_start();
         print html_writer::end_tag('tr');
         print html_writer::start_tag('tr');
-        print html_writer::tag('th', get_string('attemptquestion_ability', 'catadaptivequiz'));
+        print html_writer::tag('th', get_string('theta', 'catadaptivequiz'));
+        print html_writer::tag('th', get_string('bestscorestderror', 'catadaptivequiz'));
         print html_writer::tag('th', get_string('user', 'catadaptivequiz'));
         print html_writer::tag('th', get_string('result', 'catadaptivequiz'));
         print html_writer::tag('th', get_string('answer', 'catadaptivequiz'));
@@ -87,16 +88,16 @@ class answers_statistic implements question_statistic {
         ob_start();
         print html_writer::start_tag('table', array('class' => 'adpq_answers_table'));
 
-        print html_writer::start_tag('thead');
+		print html_writer::start_tag('thead');
         print html_writer::start_tag('tr');
-        print html_writer::tag('th', get_string('highlevelusers', 'catadaptivequiz').':',
-            array('colspan' => '5', 'class' => 'section'));
+        print html_writer::tag('th', get_string('allanswers', 'catadaptivequiz').':',
+            array('colspan' => '6', 'class' => 'section'));
         print $headings;
         print html_writer::end_tag('thead');
 
         print html_writer::start_tag('tbody', array('class' => 'adpq_highlevel'));
-        if (count($high)) {
-            foreach ($high as $result) {
+        if (count($results)) {
+            foreach ($results as $result) {
                 $this->print_user_result($result);
             }
         } else {
@@ -104,39 +105,56 @@ class answers_statistic implements question_statistic {
         }
         print html_writer::end_tag('tbody');
 
-        print html_writer::start_tag('thead');
-        print html_writer::start_tag('tr');
-        print html_writer::tag('th', get_string('midlevelusers', 'catadaptivequiz').':',
-            array('colspan' => '5', 'class' => 'section'));
-        print $headings;
-        print html_writer::end_tag('thead');
+        // print html_writer::start_tag('thead');
+        // print html_writer::start_tag('tr');
+        // print html_writer::tag('th', get_string('highlevelusers', 'catadaptivequiz').':',
+        //     array('colspan' => '5', 'class' => 'section'));
+        // print $headings;
+        // print html_writer::end_tag('thead');
 
-        print html_writer::start_tag('tbody', array('class' => 'adpq_midlevel'));
-        if (count($mid)) {
-            foreach ($mid as $result) {
-                $this->print_user_result($result);
-            }
-        } else {
-            $this->print_empty_user_result();
-        }
-        print html_writer::end_tag('tbody');
+        // print html_writer::start_tag('tbody', array('class' => 'adpq_highlevel'));
+        // if (count($high)) {
+        //     foreach ($high as $result) {
+        //         $this->print_user_result($result);
+        //     }
+        // } else {
+        //     $this->print_empty_user_result();
+        // }
+        // print html_writer::end_tag('tbody');
 
-        print html_writer::start_tag('thead');
-        print html_writer::start_tag('tr');
-        print html_writer::tag('th', get_string('lowlevelusers', 'catadaptivequiz').':',
-            array('colspan' => '5', 'class' => 'section'));
-        print $headings;
-        print html_writer::end_tag('thead');
+        // print html_writer::start_tag('thead');
+        // print html_writer::start_tag('tr');
+        // print html_writer::tag('th', get_string('midlevelusers', 'catadaptivequiz').':',
+        //     array('colspan' => '5', 'class' => 'section'));
+        // print $headings;
+        // print html_writer::end_tag('thead');
 
-        print html_writer::start_tag('tbody', array('class' => 'adpq_lowlevel'));
-        if (count($low)) {
-            foreach ($low as $result) {
-                $this->print_user_result($result);
-            }
-        } else {
-            $this->print_empty_user_result();
-        }
-        print html_writer::end_tag('tbody');
+        // print html_writer::start_tag('tbody', array('class' => 'adpq_midlevel'));
+        // if (count($mid)) {
+        //     foreach ($mid as $result) {
+        //         $this->print_user_result($result);
+        //     }
+        // } else {
+        //     $this->print_empty_user_result();
+        // }
+        // print html_writer::end_tag('tbody');
+
+        // print html_writer::start_tag('thead');
+        // print html_writer::start_tag('tr');
+        // print html_writer::tag('th', get_string('lowlevelusers', 'catadaptivequiz').':',
+        //     array('colspan' => '5', 'class' => 'section'));
+        // print $headings;
+        // print html_writer::end_tag('thead');
+
+        // print html_writer::start_tag('tbody', array('class' => 'adpq_lowlevel'));
+        // if (count($low)) {
+        //     foreach ($low as $result) {
+        //         $this->print_user_result($result);
+        //     }
+        // } else {
+        //     $this->print_empty_user_result();
+        // }
+        // print html_writer::end_tag('tbody');
 
         print html_writer::end_tag('table');
 
@@ -152,6 +170,7 @@ class answers_statistic implements question_statistic {
      */
     public function print_empty_user_result () {
         print html_writer::start_tag('tr');
+        print html_writer::tag('td', '');
         print html_writer::tag('td', '');
         print html_writer::tag('td', '');
         print html_writer::tag('td', '');
@@ -175,7 +194,9 @@ class answers_statistic implements question_statistic {
         $url = new moodle_url('/mod/catadaptivequiz/reviewattempt.php', ['attempt' => $result->attemptid]);
 
         print html_writer::start_tag('tr', array('class' => $class));
-        print html_writer::tag('td', round($result->score->measured_ability_in_scale(), 2));
+        // print html_writer::tag('td', round($result->score->measured_ability_in_scale(), 4));
+        print html_writer::tag('td', round($result->measure, 4));
+        print html_writer::tag('td', round($result->standarderror, 3));
         print html_writer::tag('td', $result->user->firstname." ".$result->user->lastname);
         print html_writer::tag('td', (($result->correct) ? "correct" : "incorrect"));
         print html_writer::tag('td', $result->answer);

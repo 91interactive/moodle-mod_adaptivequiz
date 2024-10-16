@@ -1095,8 +1095,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
             $formatmeasure->lowestlevel = $summary->lowestquestiondifficulty;
             $formatmeasure->highestlevel = $summary->highestquestiondifficulty;
 
-            $datacell = new html_table_cell(html_writer::tag('strong', $this->format_measure($formatmeasure))
-                . ' / ' . $summary->lowestquestiondifficulty . ' - ' . $summary->highestquestiondifficulty);
+            $datacell = new html_table_cell(html_writer::tag('strong', $this->format_measure($formatmeasure)));
             $datacell->id = 'abilitymeasurecell';
 
             $row->cells = [$headercell, $datacell];

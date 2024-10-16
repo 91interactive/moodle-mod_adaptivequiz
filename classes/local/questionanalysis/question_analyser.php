@@ -87,13 +87,15 @@ class question_analyser {
         int $attemptid,
         stdClass $user,
         attempt_score $score,
+		$measure, $standarderror,
         bool $correct,
         ?string $answer
     ): void {
         $result = new stdClass();
         $result->attemptid = $attemptid;
         $result->user = $user;
-        $result->score = $score;
+        $result->measure = $measure;
+        $result->standarderror = $standarderror;
         $result->correct = $correct;
         $result->answer = $answer;
 

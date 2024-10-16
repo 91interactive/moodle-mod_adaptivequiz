@@ -101,7 +101,7 @@ class quiz_analyser {
                 // Record the attempt score and the individual question result.
                 $correct = ($quba->get_question_mark($slot) > 0);
                 $answer = $quba->get_response_summary($slot);
-                $this->questions[$question->id]->add_result($attempt->id, $user, $score, $correct, $answer);
+                $this->questions[$question->id]->add_result($attempt->id, $user, $attempt->measure, $attempt->standarderror, $correct, $answer);
             }
         }
     }
