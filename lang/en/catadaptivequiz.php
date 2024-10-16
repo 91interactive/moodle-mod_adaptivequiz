@@ -235,6 +235,7 @@ $string['answers_display_name'] = 'Answers';
 $string['answer'] = 'Answer';
 $string['statistic'] = 'Statistic';
 $string['value'] = 'Value';
+$string['allanswers'] = 'Answers of all users';
 $string['highlevelusers'] = 'Users above the question-level';
 $string['midlevelusers'] = 'Users near the question-level';
 $string['lowlevelusers'] = 'Users below the question-level';

@@ -187,6 +187,7 @@ $string['answers_display_name'] = 'Réponses';
 $string['answer'] = 'Réponse';
 $string['statistic'] = 'Statistique(s)';
 $string['value'] = 'Valeur';
+$string['allanswers'] = 'Réponses de tous les utilisateurs';
 $string['highlevelusers'] = 'Utilisateurs au dessus du niveau requis';
 $string['midlevelusers'] = 'Utilisateurs proche du niveau requis';
 $string['lowlevelusers'] = 'Utilisateurs en dessous du niveau requis';

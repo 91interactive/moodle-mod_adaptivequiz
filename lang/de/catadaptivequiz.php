@@ -282,6 +282,7 @@ $string['answers_display_name'] = 'Antworten';
 $string['answer'] = 'Antwort';
 $string['statistic'] = 'Statistik';
 $string['value'] = 'Wert';
+$string['allanswers'] = 'Antworten aller Benutzer';
 $string['highlevelusers'] = 'Benutzer über dem Fragenlevel';
 $string['midlevelusers'] = 'Benutzer nahe dem Fragenlevel';
 $string['lowlevelusers'] = 'Benutzer unter dem Fragenlevel';

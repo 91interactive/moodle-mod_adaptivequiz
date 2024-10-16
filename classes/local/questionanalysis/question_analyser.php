@@ -79,15 +79,14 @@ class question_analyser {
      *
      * @param int $attemptid Id of a record from {catadaptivequiz_attempt}.
      * @param stdClass $user Normally a record from {users}, or and object with 'firstname' and 'lastname' properties.
-     * @param attempt_score $score The user's score on this attempt.
      * @param bool $correct True if the user answered correctly.
      * @param null|string $answer
      */
     public function add_result (
         int $attemptid,
         stdClass $user,
-        attempt_score $score,
-		$measure, $standarderror,
+		$measure, 
+		$standarderror,
         bool $correct,
         ?string $answer
     ): void {

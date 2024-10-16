@@ -50,7 +50,7 @@ class answers_statistic implements question_statistic {
         // Sort the results.
         $results = $analyser->get_results();
         foreach ($results as $result) {
-            $sortkeys[] = $result->score->measured_ability_in_logits();
+            $sortkeys[] = $result->measure;
         }
         array_multisort($sortkeys, SORT_NUMERIC, SORT_DESC, $results);
 
@@ -59,8 +59,8 @@ class answers_statistic implements question_statistic {
         $mid = array();
         $low = array();
         foreach ($results as $result) {
-            $ceiling = $result->score->measured_ability_in_logits() + $result->score->standard_error_in_logits();
-            $floor = $result->score->measured_ability_in_logits() - $result->score->standard_error_in_logits();
+            $ceiling = $result->measure + $result->standarderror;
+            $floor = $result->measure - $result->standarderror;
             if ($analyser->get_question_level_in_logits() < $floor) {
                 // User is significantly above the question-level.
                 $high[] = $result;
@@ -194,7 +194,6 @@ class answers_statistic implements question_statistic {
         $url = new moodle_url('/mod/catadaptivequiz/reviewattempt.php', ['attempt' => $result->attemptid]);
 
         print html_writer::start_tag('tr', array('class' => $class));
-        // print html_writer::tag('td', round($result->score->measured_ability_in_scale(), 4));
         print html_writer::tag('td', round($result->measure, 4));
         print html_writer::tag('td', round($result->standarderror, 3));
         print html_writer::tag('td', $result->user->firstname." ".$result->user->lastname);

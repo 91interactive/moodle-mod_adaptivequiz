@@ -59,21 +59,21 @@ class discrimination_statistic implements question_statistic {
         $lowergroupsize = 0;
         $lowergroupcorrect = 0;
 
-        foreach ($analyser->get_results() as $result) {
-            if ($result->score->measured_ability_in_logits() - $result->score->standard_error_in_logits() > $level) {
-                // Upper group.
-                $uppergroupsize++;
-                if ($result->correct) {
-                    $uppergroupcorrect++;
-                }
-            } else if ($result->score->measured_ability_in_logits() + $result->score->standard_error_in_logits() < $level) {
-                // Lower Group.
-                $lowergroupsize++;
-                if ($result->correct) {
-                    $lowergroupcorrect++;
-                }
-            }
-        }
+        // foreach ($analyser->get_results() as $result) {
+        //     if ($result->score->measured_ability_in_logits() - $result->score->standard_error_in_logits() > $level) {
+        //         // Upper group.
+        //         $uppergroupsize++;
+        //         if ($result->correct) {
+        //             $uppergroupcorrect++;
+        //         }
+        //     } else if ($result->score->measured_ability_in_logits() + $result->score->standard_error_in_logits() < $level) {
+        //         // Lower Group.
+        //         $lowergroupsize++;
+        //         if ($result->correct) {
+        //             $lowergroupcorrect++;
+        //         }
+        //     }
+        // }
 
         if ($uppergroupsize > 0 && $lowergroupsize > 0) {
             // We need at least one result in the upper and lower groups.
