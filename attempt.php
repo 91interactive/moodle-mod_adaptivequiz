@@ -359,6 +359,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 					// questionId, raw answers and rated answers
 
 					$qu->standarderror = $r_server_response->SE;
+					$qu->timestamp = time();
 
 					// question history in single attempt
 					if ($currentDBdetaildtestresults != null && $currentDBdetaildtestresults != "" && $currentDBdetaildtestresults != "null") {
