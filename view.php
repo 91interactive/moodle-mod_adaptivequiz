@@ -25,6 +25,7 @@
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/tablelib.php');
 require_once($CFG->dirroot . '/mod/catadaptivequiz/locallib.php');
+require_once($CFG->dirroot . '/mod/catadaptivequiz/lib.php');
 
 use core\output\notification;
 use mod_catadaptivequiz\local\adaptive_quiz_requires;
@@ -39,6 +40,10 @@ use mod_catadaptivequiz\local\report\users_attempts\user_preferences\user_prefer
 use mod_catadaptivequiz\local\report\users_attempts\users_attempts_table;
 use mod_catadaptivequiz\local\user_attempts_table;
 use mod_catadaptivequiz\output\user_attempt_summary;
+
+
+// Set the group_concat_max_len session variable
+catadaptivequiz_set_group_concat_max_len();
 
 $id = optional_param('id', 0, PARAM_INT);
 $downloadusersattempts = optional_param('download', '', PARAM_ALPHA);
@@ -198,7 +203,7 @@ if (has_capability('mod/catadaptivequiz:attempt', $context)) {
             FROM {catadaptivequiz_attempt}
             WHERE instance = ? AND userid = ?
             ORDER BY timemodified DESC';
-			// show first entry from user
+		// show first entry from user
 		if ($userattempts = $DB->get_records_sql($sql, [$adaptivequiz->id, $USER->id], 0, 1)) {
 			$userattempt = $userattempts[array_key_first($userattempts)];
 

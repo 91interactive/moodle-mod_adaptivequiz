@@ -820,7 +820,7 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
 
 		// get values from $attempt->detaildtestresults object/associative array
 		$answered_questions = [];
-		if ($attempt->detaildtestresults) $answered_questions = array_values(json_decode($attempt->detaildtestresults, true))[0];
+		if ($attempt->detaildtestresults) $answered_questions = array_values(json_decode($attempt->detaildtestresults, true))[0]; // todo rm: check if this is correct
 		else debugging('no detaildtestresults : ' . json_encode($attempt));
         
 		foreach ($quba->get_slots() as $slot) {

@@ -79,7 +79,7 @@ final class user_attempts_table extends table_sql {
         $this->set_column_css_classes();
         $this->set_content_alignment_in_columns();
         $this->define_baseurl($baseurl);
-        $this->set_sql('a.id, a.attemptstate AS state, a.timemodified AS timefinished, a.measure,a.detaildtestresults, q.highestlevel, ' .
+        $this->set_sql('a.id, a.attemptstate AS state, a.timemodified AS timefinished, a.measure, a.detaildtestresults, q.highestlevel, ' .
             'q.lowestlevel', '{catadaptivequiz_attempt} a, {catadaptivequiz} q', 'a.instance = q.id AND q.id = ? ' .
             'AND userid = ?', [$adaptivequiz->id, $userid]);
     }

@@ -137,6 +137,20 @@ function xmldb_catadaptivequiz_upgrade($oldversion)
 
 		upgrade_mod_savepoint(true, 2024071114, 'catadaptivequiz');
 	}
+	if ($oldversion < 2024100133) {
+		// change length of detaildtestresults field in  catadaptivequiz_attempt table to max length
+		$table = new xmldb_table('catadaptivequiz_attempt');
+		// $field = new xmldb_field( 'detaildtestresults', XMLDB_TYPE_TEXT, 'max', null, null, null, null, 'questionsattempted');
+		// Define the field with a new type but without length
+		$field = new xmldb_field('detaildtestresults', XMLDB_TYPE_TEXT, "long", null, null, null, null, 'questionsattempted');
+
+
+		if ($dbman->field_exists($table, $field)) {
+			$dbman->change_field_type($table, $field);
+		}
+
+		upgrade_mod_savepoint(true, 2024100133, 'catadaptivequiz');
+	}
 
 	return true;
 }

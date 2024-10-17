@@ -528,7 +528,7 @@ function catadaptivequiz_extend_navigation(navigation_node $navref, stdclass $co
  * @throws coding_exception
  * @throws moodle_exception
  */
-function catadaptivequiz_extend_settings_navigation(settings_navigation $settingsnav, navigation_node $adaptivequiznode) {
+	function catadaptivequiz_extend_settings_navigation(settings_navigation $settingsnav, navigation_node $adaptivequiznode) {
     global $PAGE;
 
     if (!has_capability('mod/catadaptivequiz:viewreport', $PAGE->cm->context)) {
@@ -541,8 +541,6 @@ function catadaptivequiz_extend_settings_navigation(settings_navigation $setting
         navigation_node::TYPE_SETTING, null, 'mod_catadaptivequiz_question_analysis',
         new pix_icon('i/report', ''));
     $adaptivequiznode->add_node($node);
-
-	
 }
 
 /**
@@ -784,4 +782,12 @@ function catadaptivequiz_get_coursemodule_info(stdClass $coursemodule) {
     }
 
     return $result;
+}
+
+/**
+ * Set the group_concat_max_len session variable.
+ */
+function catadaptivequiz_set_group_concat_max_len() {
+    global $DB;
+    $DB->execute("SET SESSION group_concat_max_len = 4000000000"); // Adjust the value as needed
 }
