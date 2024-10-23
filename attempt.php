@@ -344,6 +344,7 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 
 				$currentDBdetaildtestresults = $currentDBentry->detaildtestresults ? json_decode($currentDBentry->detaildtestresults) ?? '' : '';
 
+				$mergedObj = [];
 				// check if question is answered (graded)
 				if ($qa->get_state()->is_graded() && $currentDBdetaildtestresults != "null") {
 
@@ -377,7 +378,6 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 						$mergedObj[$uniqueid] = $qu;
 					}
 				}
-
 				$adaptiveattempt->update_after_question_answered_with_r_response(0.0, $r_server_response->SE ?? $standarderror ?? 0.0, $r_server_response->theta ?? 0, time(), json_encode($mergedObj));
 			} catch (Exception $exception) {
 				throw new moodle_exception(

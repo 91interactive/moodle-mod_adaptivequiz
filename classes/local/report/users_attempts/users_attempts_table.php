@@ -207,12 +207,8 @@ final class users_attempts_table extends table_sql
 	 */
 	protected function col_detaildtestresults(stdClass $row): string
 	{
-
-		// debugging("col_detaildtestresults".json_encode($row->detaildtestresults));
-		// debugging("col_detaildtestresults ".$row->detaildtestresults);
-		return $row->detaildtestresults != null
-			? $row->detaildtestresults
-			: get_string('na', 'catadaptivequiz');
+		if ($row->detaildtestresults == null) return get_string('na', 'catadaptivequiz');
+		return  "[" . $row->detaildtestresults . "]";
 	}
 
 	/**
