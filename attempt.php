@@ -134,9 +134,11 @@ $standarderror = 0.0;
 $determinenextdifficultylevelresult = null;
 $r_server_response = null;
 $data_for_r_server = new stdClass;
+$quba = null;
 
 // If uniqueid is not empty the process respones.
-if (!empty($uniqueid) && confirm_sesskey()) {
+if (!empty($uniqueid) && confirm_sesskey()) { // todo rm: refactor, that this is used on first question also.
+
 	// Check if the uniqueid belongs to the same attempt record the user is currently using.
 	if (!adaptivequiz_uniqueid_part_of_attempt($uniqueid, $cm->instance, $USER->id)) {
 		throw new moodle_exception('uniquenotpartofattempt', 'catadaptivequiz');
@@ -162,230 +164,6 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 
 			$questionanswerevaluation = new question_answer_evaluation($quba);
 			$questionanswerevaluationresult = $questionanswerevaluation->perform();
-
-			// CS: calling R-Server for next question
-			// CS: preparing data for r-server call			
-			$data_for_r_server = new stdClass;
-			$data_for_r_server->courseID = $course->id;  // course id
-			$data_for_r_server->testID =  $adaptivequiz->id; // test id
-
-
-			// CS: get the quiz category 
-			$category = $DB->get_record('catadaptivequiz_question', ['instance' => $adaptivequiz->id]);
-			// CS: get all question from selected question categories in question pool
-			$categoryList = adaptivequiz_get_selected_question_cateogires($adaptivequiz->id);
-
-			$qf = new question_finder();
-			// create question bank via quategoryIds
-			$questionIdsFromCategories = $qf->get_questions_from_categories($categoryList, null);
-			$questionBankWithIdNumber = question_load_questions($questionIdsFromCategories, 'qbe.idnumber');
-
-			// CS: prepare itempool for R-Server
-			$data_for_r_server->itempool = new stdClass;
-			$data_for_r_server->itempool->items = [];
-			foreach ($questionBankWithIdNumber as $question) {
-				// CS: reset object for each question
-				$itemsArray = new stdClass;
-				$itemsArray->diff = [];
-				$itemsArray->content_area = [];
-				$itemsArray->disc = [];
-				// $itemsArray->max = null;
-				// $itemsArray->answer = [];
-				$itemsArray->cluster = null;
-
-				$itemsArray->enemys = [];
-				$itemsArray->ID = null;
-
-				$itemsArray->ID = $question->idnumber;
-				$itemsArray->dbID = $question->id;
-				//get tags for each question
-				$tags =  core_tag_tag::get_item_tags_array('core_question', 'question', $question->id);
-				$itemsArray = attempt::distribute_used_tags($tags, $itemsArray);
-
-				// push itemsArray to itempool items
-				array_push($data_for_r_server->itempool->items, $itemsArray);
-			}
-
-			// CS: prepare settings for R-Server
-			$data_for_r_server->settings = new stdClass;
-			// Settings $adaptivequiz
-			$data_for_r_server->settings->maxItems = $adaptivequiz->maximumquestions;
-			$data_for_r_server->settings->minItems = $adaptivequiz->minimumquestions;
-			$data_for_r_server->settings->minStdError = $adaptivequiz->standarderror;
-			$data_for_r_server->settings->criteria_not_adaptive = $adaptivequiz->selecttasktypes == 0 ? 'sequential' : 'random';
-			$data_for_r_server->settings->ncl_calib = $adaptivequiz->numbercalibrationclusters;
-			$data_for_r_server->settings->ncl_link = $adaptivequiz->numberlinkingclusters;
-			$data_for_r_server->settings->ncl_adaptive = $adaptivequiz->numberadaptiveclusters;
-			// debugging('Contents of $adaptivequiz->personalparameterestimation: ' . print_r($adaptivequiz->personalparameterestimation, true), DEBUG_DEVELOPER);
-			// debugging('Contents of $adaptivequiz->adaptivepart: ' . print_r($adaptivequiz->adaptivepart, true), DEBUG_DEVELOPER);
-			switch ($adaptivequiz->personalparameterestimation) {
-				case '0':
-					$data_for_r_server->settings->pers_est = "MAP";
-					break;
-				case '1':
-					$data_for_r_server->settings->pers_est = "EAP";
-					break;
-				case '2':
-					$data_for_r_server->settings->pers_est = "WLE";
-					break;
-				case '3':
-					$data_for_r_server->settings->pers_est = "MLE";
-					break;
-			}
-
-			switch ($adaptivequiz->adaptivepart) {
-				case '0':
-					$data_for_r_server->settings->criteria_adaptive = "MI";
-					break;
-				case '1':
-					$data_for_r_server->settings->criteria_adaptive = "MEPV";
-					break;
-				case '2':
-					$data_for_r_server->settings->criteria_adaptive = "MEI";
-					break;
-				case '3':
-					$data_for_r_server->settings->criteria_adaptive = "IKL";
-					break;
-			}
-
-			$exposure = new stdClass();
-			$exposure->enabled = $adaptivequiz->randomesque_exposure_control == "1" ? 1 : 0;
-			$exposure->nitems_exposure = $adaptivequiz->suitabletasks;
-			$data_for_r_server->settings->exposure = $exposure;
-
-			$contentareas = new stdClass();
-			$contentareas->enabled = $adaptivequiz->contentareas; //Warning: Undefined property: stdClass::$contentareas in /var/www/html/mod/catadaptivequiz/attempt.php on line 247
-			$contentareas->distribution = $adaptivequiz->contentarea1;
-			// $contentareas->area1 = $adaptivequiz->contentarea1;
-			// $contentareas->area2 = $adaptivequiz->contentarea2;
-			// $contentareas->area3 = $adaptivequiz->contentarea3;
-			// $contentareas->area4 = $adaptivequiz->contentarea4;
-			$data_for_r_server->settings->content_areas = $contentareas;
-
-			//CS: user data for r-server
-			$data_for_r_server->person = new stdClass;
-			$data_for_r_server->person->personID = $USER->id;
-
-			// CS: prepare test data for R-Server 
-			$data_for_r_server->test = new stdClass;
-			$data_for_r_server->test->itemID = [];
-			$data_for_r_server->test->item = [];
-			$data_for_r_server->test->scoredResponse = [];
-
-			$quSlots = $quba->get_slots();
-			foreach ($quSlots as $slot) {
-				$questionBySlot = $quba->get_question($slot);
-
-				array_push($data_for_r_server->test->itemID, $questionBySlot->idnumber);
-				// add index of item with id questionBySlot->idnumber in itempool to $data_for_rs_server->test->item
-				$index = array_search($questionBySlot->idnumber, array_column($data_for_r_server->itempool->items, 'ID'));
-				array_push($data_for_r_server->test->item, $index);
-
-				// $questionBySlot->id
-
-
-
-				// scoredResponse
-				$qa = $quba->get_attempt_iterator()->offsetGet($slot);
-				$fraction = $qa->get_fraction();
-				$scoredResponse = $quba->get_question_mark($slot); //$fraction * $qa->get_question()->max;
-				array_push($data_for_r_server->test->scoredResponse, $scoredResponse);
-			}
-			$data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33); // todo rm: write correct times
-			$data_for_r_server->test->timeout = false; // todo rm: calculate correct value
-
-			// CS: prepare answered questions, testsettings and questions for R-Server
-			$data_for_r_server->answeredquestions = $adaptiveattempt->read_attempt_data()->detaildtestresults;
-			$data_for_r_server->testsettings = $adaptivequiz;
-
-			// $quizid = $adaptivequiz->id;
-			// $quiz = $DB->get_record('quiz', array('id' => $quizid), '*', MUST_EXIST);
-
-			// // Get the quiz slots (question ids are stored in slots)
-			// $slots = $DB->get_records('quiz_slots', array('quizid' => $quiz->id), 'slot');
-
-			// // Fetch each question
-			// $questions = array();
-			// // foreach ($slots as $slot) {
-			// //     $question = $DB->get_record('question', array('id' => $slot->questionid), '*', MUST_EXIST);
-			// //     $questions[] = $question;
-			// // }
-
-			// $data_for_r_server->questionsDatas = $questions;
-
-			// $data_for_r_server->questionsDatas = $questions;	// Warning: Undefined variable $questions in /var/www/html/mod/catadaptivequiz/attempt.php on line 283	
-
-			// CS in response we get the next question and the next difficulty level
-			// c server call here:
-			$r_server_response = $adaptiveattempt->call_r_server($data_for_r_server);
-
-			// add check if response is valide
-			if ($r_server_response == null) {
-				throw new moodle_exception('rserverresponseerrornull', 'catadaptivequiz');
-			}
-			// check if response has SE, personID, theta, nextItem and terminated
-			if (!property_exists($r_server_response, 'SE') || !property_exists($r_server_response, 'personID') || !property_exists($r_server_response, 'theta') || !property_exists($r_server_response, 'nextItem') || !property_exists($r_server_response, 'terminated')) {
-				throw new moodle_exception('rserverresponseerrormissingvalue', 'catadaptivequiz');
-			}
-
-
-			$standarderror = $r_server_response->SE;
-			$determinenextdifficultylevelresult = $r_server_response->terminated ? determine_next_difficulty_result::with_error("CAT terminated") : null;
-
-			try {
-
-				// CS: adding list with object of questionId as key and raw and rated answer as value
-				$objList = null;
-				$quSlots = $quba->get_slots();
-				$lastSlot = end($quSlots);
-				$qa = $quba->get_attempt_iterator()->offsetGet($lastSlot);
-
-				$currentDBentry = $DB->get_record('catadaptivequiz_attempt', array('uniqueid' => $uniqueid), '*', MUST_EXIST);
-
-				$currentDBdetaildtestresults = $currentDBentry->detaildtestresults ? json_decode($currentDBentry->detaildtestresults) ?? '' : '';
-
-				$mergedObj = [];
-				// check if question is answered (graded)
-				if ($qa->get_state()->is_graded() && $currentDBdetaildtestresults != "null") {
-
-					// get question id 
-					$quID = $qa->get_question_id();
-
-					$qu = new stdClass();
-					$qu->questionId = $quID;
-					$qu->name = $qa->get_question()->name;
-					$qu->rawAnswer = $qa->get_response_summary();
-					$qu->ratedAnswer = $quba->get_question_mark($lastSlot);
-					$qu->theta = $r_server_response->theta;
-					// questionId, raw answers and rated answers
-
-					$qu->standarderror = $r_server_response->SE;
-					$qu->timestamp = time();
-
-					// question history in single attempt
-					if ($currentDBdetaildtestresults != null && $currentDBdetaildtestresults != "" && $currentDBdetaildtestresults != "null") {
-						$tmpArray = [];
-						if (gettype($currentDBdetaildtestresults->$uniqueid) == "object") {
-							$tmpArray = [$currentDBdetaildtestresults->$uniqueid, $qu];
-						} else {
-							foreach ($currentDBdetaildtestresults->$uniqueid as $key => $value) {
-								array_push($tmpArray, $value);
-							}
-							array_push($tmpArray, $qu);
-						}
-						$mergedObj[$uniqueid] = $tmpArray;
-					} else {
-						$mergedObj[$uniqueid] = $qu;
-					}
-				}
-				$adaptiveattempt->update_after_question_answered_with_r_response(0.0, $r_server_response->SE ?? $standarderror ?? 0.0, $r_server_response->theta ?? 0, time(), json_encode($mergedObj));
-			} catch (Exception $exception) {
-				throw new moodle_exception(
-					'unableupdatediffsum',
-					'catadaptivequiz',
-					new moodle_url('/mod/catadaptivequiz/attempt.php', ['cmid' => $id])
-				);
-			}
 		}
 	} catch (question_out_of_sequence_exception $e) {
 		$url = new moodle_url('/mod/catadaptivequiz/attempt.php', array('cmid' => $id));
@@ -401,6 +179,221 @@ if (!empty($uniqueid) && confirm_sesskey()) {
 		throw new moodle_exception('errorprocessingresponses', 'question', $url, $e->getMessage(), $debuginfo);
 	}
 }
+
+// r-server call start
+// CS: calling R-Server for next question
+// CS: preparing data for r-server call			
+$data_for_r_server = new stdClass;
+$data_for_r_server->courseID = $course->id;  // course id
+$data_for_r_server->testID =  $adaptivequiz->id; // test id
+
+
+// CS: get the quiz category 
+$category = $DB->get_record('catadaptivequiz_question', ['instance' => $adaptivequiz->id]);
+// CS: get all question from selected question categories in question pool
+$categoryList = adaptivequiz_get_selected_question_cateogires($adaptivequiz->id);
+
+$qf = new question_finder();
+// create question bank via quategoryIds
+$questionIdsFromCategories = $qf->get_questions_from_categories($categoryList, null);
+$questionBankWithIdNumber = question_load_questions($questionIdsFromCategories, 'qbe.idnumber');
+
+// CS: prepare itempool for R-Server
+$data_for_r_server->itempool = new stdClass;
+$data_for_r_server->itempool->items = [];
+foreach ($questionBankWithIdNumber as $question) {
+	// CS: reset object for each question
+	$itemsArray = new stdClass;
+	$itemsArray->diff = [];
+	$itemsArray->content_area = [];
+	$itemsArray->disc = [];
+	// $itemsArray->max = null;
+	// $itemsArray->answer = [];
+	$itemsArray->cluster = null;
+
+	$itemsArray->enemys = [];
+	$itemsArray->ID = null;
+
+	$itemsArray->ID = $question->idnumber;
+	$itemsArray->dbID = $question->id;
+	//get tags for each question
+	$tags =  core_tag_tag::get_item_tags_array('core_question', 'question', $question->id);
+	$itemsArray = attempt::distribute_used_tags($tags, $itemsArray);
+
+	// push itemsArray to itempool items
+	array_push($data_for_r_server->itempool->items, $itemsArray);
+}
+
+// CS: prepare settings for R-Server
+$data_for_r_server->settings = new stdClass;
+// Settings $adaptivequiz
+$data_for_r_server->settings->maxItems = $adaptivequiz->maximumquestions;
+$data_for_r_server->settings->minItems = $adaptivequiz->minimumquestions;
+$data_for_r_server->settings->minStdError = $adaptivequiz->standarderror;
+$data_for_r_server->settings->criteria_not_adaptive = $adaptivequiz->selecttasktypes == 0 ? 'sequential' : 'random';
+$data_for_r_server->settings->ncl_calib = $adaptivequiz->numbercalibrationclusters;
+$data_for_r_server->settings->ncl_link = $adaptivequiz->numberlinkingclusters;
+$data_for_r_server->settings->ncl_adaptive = $adaptivequiz->numberadaptiveclusters;
+// debugging('Contents of $adaptivequiz->personalparameterestimation: ' . print_r($adaptivequiz->personalparameterestimation, true), DEBUG_DEVELOPER);
+// debugging('Contents of $adaptivequiz->adaptivepart: ' . print_r($adaptivequiz->adaptivepart, true), DEBUG_DEVELOPER);
+switch ($adaptivequiz->personalparameterestimation) {
+	case '0':
+		$data_for_r_server->settings->pers_est = "MAP";
+		break;
+	case '1':
+		$data_for_r_server->settings->pers_est = "EAP";
+		break;
+	case '2':
+		$data_for_r_server->settings->pers_est = "WLE";
+		break;
+	case '3':
+		$data_for_r_server->settings->pers_est = "MLE";
+		break;
+}
+
+switch ($adaptivequiz->adaptivepart) {
+	case '0':
+		$data_for_r_server->settings->criteria_adaptive = "MI";
+		break;
+	case '1':
+		$data_for_r_server->settings->criteria_adaptive = "MEPV";
+		break;
+	case '2':
+		$data_for_r_server->settings->criteria_adaptive = "MEI";
+		break;
+	case '3':
+		$data_for_r_server->settings->criteria_adaptive = "IKL";
+		break;
+}
+
+$exposure = new stdClass();
+$exposure->enabled = $adaptivequiz->randomesque_exposure_control == "1" ? 1 : 0;
+$exposure->nitems_exposure = $adaptivequiz->suitabletasks;
+$data_for_r_server->settings->exposure = $exposure;
+
+$contentareas = new stdClass();
+$contentareas->enabled = $adaptivequiz->contentareas; //Warning: Undefined property: stdClass::$contentareas in /var/www/html/mod/catadaptivequiz/attempt.php on line 247
+$contentareas->distribution = $adaptivequiz->contentarea1;
+$data_for_r_server->settings->content_areas = $contentareas;
+
+//CS: user data for r-server
+$data_for_r_server->person = new stdClass;
+$data_for_r_server->person->personID = $USER->id;
+
+// CS: prepare test data for R-Server 
+$data_for_r_server->test = new stdClass;
+$data_for_r_server->test->itemID = [];
+$data_for_r_server->test->item = [];
+$data_for_r_server->test->scoredResponse = [];
+$data_for_r_server->test->itemtime = [];
+$data_for_r_server->test->timeout = false;
+$data_for_r_server->answeredquestions = [];
+
+if ($quba != null) {
+	$quSlots = $quba->get_slots();
+	foreach ($quSlots as $slot) {
+		$questionBySlot = $quba->get_question($slot);
+
+		array_push($data_for_r_server->test->itemID, $questionBySlot->idnumber);
+		// add index of item with id questionBySlot->idnumber in itempool to $data_for_rs_server->test->item
+		$index = array_search($questionBySlot->idnumber, array_column($data_for_r_server->itempool->items, 'ID'));
+		array_push($data_for_r_server->test->item, $index);
+
+
+		// scoredResponse
+		$qa = $quba->get_attempt_iterator()->offsetGet($slot);
+		$fraction = $qa->get_fraction();
+		$scoredResponse = $quba->get_question_mark($slot); //$fraction * $qa->get_question()->max;
+		array_push($data_for_r_server->test->scoredResponse, $scoredResponse);
+
+		// calculate itemtime
+		array_push($data_for_r_server->test->itemtime, 0.0); // todo rm: write correct times
+
+	}
+
+	// $data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33); // todo rm: write correct times
+
+}
+$data_for_r_server->test->timeout = false; // todo rm: calculate correct value
+// CS: prepare answered questions, testsettings and questions for R-Server
+$readattemptdata = $adaptiveattempt->read_attempt_data();
+if ($readattemptdata && property_exists($readattemptdata, 'detaildtestresults')) {
+	$data_for_r_server->answeredquestions = $readattemptdata->detaildtestresults;
+}
+$data_for_r_server->testsettings = $adaptivequiz;
+
+// CS in response we get the next question and the next difficulty level
+// c server call here:
+$r_server_response = $adaptiveattempt->call_r_server($data_for_r_server);
+// add check if response is valide
+if ($r_server_response == null) {
+	throw new moodle_exception('rserverresponseerrornull', 'catadaptivequiz');
+}
+// check if response has SE, personID, theta, nextItem and terminated
+if (!property_exists($r_server_response, 'SE') || !property_exists($r_server_response, 'personID') || !property_exists($r_server_response, 'theta') || !property_exists($r_server_response, 'nextItem') || !property_exists($r_server_response, 'terminated')) {
+	throw new moodle_exception('rserverresponseerrormissingvalue', 'catadaptivequiz');
+}
+
+
+$standarderror = $r_server_response->SE;
+$determinenextdifficultylevelresult = $r_server_response->terminated ? determine_next_difficulty_result::with_error("CAT terminated") : null;
+
+try {
+	if ($quba != null) {
+		// CS: adding list with object of questionId as key and raw and rated answer as value
+		$objList = null;
+		$quSlots = $quba->get_slots();
+		$lastSlot = end($quSlots);
+		$qa = $quba->get_attempt_iterator()->offsetGet($lastSlot);
+
+		$currentDBentry = $DB->get_record('catadaptivequiz_attempt', array('uniqueid' => $uniqueid), '*', MUST_EXIST);
+
+		$currentDBdetaildtestresults = $currentDBentry->detaildtestresults ? json_decode($currentDBentry->detaildtestresults) ?? '' : '';
+
+		$mergedObj = [];
+		// check if question is answered (graded)
+		if ($qa->get_state()->is_graded() && $currentDBdetaildtestresults != "null") {
+
+			// get question id 
+			$quID = $qa->get_question_id();
+
+			$qu = new stdClass();
+			$qu->questionId = $quID;
+			$qu->name = $qa->get_question()->name;
+			$qu->rawAnswer = $qa->get_response_summary();
+			$qu->ratedAnswer = $quba->get_question_mark($lastSlot);
+			$qu->theta = $r_server_response->theta;
+			// questionId, raw answers and rated answers
+
+			$qu->standarderror = $r_server_response->SE;
+			$qu->timestamp = time();
+
+			// question history in single attempt
+			if ($currentDBdetaildtestresults != null && $currentDBdetaildtestresults != "" && $currentDBdetaildtestresults != "null") {
+				$tmpArray = [];
+				if (gettype($currentDBdetaildtestresults->$uniqueid) == "object") {
+					$tmpArray = [$currentDBdetaildtestresults->$uniqueid, $qu];
+				} else {
+					foreach ($currentDBdetaildtestresults->$uniqueid as $key => $value) {
+						array_push($tmpArray, $value);
+					}
+					array_push($tmpArray, $qu);
+				}
+				$mergedObj[$uniqueid] = $tmpArray;
+			} else {
+				$mergedObj[$uniqueid] = $qu;
+			}
+		}
+		$adaptiveattempt->update_after_question_answered_with_r_response(0.0, $r_server_response->SE ?? $standarderror ?? 0.0, $r_server_response->theta ?? 0, time(), json_encode($mergedObj));
+	}
+} catch (Exception $exception) {
+	throw new moodle_exception(
+		'unableupdatediffsum',
+		'catadaptivequiz',
+		new moodle_url('/mod/catadaptivequiz/attempt.php', ['cmid' => $id])
+	);
+}
+// r-server call end
 
 // Initialize quba.
 $qubaid = $adaptiveattempt->read_attempt_data()->uniqueid;
@@ -427,7 +420,7 @@ if ($data_for_r_server != null && property_exists($data_for_r_server, 'itempool'
 if ($nextIndex == null) {
 	debugging('nextIndex is null ' . json_encode($data_for_r_server), DEBUG_DEVELOPER);
 }
-
+// debugging("nextIndex from r-server is: " . $nextIndex . " ||| ". json_encode($r_server_response));
 $itemadministration = new item_administration($quba, $fetchquestion);
 $itemadministrationevaluation = $itemadministration->evaluate_ability_to_administer_next_item(
 	$adaptiveattempt,
