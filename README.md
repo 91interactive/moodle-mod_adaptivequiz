@@ -223,67 +223,148 @@ The property "criteria_adaptive" has following short values:
 - MI [//]: # Maximum Information
 - MEPV [//]: # Minimum Expected Posterior Variance
 - MEI [//]: # Maximum Expected Information
-- IKL [//]: # Integration-based
+- IKL [//]: # Integration-based   
+   
+<br>
+Example JSON:   
 
----
-```PHP
+```JSON
 {
-	"courseID" : "asasd",
-	"TestID" : "sdsd",
-	"itempool" : {
-		"items":[
-				{"ID": "ID1", "diff": [2,2,3], "disc": 2,"content_area" : ["ca1", "ca2"], "enemy": [2,5,6]},
-				{"ID": "ID2", "diff": 1, "disc": 1,	"content_area" : ["ca1"], "enemy": [3,8]}
-		]	
+	"courseID": [
+		"2"
+	],
+	"testID": [
+		"2"
+	],
+	"itempool": {
+		"items": [
+			{
+				"diff": [
+					"0.57"
+				],
+				"content_area": [
+					"I",
+					"9",
+					"25",
+					"A",
+					"KI"
+				],
+				"disc": [
+					"1.52"
+				],
+				"cluster": "A",
+				"enemys": [],
+				"ID": "I0925AKa",
+				"dbID": "67"
+			},
+			{
+				"diff": [
+					"-1.25"
+				],
+				"content_area": [
+					"I",
+					"9",
+					"25",
+					"W",
+					"HI"
+				],
+				"disc": [
+					"1.08"
+				],
+				"cluster": "A",
+				"enemys": [],
+				"ID": "I0925WHa",
+				"dbID": "69"
+			},
+			...
+		]
 	},
-	"settings" : {
-       	"maxItems": 60,
-       	"criteria_not_adaptive": "random",
-       	"ncl_calib": 2,
-	  	"ncl_link": 2,
-	  	"ncl_adaptive": 2,
-	  	"pers.est": "WLE",
-        "criteria_adaptive": "MI",
-	  	"exposure": {
-			"enabled": true,
-			"nitems_exposure": 4	
+	"settings": {
+		"maxItems": [
+			"12"
+		],
+		"minItems": [
+			"1"
+		],
+		"minStdError": [
+			"0.00000"
+		],
+		"criteria_not_adaptive": [
+			"random"
+		],
+		"ncl_calib": [
+			"2"
+		],
+		"ncl_link": [
+			"2"
+		],
+		"ncl_adaptive": [
+			"2"
+		],
+		"pers_est": [
+			"MAP"
+		],
+		"criteria_adaptive": [
+			"MI"
+		],
+		"exposure": {
+			"enabled": [
+				1
+			],
+			"nitems_exposure": [
+				"4"
+			]
 		},
-		"content_areas":{
-			"enabled" : true,
-			"area1" : ""
-			"area2" : ""
-			"area3" : ""
-			"area4" : ""
+		"content_areas": {
+			"enabled": [
+				"1"
+			],
+			"distribution": [
+				"catname8:0.5;catname2:0.3;catname3:0.5"
+			]
 		}
 	},
-	"person" : {
-       	"personID": "userXYZ"
-    },
-	"test":{  
-		"item": [1,8,24],
-		"itemID":["ID1","ID8", "ID24"],  
-		"scoredResponse":[1,0,1],  
-		"itemtime": [0.23, 23.12, 120.33], 
-		"timeout":  false  
+	"person": {
+		"personID": [
+			"2"
+		]
+	},
+	"test": {
+		"itemID": [
+			"U0206VHa",
+			"U0206AHa"
+		],
+		"item": [
+			27,
+			26
+		],
+		"scoredResponse": [
+			0,
+			0
+		],
+		"itemtime": [
+			21,
+			4
+		],
+		"timeout": [
+			false
+		]
 	}
-
 }
-
-
 ```
 
 
 Following JSON should be the response of the R-Server. 
 Values are examples to get the code working
 
-``` PHP
+``` JSON
 {
-	"personID": 2376, // user id
-	"theta": -0.866876539473478, 
-	"SE":0.10676325431541, // standarderror
-	"nextItem": "89" // next question id
+	"personID":["2"], // user id
+	"terminated":[false], // is quiz terminated
+	"theta":[-1.3127], // ability measure
+	"SE":[0.3918], // standarderror
+	"nextItem":["B0720VHb"]  // next question id
 }
-
 ```
 
 ## using different question pools
@@ -301,23 +382,5 @@ Values are examples to get the code working
 - so with different adaptive quizzes you can use different question categories for different question pools
 
 [Tutorial to create question bank categories](https://moodleuserguides.org/guides/create-a-question-bank-category/)
-```
 
 
-Vorübergehende Fähigkeitsschätzung nach jeder Antwort inkl. Standardfehler
-Finale Fähigkeitsschätzung inkl. Standardfehler
-Beantwortete Aufgaben (IDs)
-Rohantwort pro Aufgabe
-Bewertete Antwort pro Aufgabe
-Bearbeitungszeit pro Aufgabe
-
-{
-	personal_data: {},
-	settings: {
-
-	},
-	questions: [],
-	answered_questions:[],
-	raw_answers: [],
-	answer_times: []
-}
