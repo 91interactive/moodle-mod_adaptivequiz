@@ -289,13 +289,51 @@ $data_for_r_server->test->itemtime = [];
 $data_for_r_server->test->timeout = false;
 $data_for_r_server->answeredquestions = [];
 
+// CS: prepare answered questions, testsettings and questions for R-Server
+$readattemptdata = $adaptiveattempt->read_attempt_data();
+if ($readattemptdata && property_exists($readattemptdata, 'detaildtestresults')) {
+	$data_for_r_server->answeredquestions = $readattemptdata->detaildtestresults;
+}
+// calculate itemtime
+$attemptsobj = $data_for_r_server->answeredquestions ? json_decode($data_for_r_server->answeredquestions) : null ?? [];
+// debugging("readattemptdata is: " . json_encode($readattemptdata));
+// debugging("attemptsobj is: " . json_encode($attemptsobj));
+$questions = [];
+if (isset($attemptsobj->$uniqueid)) {
+	if (gettype($attemptsobj->$uniqueid) == "object") {
+		array_push($questions, $attemptsobj->$uniqueid);
+	} else {
+		$questions = $attemptsobj->$uniqueid;
+	}
+}
+// debugging("questions is: " . json_encode($questions));
+
+for ($i = 0; $i < count($questions); $i++) {
+	$itemtime = 0;
+	if ($i > 0) {
+		$itemtime =	$questions[$i]->timestamp - $questions[$i - 1]->timestamp;
+	} else {
+		$itemtime =	$questions[$i]->timestamp - $readattemptdata->timecreated;
+	}
+	array_push($data_for_r_server->test->itemtime, $itemtime);
+}
+// add time for current/this question
+if (count($questions) > 0) {
+	array_push($data_for_r_server->test->itemtime, time() - $questions[count($questions) - 1]->timestamp);
+}
+else{
+	array_push($data_for_r_server->test->itemtime, time() - $readattemptdata->timecreated);
+}
+
+
+
 if ($quba != null) {
 	$quSlots = $quba->get_slots();
 	foreach ($quSlots as $slot) {
 		$questionBySlot = $quba->get_question($slot);
 
 		array_push($data_for_r_server->test->itemID, $questionBySlot->idnumber);
-		// add index of item with id questionBySlot->idnumber in itempool to $data_for_rs_server->test->item
+		// add index of item with id questionBySlot->idnumber in itempool to $data_for_rs_server->test->item // todo rm: but why?!
 		$index = array_search($questionBySlot->idnumber, array_column($data_for_r_server->itempool->items, 'ID'));
 		array_push($data_for_r_server->test->item, $index);
 
@@ -305,21 +343,11 @@ if ($quba != null) {
 		$fraction = $qa->get_fraction();
 		$scoredResponse = $quba->get_question_mark($slot); //$fraction * $qa->get_question()->max;
 		array_push($data_for_r_server->test->scoredResponse, $scoredResponse);
-
-		// calculate itemtime
-		array_push($data_for_r_server->test->itemtime, 0.0); // todo rm: write correct times
-
 	}
-
 	// $data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33); // todo rm: write correct times
-
 }
 $data_for_r_server->test->timeout = false; // todo rm: calculate correct value
-// CS: prepare answered questions, testsettings and questions for R-Server
-$readattemptdata = $adaptiveattempt->read_attempt_data();
-if ($readattemptdata && property_exists($readattemptdata, 'detaildtestresults')) {
-	$data_for_r_server->answeredquestions = $readattemptdata->detaildtestresults;
-}
+
 $data_for_r_server->testsettings = $adaptivequiz;
 
 // CS in response we get the next question and the next difficulty level

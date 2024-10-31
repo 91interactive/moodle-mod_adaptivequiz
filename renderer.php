@@ -831,6 +831,8 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
 				return $obj["questionId"] == $question->id;
 			});
 
+			$theta = 0;
+			$stderror = 1;
 			// Since array_filter returns an array, get the first element if you expect only one match
 			$answer = reset($answer); // This will get the first matching object, or false if none found
 			// Now, $answer contains the object where questionId matches $question->id, or false if no match was found.
