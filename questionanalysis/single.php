@@ -63,7 +63,7 @@ $output = $PAGE->get_renderer('mod_catadaptivequiz', 'questionanalysis');
 
 $quizanalyzer->add_statistic('times_used', new times_used_statistic());
 $quizanalyzer->add_statistic('percent_correct', new percent_correct_statistic());
-$quizanalyzer->add_statistic('discrimination', new discrimination_statistic());
+// $quizanalyzer->add_statistic('discrimination', new discrimination_statistic());
 $quizanalyzer->add_statistic('answers', new answers_statistic());
 
 $headers = $quizanalyzer->get_header();

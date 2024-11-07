@@ -152,8 +152,23 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 			get_string('attemptfeedback', 'catadaptivequiz'),
 			'wrap="virtual" rows="10" cols="50"'
 		);
-		$mform->addHelpButton('attemptfeedback', 'attemptfeedback', 'catadaptivequiz');
 		$mform->setType('attemptfeedback', PARAM_NOTAGS);
+
+		// Adding the standard "attempt feedback" field.
+		// $mform->addElement('editor', 'attemptfeedback', get_string('attemptfeedback', 'catadaptivequiz'), array('rows' => 10), array(
+		// 	'subdirs'=>0,
+		// 	'maxbytes'=>0,
+		// 	'maxfiles'=>0,
+		// 	'changeformat'=>0,
+		// 	'context'=>null,
+		// 	'noclean'=>0,
+		// 	'trusttext'=>0,
+		// 	'enable_filemanagement' => false)
+		// );
+		// $mform->setType('attemptfeedback', PARAM_RAW); // no XSS prevention here, users must be trusted
+
+
+		$mform->addHelpButton('attemptfeedback', 'attemptfeedback', 'catadaptivequiz');
 
 		// Adding the standard "show ability measure to students" field.
 		$mform->addElement(

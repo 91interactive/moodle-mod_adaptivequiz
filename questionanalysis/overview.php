@@ -61,7 +61,7 @@ $quizanalyzer = new quiz_analyser();
 $quizanalyzer->load_attempts($cm->instance);
 $quizanalyzer->add_statistic('times_used', new times_used_statistic());
 $quizanalyzer->add_statistic('percent_correct', new percent_correct_statistic());
-$quizanalyzer->add_statistic('discrimination', new discrimination_statistic());
+// $quizanalyzer->add_statistic('discrimination', new discrimination_statistic());
 
 $headers = $quizanalyzer->get_header();
 $records = $quizanalyzer->get_records($sort, $sortdir);

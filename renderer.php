@@ -821,29 +821,32 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
 		// get values from $attempt->detaildtestresults object/associative array
 		$answered_questions = [];
 		if ($attempt->detaildtestresults) $answered_questions = array_values(json_decode($attempt->detaildtestresults, true))[0]; // todo rm: check if this is correct
-		else debugging('no detaildtestresults : ' . json_encode($attempt));
+		// else debugging('no detaildtestresults : ' . json_encode($attempt));
         
 		foreach ($quba->get_slots() as $slot) {
 			$question = $quba->get_question($slot);
 			$tags = core_tag_tag::get_item_tags_array('core_question', 'question', $question->id);
 			// get element from $answered_questions array where object value questionId matches $question->id
-			$answer = array_filter($answered_questions, function ($obj) use ($question) {
-				return $obj["questionId"] == $question->id;
-			});
-
 			$theta = 0;
 			$stderror = 1;
-			// Since array_filter returns an array, get the first element if you expect only one match
-			$answer = reset($answer); // This will get the first matching object, or false if none found
-			// Now, $answer contains the object where questionId matches $question->id, or false if no match was found.
-			if ($answer) {
-				$theta = $answer["theta"];
-				$stderror = $answer["standarderror"];
-			}
+			// check if $answered_questions is not empty
+			if (!empty($answered_questions)) 
+			{
+				$answer = array_filter($answered_questions, function ($obj) use ($question) {
+						return $obj["questionId"] == $question->id;
+					});
 
+				// Since array_filter returns an array, get the first element if you expect only one match
+				$answer = reset($answer); // This will get the first matching object, or false if none found
+				// Now, $answer contains the object where questionId matches $question->id, or false if no match was found.
+				if ($answer) {
+					$theta = $answer["theta"];
+					$stderror = $answer["standarderror"];
+				}
+			}
             $qdifficulty = adaptivequiz_get_difficulty_from_tags($tags);
           
-            $table->data[] = [$question->name, /*$qdifficulty,*/ round($quba->get_question_mark($slot),0), round($theta, 4),
+            $table->data[] = [$question->name, /*$qdifficulty,*/ round($quba->get_question_mark($slot) ?? 0, 0), round($theta, 4),
                 round($stderror , 3)];
         }
 
