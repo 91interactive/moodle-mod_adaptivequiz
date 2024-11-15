@@ -53,7 +53,7 @@ class discrimination_statistic implements question_statistic {
         // ability measure plus the measure's standard error is less than the question's level.
         // Responses where the user's ability measure and error-range include the question level will be ignored.
 
-        $level = $analyser->get_question_level_in_logits();
+        // $level = $analyser->get_question_level_in_logits();
         $uppergroupsize = 0;
         $uppergroupcorrect = 0;
         $lowergroupsize = 0;

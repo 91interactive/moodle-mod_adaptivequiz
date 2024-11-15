@@ -55,23 +55,23 @@ class answers_statistic implements question_statistic {
         array_multisort($sortkeys, SORT_NUMERIC, SORT_DESC, $results);
 
         // Sort the results into three arrays based on how far above or below the question-level the users are.
-        $high = array();
-        $mid = array();
-        $low = array();
-        foreach ($results as $result) {
-            $ceiling = $result->measure + $result->standarderror;
-            $floor = $result->measure - $result->standarderror;
-            if ($analyser->get_question_level_in_logits() < $floor) {
-                // User is significantly above the question-level.
-                $high[] = $result;
-            } else if ($analyser->get_question_level_in_logits() > $ceiling) {
-                // User is significantly below the question-level.
-                $low[] = $result;
-            } else {
-                // User's ability overlaps the question level.
-                $mid[] = $result;
-            }
-        }
+        // $high = array();
+        // $mid = array();
+        // $low = array();
+        // foreach ($results as $result) {
+        //     $ceiling = $result->measure + $result->standarderror;
+        //     $floor = $result->measure - $result->standarderror;
+        //     if ($analyser->get_question_level_in_logits() < $floor) {
+        //         // User is significantly above the question-level.
+        //         $high[] = $result;
+        //     } else if ($analyser->get_question_level_in_logits() > $ceiling) {
+        //         // User is significantly below the question-level.
+        //         $low[] = $result;
+        //     } else {
+        //         // User's ability overlaps the question level.
+        //         $mid[] = $result;
+        //     }
+        // }
 
         ob_start();
         print html_writer::end_tag('tr');
