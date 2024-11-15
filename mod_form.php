@@ -220,7 +220,7 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 		$mform->addHelpButton('numberadaptiveclusters', 'numberadaptiveclustersDescription', 'catadaptivequiz');
 
 		// Adding the standard "Personal parameter estimation" field.
-		$mform->addElement('select', 'personalparameterestimation', get_string('personalparameterestimation', 'catadaptivequiz'),  ["Maximum-A-Posteriori (MAP)", "Expected-A-Posteriori (EAP)", "Weighted Likelihood Estimation (WLE)", "Maximum Likelihood Estimation (MLE)"], ["Maximum-A-Posteriori (MAP)", "Expected-A-Posteriori (EAP)", "Weighted Likelihood Estimation (WLE)", "Maximum Likelihood Estimation (MLE)"]);
+		$mform->addElement('select', 'personalparameterestimation', get_string('personalparameterestimation', 'catadaptivequiz'),  ["Maximum-A-Posteriori (MAP)", "Expected-A-Posteriori (EAP)", "Weighted Likelihood Estimation (WLE)", "Maximum Likelihood Estimation (ML)"], ["Maximum-A-Posteriori (MAP)", "Expected-A-Posteriori (EAP)", "Weighted Likelihood Estimation (WLE)", "Maximum Likelihood Estimation (ML)"]);
 		$mform->addHelpButton('personalparameterestimation', 'personalparameterestimationDescription', 'catadaptivequiz');
 
 		// Adding the standard "Task selection adaptive part" field

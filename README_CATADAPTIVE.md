@@ -28,7 +28,7 @@ The property ```pers_est``` has following short values:
 | MAP  | Maximum-A-Posteriori	|
 | EAP  | Expected-A-Posteriori	|
 | WLE  | Weighted Likelihood Estimation	|
-| MLE  | Maximum Likelihood Estimation	|
+| ML  | Maximum Likelihood Estimation	|
 
 \
 &nbsp;

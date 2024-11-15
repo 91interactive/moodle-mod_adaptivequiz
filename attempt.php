@@ -247,7 +247,7 @@ switch ($adaptivequiz->personalparameterestimation) {
 		$data_for_r_server->settings->pers_est = "WLE";
 		break;
 	case '3':
-		$data_for_r_server->settings->pers_est = "MLE";
+		$data_for_r_server->settings->pers_est = "ML";
 		break;
 }
 

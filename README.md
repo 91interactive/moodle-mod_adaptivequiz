@@ -217,7 +217,7 @@ The property "pers.est" has following short values:
 - MAP [//]: # Maximum-A-Posteriori
 - EAP [//]: # Expected-A-Posteriori
 - WLE [//]: # Weighted Likelihood Estimation
-- MLE [//]: # Maximum Likelihood Estimation
+- ML [//]: # Maximum Likelihood Estimation
 
 The property "criteria_adaptive" has following short values:
 - MI [//]: # Maximum Information

@@ -60,7 +60,7 @@ $string['numberadaptiveclustersDescription_help'] = 'Anzahl an Aufgabenclustern,
 
 $string['personalparameterestimation'] = 'Personenparameterschätzung';
 $string['personalparameterestimationDescription'] = 'Personenparameterschätzung';
-$string['personalparameterestimationDescription_help'] = 'Die Personenparameterschätzung während des Tests. Zur Auswahl stehen folgende Schätzer: Expected-A-Posteriori (EAP; Bock & Mislevy, 1982), Maximum-A-Posteriori (MAP; Mislevy, 1986), Weighted Likelihood Estimate (WLE; Warm, 1989), Maximum Likelihood Estimate (MLE; Lord, 1980).';
+$string['personalparameterestimationDescription_help'] = 'Die Personenparameterschätzung während des Tests. Zur Auswahl stehen folgende Schätzer: Expected-A-Posteriori (EAP; Bock & Mislevy, 1982), Maximum-A-Posteriori (MAP; Mislevy, 1986), Weighted Likelihood Estimate (WLE; Warm, 1989), Maximum Likelihood Estimate (ML; Lord, 1980).';
 
 $string['adaptivepart'] = 'Aufgabenauswahl adaptiver Teil';
 $string['adaptivepartDescription'] = 'Aufgabenauswahl adaptiver Teil';
