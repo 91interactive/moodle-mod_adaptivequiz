@@ -104,6 +104,9 @@ class quiz_analyser
 					$tags = array_filter($tags, function ($tag) {
 						return strpos($tag, 'disc_') === 0 || strpos($tag, 'diff_') === 0;
 					});
+					// sort $tags array alphabetically
+					sort($tags);
+
 					$difficulty = array_reduce($tags, function ($carry, $tag) {
 						$carry .= $tag . ' ';
 						return $carry;
