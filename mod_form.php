@@ -442,17 +442,17 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 		if (0 >= $data['testduration']) {
 			$errors['testduration'] = get_string('formelementnegative', 'catadaptivequiz');
 		}
-		if (0 >= $data['numbercalibrationclusters']) {
+		if (0 > $data['numbercalibrationclusters']) {
 			$errors['numbercalibrationclusters'] = get_string('formelementnegative', 'catadaptivequiz');
 		}
-		if (0 >= $data['numberlinkingclusters']) {
+		if (0 > $data['numberlinkingclusters']) {
 			$errors['numberlinkingclusters'] = get_string('formelementnegative', 'catadaptivequiz');
 		}
-		if (0 >= $data['numberadaptiveclusters']) {
+		if (0 > $data['numberadaptiveclusters']) {
 			$errors['numberadaptiveclusters'] = get_string('formelementnegative', 'catadaptivequiz');
 		}
 		if ($data['randomesque_exposure_control']) {
-			if (0 >= $data['suitabletasks']) {
+			if (0 > $data['suitabletasks']) {
 				$errors['suitabletasks'] = get_string('formelementnegative', 'catadaptivequiz');
 			}
 		}
