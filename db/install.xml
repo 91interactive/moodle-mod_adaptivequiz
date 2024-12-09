@@ -28,22 +28,21 @@
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Time created timestamp"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Time modified timesampt"/>
         <FIELD NAME="completionattemptcompleted" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Stores whether a custom completion rule based on whether a user has a completed attempt enabled."/>
-		<FIELD NAME="testlength" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Number of tasks to be specified"></FIELD>
-		<FIELD NAME="testduration" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Maximum test time"></FIELD>
-		<FIELD NAME="selecttasktypes" TYPE="char" LENGTH="10" NOTNULL="true" COMMENT="Type of for non adaptive tests"></FIELD>
-		<FIELD NAME="numbercalibrationclusters" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Number of calibration clusters"></FIELD>
-		<FIELD NAME="numberlinkingclusters" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Number of linking clusters"></FIELD>
-		<FIELD NAME="numberadaptiveclusters" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Number of adaptive clusters"></FIELD>
-		<FIELD NAME="personalparameterestimation" TYPE="char" LENGTH="10" NOTNULL="true" COMMENT="Personal parameter estimation"></FIELD>
-		<FIELD NAME="adaptivepart" TYPE="char" LENGTH="10" NOTNULL="true" COMMENT="Tasks Adaptive part"></FIELD>
-		<FIELD NAME="randomesque_exposure_control" TYPE="int" LENGTH="2" NOTNULL="true" COMMENT="Randomesque Exposure Control"></FIELD>
-		<FIELD NAME="suitabletasks" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Number of suitable tasks"></FIELD>
-		<FIELD NAME="messageatlastpage" TYPE="text" NOTNULL="false" COMMENT="Number of suitable tasks"></FIELD>
+		<FIELD NAME="testduration" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Maximum test time"></FIELD>
+		<FIELD NAME="selecttasktypes" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Type of for non adaptive tests"></FIELD>
+		<FIELD NAME="numbercalibrationclusters" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Number of calibration clusters"></FIELD>
+		<FIELD NAME="numberlinkingclusters" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Number of linking clusters"></FIELD>
+		<FIELD NAME="numberadaptiveclusters" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Number of adaptive clusters"></FIELD>
+		<FIELD NAME="personalparameterestimation" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Personal parameter estimation"></FIELD>
+		<FIELD NAME="adaptivepart" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Tasks Adaptive part"></FIELD>
+		<FIELD NAME="randomesque_exposure_control" TYPE="int" LENGTH="2" NOTNULL="true" SEQUENCE="false" COMMENT="Randomesque Exposure Control"></FIELD>
+		<FIELD NAME="suitabletasks" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Number of suitable tasks"></FIELD>
+		<FIELD NAME="messageatlastpage" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Number of suitable tasks"></FIELD>
 		<FIELD NAME="contentareas" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Are Content Areas enabled"></FIELD>
-		<FIELD NAME="contentarea1" TYPE="text" NOTNULL="false" COMMENT="Number of suitable tasks"></FIELD>
-		<FIELD NAME="contentarea2" TYPE="text" NOTNULL="false" COMMENT="Number of suitable tasks"></FIELD>
-		<FIELD NAME="contentarea3" TYPE="text" NOTNULL="false" COMMENT="Number of suitable tasks"></FIELD>
-		<FIELD NAME="contentarea4" TYPE="text" NOTNULL="false" COMMENT="Number of suitable tasks"></FIELD>
+		<FIELD NAME="contentarea1" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Number of suitable tasks"></FIELD>
+		<FIELD NAME="contentarea2" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Number of suitable tasks"></FIELD>
+		<FIELD NAME="contentarea3" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Number of suitable tasks"></FIELD>
+		<FIELD NAME="contentarea4" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Number of suitable tasks"></FIELD>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -71,7 +70,7 @@
         <FIELD NAME="attemptstate" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" COMMENT="The state of the attempt"/>
         <FIELD NAME="attemptstopcriteria" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The reason why the attempt was stopped"/>
         <FIELD NAME="questionsattempted" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The number of question attempted"/>
-		<FIELD NAME="detaildtestresults" TYPE="text" LENGTH="long" NOTNULL="false" SEQUENCE="false" COMMENT="List of questionId, raw answers and rated answers"/>
+		<FIELD NAME="detaildtestresults" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="List of questionId, raw answers and rated answers"/>
         <FIELD NAME="difficultysum" TYPE="number" LENGTH="10" NOTNULL="true" DEFAULT="0.0" SEQUENCE="false" DECIMALS="7" COMMENT="The sum of difficulty levels attempted measured in logits"/>
         <FIELD NAME="standarderror" TYPE="number" LENGTH="10" NOTNULL="true" DEFAULT="0.0" SEQUENCE="false" DECIMALS="5" COMMENT="The standard error that was achieved during the attempt"/>
         <FIELD NAME="measure" TYPE="number" LENGTH="10" NOTNULL="true" DEFAULT="0.0" SEQUENCE="false" DECIMALS="5" COMMENT="The attempt ability measure in logits"/>

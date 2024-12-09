@@ -151,6 +151,17 @@ function xmldb_catadaptivequiz_upgrade($oldversion)
 
 		upgrade_mod_savepoint(true, 2024100133, 'catadaptivequiz');
 	}
+	
+	if ($oldversion < 2024120905) {
+		$table = new xmldb_table('catadaptivequiz');
+		$field = new xmldb_field('testlength');
+
+		if ($dbman->field_exists($table, $field)) {
+			$dbman->drop_field($table, $field);
+		}
+
+		upgrade_mod_savepoint(true, 2024120905, 'catadaptivequiz');
+	}
 
 	return true;
 }
