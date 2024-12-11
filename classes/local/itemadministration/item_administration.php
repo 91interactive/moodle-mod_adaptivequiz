@@ -91,20 +91,20 @@ final class item_administration {
             fetchquestion::decrement_question_sum_for_difficulty_level($lastdifficultylevel);
         }
 
-        $nextdifficultylevel = is_null($determinenextdifficultyresult)
-            ? $this->get_next_difficulty_level_from_quba(
-                $adaptivequiz->startinglevel,
-                questions_difficulty_range::from_activity_instance($adaptivequiz)
-            )
-            : $determinenextdifficultyresult->next_difficulty_level();
+        // $nextdifficultylevel = is_null($determinenextdifficultyresult)
+        //     ? $this->get_next_difficulty_level_from_quba(
+        //         $adaptivequiz->startinglevel,
+        //         questions_difficulty_range::from_activity_instance($adaptivequiz)
+        //     )
+        //     : $determinenextdifficultyresult->next_difficulty_level();
 
-        // Check if the level requested is out of the minimum/maximum boundaries for the attempt.
-        if (!$this->level_in_bounds($nextdifficultylevel, $adaptivequiz)) {
+        // // Check if the level requested is out of the minimum/maximum boundaries for the attempt.
+        // if (!$this->level_in_bounds($nextdifficultylevel, $adaptivequiz)) {
 
-            return item_administration_evaluation::with_stoppage_reason(
-                get_string('leveloutofbounds', 'catadaptivequiz', $nextdifficultylevel)
-            );
-        }
+        //     return item_administration_evaluation::with_stoppage_reason(
+        //         get_string('leveloutofbounds', 'catadaptivequiz', $nextdifficultylevel)
+        //     );
+        // }
 
         // Check if the attempt has reached the maximum number of questions attempted.
         if ($questionsattempted >= $adaptivequiz->maximumquestions) {
@@ -118,73 +118,73 @@ final class item_administration {
         $questionslots = $this->quba->get_slots();
         $slot = !empty($questionslots) ? end($questionslots) : 0;
 
-        // Check if this is the beginning of an attempt (and pass the starting level) or the continuation of an attempt.
-        if (empty($slot) && 0 == $questionsattempted) {
-            // Set the starting difficulty level.
-            // $this->fetchquestion->set_level((int) $adaptivequiz->startinglevel );
-            $this->fetchquestion->set_level( );
-            // Sets the level class property.
-            $nextdifficultylevel = $adaptivequiz->startinglevel;
-            // Set the rebuild flag for fetchquestion class.
-            $this->fetchquestion->rebuild = true;
+        // // Check if this is the beginning of an attempt (and pass the starting level) or the continuation of an attempt.
+        // if (empty($slot) && 0 == $questionsattempted) {
+        //     // Set the starting difficulty level.
+        //     // $this->fetchquestion->set_level((int) $adaptivequiz->startinglevel );
+        //     $this->fetchquestion->set_level( );
+        //     // Sets the level class property.
+        //     $nextdifficultylevel = $adaptivequiz->startinglevel;
+        //     // Set the rebuild flag for fetchquestion class.
+        //     $this->fetchquestion->rebuild = true;
 
-        } else if (!empty($slot) && $this->was_answer_submitted_to_question($slot)) {
-            // If the attempt already has a question attached to it, check if an answer was submitted to the question.
-            // If so fetch a new question.
+        // } else if (!empty($slot) && $this->was_answer_submitted_to_question($slot)) {
+        //     // If the attempt already has a question attached to it, check if an answer was submitted to the question.
+        //     // If so fetch a new question.
 
-            // Provide the question-fetching process with limits based on our last question.
-            // If the last question was correct...
-            if ($this->quba->get_question_mark($slot) > 0) {
-                // Only ask questions harder than the last question unless we are already at the top of the ability scale.
-                if ($lastdifficultylevel < $adaptivequiz->highestlevel) {
-                    $this->fetchquestion->set_minimum_level($lastdifficultylevel + 1);
-                    // Do not ask a question of the same level unless we are already at the max.
-                    if ($lastdifficultylevel == $nextdifficultylevel) {
-                        $nextdifficultylevel++;
-                    }
-                }
-            } else {
-                // If the last question was wrong...
-                // Only ask questions easier than the last question unless we are already at the bottom of the ability scale.
-                if ($lastdifficultylevel > $adaptivequiz->lowestlevel) {
-                    $this->fetchquestion->set_maximum_level($lastdifficultylevel - 1);
-                    // Do not ask a question of the same level unless we are already at the min.
-                    if ($lastdifficultylevel == $nextdifficultylevel) {
-                        $nextdifficultylevel--;
-                    }
-                }
-            }
+        //     // Provide the question-fetching process with limits based on our last question.
+        //     // If the last question was correct...
+        //     if ($this->quba->get_question_mark($slot) > 0) {
+        //         // Only ask questions harder than the last question unless we are already at the top of the ability scale.
+        //         if ($lastdifficultylevel < $adaptivequiz->highestlevel) {
+        //             $this->fetchquestion->set_minimum_level($lastdifficultylevel + 1);
+        //             // Do not ask a question of the same level unless we are already at the max.
+        //             if ($lastdifficultylevel == $nextdifficultylevel) {
+        //                 $nextdifficultylevel++;
+        //             }
+        //         }
+        //     } else {
+        //         // If the last question was wrong...
+        //         // Only ask questions easier than the last question unless we are already at the bottom of the ability scale.
+        //         if ($lastdifficultylevel > $adaptivequiz->lowestlevel) {
+        //             $this->fetchquestion->set_maximum_level($lastdifficultylevel - 1);
+        //             // Do not ask a question of the same level unless we are already at the min.
+        //             if ($lastdifficultylevel == $nextdifficultylevel) {
+        //                 $nextdifficultylevel--;
+        //             }
+        //         }
+        //     }
 
-            // Reset the slot number back to zero, since we are going to fetch a new question.
-            $slot = 0;
-            // Set the level of difficulty to fetch.
-            // $this->fetchquestion->set_level($nextdifficultylevel);
-            $this->fetchquestion->set_level();
+        //     // Reset the slot number back to zero, since we are going to fetch a new question.
+        //     $slot = 0;
+        //     // Set the level of difficulty to fetch.
+        //     // $this->fetchquestion->set_level($nextdifficultylevel);
+        //     $this->fetchquestion->set_level();
 
-        } else if (empty($slot) && 0 < $questionsattempted) {
+        // } else if (empty($slot) && 0 < $questionsattempted) {
 
-            // If this condition is met, then something went wrong because the slot id is empty BUT the questions attempted is
-            // greater than zero. Stop the attempt.
-            return item_administration_evaluation::with_stoppage_reason(get_string('errorattemptstate', 'catadaptivequiz'));
-        }
+        //     // If this condition is met, then something went wrong because the slot id is empty BUT the questions attempted is
+        //     // greater than zero. Stop the attempt.
+        //     return item_administration_evaluation::with_stoppage_reason(get_string('errorattemptstate', 'catadaptivequiz'));
+        // }
 
         // If the slot property is set, then we have a question that is ready to be attempted.  No more process is required.
         if (!empty($slot)) {
 
 			if($question_id != null){
-				return $this->get_question_ready($attempt, $nextdifficultylevel, $question_id);
+				return $this->get_question_ready($attempt, 0, $question_id);
 			}
 
-            return item_administration_evaluation::with_next_item(new next_item($nextdifficultylevel, $slot));
+            return item_administration_evaluation::with_next_item(new next_item(0, $slot));
         }
 
         // If we are here, then the slot property was unset and a new question needs to prepared for display.
-        $status = $this->get_question_ready($attempt, $nextdifficultylevel, $question_id);
+        $status = $this->get_question_ready($attempt, 0, $question_id);
 
         if (empty($status)) {
 
             return item_administration_evaluation::with_stoppage_reason(
-                get_string('errorfetchingquest', 'catadaptivequiz', $nextdifficultylevel)
+                get_string('errorfetchingquest', 'catadaptivequiz', 0)
             );
         }
 
@@ -249,12 +249,12 @@ final class item_administration {
 			$questionids = $question_id;
 		}
 
-        if (empty($questionids)) {
+        // if (empty($questionids)) {
 
-            return item_administration_evaluation::with_stoppage_reason(
-                get_string('errorfetchingquest', 'catadaptivequiz', $nextdifficultylevel)
-            );
-        }
+        //     return item_administration_evaluation::with_stoppage_reason(
+        //         get_string('errorfetchingquest', 'catadaptivequiz', $nextdifficultylevel)
+        //     );
+        // }
 
         // Select one random question.
 		// CS if first question ?
