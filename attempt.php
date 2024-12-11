@@ -435,7 +435,7 @@ $adaptivequiz->context = $context;
 $adaptivequiz->cm = $cm;
 // debugging('adaptivequiz: ' . json_encode($adaptivequiz), DEBUG_DEVELOPER);
 // $fetchquestion = new fetchquestion($adaptivequiz, 1, $adaptivequiz->lowestlevel , $adaptivequiz->highestlevel);
-$fetchquestion = new fetchquestion($adaptivequiz, 1, 0 , 999);
+$fetchquestion = new fetchquestion($adaptivequiz, 1, 0, 999);
 
 $nextIndex = null;
 // get the id of the element (from $data_for_r_server->itempool->items) with the idnumber that is stored in $r_server_response->nextItem
@@ -473,7 +473,7 @@ if ($itemadministrationevaluation->item_administration_is_to_stop()) {
 		);
 	}
 
-	$adaptiveattempt->complete($context, $r_server_response->SE, $itemadministrationevaluation->stoppage_reason(), time());
+	$adaptiveattempt->complete($context, $r_server_response->SE ?? $standarderror ?? 0.0, $itemadministrationevaluation->stoppage_reason(), time());
 
 	redirect(new moodle_url(
 		'/mod/catadaptivequiz/attemptfinished.php',
