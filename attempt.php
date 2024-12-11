@@ -320,8 +320,7 @@ for ($i = 0; $i < count($questions); $i++) {
 // add time for current/this question
 if (count($questions) > 0) {
 	array_push($data_for_r_server->test->itemtime, time() - $questions[count($questions) - 1]->timestamp);
-}
-else{
+} else {
 	array_push($data_for_r_server->test->itemtime, time() - $readattemptdata->timecreated);
 }
 
@@ -434,8 +433,9 @@ if ($qubaid == 0) {
 
 $adaptivequiz->context = $context;
 $adaptivequiz->cm = $cm;
-
-$fetchquestion = new fetchquestion($adaptivequiz, 1, $adaptivequiz->lowestlevel, $adaptivequiz->highestlevel);
+// debugging('adaptivequiz: ' . json_encode($adaptivequiz), DEBUG_DEVELOPER);
+// $fetchquestion = new fetchquestion($adaptivequiz, 1, $adaptivequiz->lowestlevel , $adaptivequiz->highestlevel);
+$fetchquestion = new fetchquestion($adaptivequiz, 1, 0 , 999);
 
 $nextIndex = null;
 // get the id of the element (from $data_for_r_server->itempool->items) with the idnumber that is stored in $r_server_response->nextItem

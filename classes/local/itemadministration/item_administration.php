@@ -121,7 +121,8 @@ final class item_administration {
         // Check if this is the beginning of an attempt (and pass the starting level) or the continuation of an attempt.
         if (empty($slot) && 0 == $questionsattempted) {
             // Set the starting difficulty level.
-            $this->fetchquestion->set_level((int) $adaptivequiz->startinglevel);
+            // $this->fetchquestion->set_level((int) $adaptivequiz->startinglevel );
+            $this->fetchquestion->set_level( );
             // Sets the level class property.
             $nextdifficultylevel = $adaptivequiz->startinglevel;
             // Set the rebuild flag for fetchquestion class.
@@ -157,7 +158,8 @@ final class item_administration {
             // Reset the slot number back to zero, since we are going to fetch a new question.
             $slot = 0;
             // Set the level of difficulty to fetch.
-            $this->fetchquestion->set_level($nextdifficultylevel);
+            // $this->fetchquestion->set_level($nextdifficultylevel);
+            $this->fetchquestion->set_level();
 
         } else if (empty($slot) && 0 < $questionsattempted) {
 
