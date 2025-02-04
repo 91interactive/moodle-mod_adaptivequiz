@@ -20,6 +20,7 @@ This Plugin can be installed via zip upload on your Moodle installation.
 ### Testsettings
 
 
+#### pers_est
 The property ```pers_est``` has following short values:
 
 -------------------------------------------------------------------- 
@@ -33,6 +34,7 @@ The property ```pers_est``` has following short values:
 \
 &nbsp;
 
+#### criteria_adaptive
 The property ```criteria_adaptive``` has following short values:  
 
 -------------------------------------------------------------------- 
@@ -44,42 +46,22 @@ The property ```criteria_adaptive``` has following short values:
 | IKL  | Integration-based   	|
 
 
+
+
 ### Itempool
 The items in the itempool need to have certain tags to be recognized by the Plugin. The tags are:
 
 --------------------------------------------------------------------
 | Tag      | Beispiel | Beschreibung | 
 | ------------- |:-------------:| ------------- |
-| adpq_1 |  adpq_1 |  Marker, dass Frage für adaptiven Fragepool markiert ist |
-| enemey_[array with number] | enemy_[23;31;11] | Enemy question Ids. (*Tag weg lassen, wenn es keine Enemy Questions gibt.*) |
-| ca_[array with strings] | ca_[building;wooden] | Kategorienamen |
-| diff_[array with floats] | diff_[1.2;3.4;5.5] | Kategorieschwierigkeiten. Kann mehrere Gleitkommawerte haben. <br/>Ein Wert bei dichotomen Fragen oder mehrere Werte bei polytomen Fragen, getrennt durch ;<br/>Beispiele: <br/>cat_diff_[1.2] für dichotome Fragen<br/>cat_diff_[1.2;2.34;5.54]  |
-| disc_[array with numbers] | disc_[2;3] | Diskriminations-Parameter |					
-| cluster_CLUSTERNAME | cluster_a | Cluster |					
+| adpq_1 |  adpq_1 |  Marker, dass Frage für adaptiven Itempool markiert ist | 
+| enemey_[array with ItemID] | enemy_[ItemID1;ItemID456] | ItemID von Enemy-Items, also Items die nicht zusammen mit dem jeweiligen Item in einem Test vorkommen sollen. Mehrere Werte getrennt durch Semikolon. *(Tag weglassen, wenn es keine Enemy-Items gibt.)* |
+| ca_[array with strings] | ca_[Leseverstehen;Verständnis;Märchen;MC] | Dieser Tag kann dafür genutzt werden verschiedene Inhaltsbereiche, die durch das Item abgedeckt werden, zu spezifizieren. Er kann zudem auch für andere, für die Itemauswahl relevanten Merkmale genutzt werden (z.B. Itemtyp, kognitives Anforderungsniveau). Mehrere Werte getrennt durch Semikolon. Die Anteile der verschiedenen hier spezifizierten Inhaltsbereiche am Gesamttest können in den Testeinstellungen angegeben werden. |
+| diff_[array with floats] | diff_[1.2] für dichotome Items<br><br> diff_[1.2;2.34;5.54] für polytome Items | Schwierigkeitsparameter. Kann mehrere Gleitkommawerte haben. Ein Wert bei dichotomen Items oder mehrere Werte bei polytomen Items, getrennt durch Semikolon. |
+| disc_[array with numbers] | disc_[1.4] für eindimensionale Tests<br><br>disc_[1.9;0;1.4] für dreidimensionale Tests| Diskriminationsparameter. Kann mehrere Gleitkommawerte haben. Ein Wert bei eindimensionalen Tests oder mehrere Werte (spezifiziert Ladungsmuster) bei mehrdimensionalen Tests, getrennt durch Semikolon. |				
+| cluster_CLUSTERNAME | cluster_A, cluster_C1, cluster_L2  | Cluster i.S.d. kontinuierlichen Kalibrierungsstrategie, dem das Item zugehörig ist. Dient der kontinuierlichen Kalibrierungsstrategie. Unterschieden werden adaptive Cluster (cluster_A), Kalibrierungscluster (cluster_C#) und Linkingcluster (cluster_L#) |					
 				
 
-
-<!-- ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc. -->
-
-<!-- ## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README. -->
-
-<!-- ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser. -->
-
-<!-- ## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project. -->
-
-<!-- ## License
-For open source projects, say how it is licensed. -->
-
-<!-- ## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers. -->
 
 # R-Server
 ## Setup
@@ -303,3 +285,9 @@ This section describes the REST-API of the R-Server. The R-Server is responsible
 	"nextItem":["B0720VHb"]  // next question id
 }
 ```
+
+
+
+
+
+
