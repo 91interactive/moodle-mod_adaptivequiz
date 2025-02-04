@@ -100,7 +100,7 @@ class mod_catadaptivequiz_mod_form extends moodleform_mod
 		$mform->addRule('questionpool', null, 'required', null, 'client');
 		$mform->getElement('questionpool')->setSelected($selquestcat);
 
-		/* todo rm: check
+		/* 
 		// Adding the standard "starting level of difficulty" field.
 		$mform->addElement(
 			'text',

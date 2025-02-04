@@ -62,6 +62,20 @@ The items in the itempool need to have certain tags to be recognized by the Plug
 | cluster_CLUSTERNAME | cluster_A, cluster_C1, cluster_L2  | Cluster i.S.d. kontinuierlichen Kalibrierungsstrategie, dem das Item zugehörig ist. Dient der kontinuierlichen Kalibrierungsstrategie. Unterschieden werden adaptive Cluster (cluster_A), Kalibrierungscluster (cluster_C#) und Linkingcluster (cluster_L#) |					
 				
 
+## Extension
+### Testsettings
+
+--------------------------------------------------------------------
+| Files         | Beschreibung  | 
+| ------------- | ------------- |
+| `/db/install.xml` | SQL-Statements für die Datenbanktabelle hinzufügen, dass Einstellungen in Moodle gespeichert werden |
+| `/mod_form.php` | UI für Testeinstellungen, ggf. Validierung einfügen |
+| `/attempt.php` | $data_for_r_server erweitern |
+| `/lang/de/catadaptivequiz.php` <br>`/lang/en/catadaptivequiz.php` <br>...| Übersetzungen/Texte für Testeinstellungen hinzufügen |
+| `/classes/local/attempt/attempt.php` |  Url zum R-Server in `public function call_r_server` ändern|
+
+
+
 
 # R-Server
 ## Setup

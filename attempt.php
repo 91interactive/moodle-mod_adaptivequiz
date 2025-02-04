@@ -137,7 +137,7 @@ $data_for_r_server = new stdClass;
 $quba = null;
 
 // If uniqueid is not empty the process respones.
-if (!empty($uniqueid) && confirm_sesskey()) { // todo rm: refactor, that this is used on first question also.
+if (!empty($uniqueid) && confirm_sesskey()) { 
 
 	// Check if the uniqueid belongs to the same attempt record the user is currently using.
 	if (!adaptivequiz_uniqueid_part_of_attempt($uniqueid, $cm->instance, $USER->id)) {
@@ -332,7 +332,6 @@ if ($quba != null) {
 		$questionBySlot = $quba->get_question($slot);
 
 		array_push($data_for_r_server->test->itemID, $questionBySlot->idnumber);
-		// add index of item with id questionBySlot->idnumber in itempool to $data_for_rs_server->test->item // todo rm: but why?!
 		$index = array_search($questionBySlot->idnumber, array_column($data_for_r_server->itempool->items, 'ID'));
 		array_push($data_for_r_server->test->item, $index);
 
@@ -343,9 +342,8 @@ if ($quba != null) {
 		$scoredResponse = $quba->get_question_mark($slot) ?? 0; //$fraction * $qa->get_question()->max;
 		array_push($data_for_r_server->test->scoredResponse, $scoredResponse);
 	}
-	// $data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33); // todo rm: write correct times
 }
-$data_for_r_server->test->timeout = false; // todo rm: calculate correct value
+$data_for_r_server->test->timeout = false;
 
 $data_for_r_server->testsettings = $adaptivequiz;
 

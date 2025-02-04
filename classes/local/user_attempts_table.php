@@ -64,7 +64,6 @@ final class user_attempts_table extends table_sql {
             get_string('attemptfinishedtimestamp', 'catadaptivequiz'),
         ];
         if ($adaptivequiz->showabilitymeasure) {
-			// todo rm: change!
             $headers[] = get_string('abilityestimated', 'catadaptivequiz');
         }
         $this->define_headers($headers);
