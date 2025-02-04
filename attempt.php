@@ -340,7 +340,7 @@ if ($quba != null) {
 		// scoredResponse
 		$qa = $quba->get_attempt_iterator()->offsetGet($slot);
 		$fraction = $qa->get_fraction();
-		$scoredResponse = $quba->get_question_mark($slot); //$fraction * $qa->get_question()->max;
+		$scoredResponse = $quba->get_question_mark($slot) ?? 0; //$fraction * $qa->get_question()->max;
 		array_push($data_for_r_server->test->scoredResponse, $scoredResponse);
 	}
 	// $data_for_r_server->test->itemtime = array(0.23, 23.12, 120.33); // todo rm: write correct times
@@ -379,7 +379,7 @@ try {
 
 		$mergedObj = [];
 		// check if question is answered (graded)
-		if ($qa->get_state()->is_graded() && $currentDBdetaildtestresults != "null") {
+		if (/*$qa->get_state()->is_graded() &&*/$currentDBdetaildtestresults != "null") {
 
 			// get question id 
 			$quID = $qa->get_question_id();
@@ -387,8 +387,8 @@ try {
 			$qu = new stdClass();
 			$qu->questionId = $quID;
 			$qu->name = $qa->get_question()->name;
-			$qu->rawAnswer = $qa->get_response_summary();
-			$qu->ratedAnswer = $quba->get_question_mark($lastSlot);
+			$qu->rawAnswer = $qa->get_state()->is_graded() ? $qa->get_response_summary() : "NA";
+			$qu->ratedAnswer = $qa->get_state()->is_graded() ? $quba->get_question_mark($lastSlot) : 0;
 			$qu->theta = $r_server_response->theta;
 			// questionId, raw answers and rated answers
 
@@ -410,8 +410,9 @@ try {
 			} else {
 				$mergedObj[$uniqueid] = $qu;
 			}
+
+			$adaptiveattempt->update_after_question_answered_with_r_response(0.0, $r_server_response->SE ?? $standarderror ?? 0.0, $r_server_response->theta ?? 0, time(), json_encode($mergedObj));
 		}
-		$adaptiveattempt->update_after_question_answered_with_r_response(0.0, $r_server_response->SE ?? $standarderror ?? 0.0, $r_server_response->theta ?? 0, time(), json_encode($mergedObj));
 	}
 } catch (Exception $exception) {
 	throw new moodle_exception(
