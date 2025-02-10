@@ -13,12 +13,11 @@ This Plugin provides an adaptive quiz. The calculation of the CAT logic is done 
 <!-- ## Visuals
 Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method. -->
 
-## Installation
+## Setup/Installation
 This Plugin can be installed via zip upload on your Moodle installation.
 
 ## Usage
 ### Testsettings
-
 
 #### pers_est
 The property ```pers_est``` has following short values:
@@ -71,14 +70,18 @@ The items in the itempool need to have certain tags to be recognized by the Plug
 | `/db/install.xml` | SQL-Statements für die Datenbanktabelle hinzufügen, dass Einstellungen in Moodle gespeichert werden |
 | `/mod_form.php` | UI für Testeinstellungen, ggf. Validierung einfügen |
 | `/attempt.php` | $data_for_r_server erweitern |
-| `/lang/de/catadaptivequiz.php` <br>`/lang/en/catadaptivequiz.php` <br>...| Übersetzungen/Texte für Testeinstellungen hinzufügen |
 | `/classes/local/attempt/attempt.php` |  Url zum R-Server in `public function call_r_server` ändern|
+| `/classes/local/attempt/attempt.php` | Tagverarbeitung um an R-Server geschickt zu werden: `public static function distribute_used_tags($tags, $itemsArray)` erweitern |
+| `/lang/de/catadaptivequiz.php` <br>`/lang/en/catadaptivequiz.php` <br>...| Übersetzungen/Texte für Testeinstellungen hinzufügen |
 
 
 
 
 # R-Server
-## Setup
+
+
+
+## Setup/Files
 The R-Server is setup via Docker. 
 [rstudio/plumber](https://www.rplumber.io/articles/hosting.html#docker) is used as image for the R-Server.
 
@@ -157,6 +160,10 @@ function(data) {
   })
 }
 ```
+## Restrictions
+The R-Server is not able to access the Moodle Database. Therefore, the R-Server needs to get all necessary information via the REST-API.   
+R is a single-threaded language. Therefore, the R-Server can only handle one request at a time. This can be a bottleneck if many users are using the Plugin at the same time.  
+This can be solved by using a load balancer in front of the R-Server or by using a more powerful server or by using a different webserver that can handle multiple requests at the same time.
 
 ## REST-API
 This section describes the REST-API of the R-Server. The R-Server is responsible for the calculation of the CAT-Logic. The Plugin communicates with the R-Server via a REST-API. The R-Server is a separate Server and can be updated without touching the Plugin.
@@ -300,6 +307,7 @@ This section describes the REST-API of the R-Server. The R-Server is responsible
 }
 ```
 
+### 
 
 
 
