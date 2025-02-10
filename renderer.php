@@ -846,8 +846,8 @@ class mod_catadaptivequiz_renderer extends plugin_renderer_base {
 			}
             $qdifficulty = adaptivequiz_get_difficulty_from_tags($tags);
           
-            $table->data[] = [$question->name, /*$qdifficulty,*/ round($quba->get_question_mark($slot) ?? 0, 0), round($theta, 4),
-                round($stderror , 3)];
+            $table->data[] = [$question->name, /*$qdifficulty,*/ round($quba->get_question_mark($slot) ?? 0, 0), round($theta ?? 0, 4),
+                round($stderror ?? 0 , 3)];
         }
 
         $return = $this->heading(get_string('reportattemptgraphtabletitle', 'catadaptivequiz'), '4', 'mdl-align');
